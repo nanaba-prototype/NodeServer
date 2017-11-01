@@ -1,0 +1,40 @@
+# nanaba android backend prototype
+
+Many people having some trouble with their cosmetics.
+
+The problem is there are no community and feedback app.
+
+So, we will make it.
+
+## Getting Started
+
+This project will work with smallest feature and scenario.
+
+Don't expect the backend work fully functional.
+
+### Prerequisites
+
+You need to install [Node.js >= 6.11.1](https://nodejs.org/en/) in your Computer.
+And we are use webstorm >= 2017.2
+
+Please install github desktop.
+
+### Installing
+
+First, you must clone this project.
+
+```
+git clone https://github.com/nanaba-prototype/NodeServer.git
+```
+
+Or, just open this repo as github desktop app.
+
+And open this folder using webstorm.
+
+## Running the tests
+
+There is no test rule.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
