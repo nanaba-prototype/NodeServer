@@ -43,6 +43,13 @@ After this, you just follow this [link](https://firebase.google.com/docs/functio
 
 There is no test rule.
 
+## Deployment
+
+After coded if you want deploy to cloud server, please type it in terminal.
+```
+firebase deploy --only functions
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
