@@ -31,6 +31,14 @@ Or, just open this repo as github desktop app.
 
 And open this folder using webstorm.
 
+We are use firebase service. So you need to setup it.
+
+```
+npm install -g firebase-tools
+```
+
+After this, you just follow this [link](https://firebase.google.com/docs/functions/get-started?authuser=0).
+
 ## Running the tests
 
 There is no test rule.
