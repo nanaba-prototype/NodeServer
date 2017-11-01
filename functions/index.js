@@ -7,3 +7,4 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
     console.log("Print hello message");
     response.send("Hello from Firebase!");
 });
+ 
