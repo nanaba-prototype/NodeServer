@@ -50,6 +50,13 @@ After coded if you want deploy to cloud server, please type it in terminal.
 firebase deploy --only functions
 ```
 
+## Run
+
+If you want run this project locally, please type it in terminal.
+```
+sudo firebase serve --only functions
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
