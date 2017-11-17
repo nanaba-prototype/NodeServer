@@ -1,4 +1,6 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -44,4 +46,23 @@ exports.jsonTest = functions.https.onRequest((request, response) => {
 
    response.setHeader('Content-Type', 'application/json');
    response.status(200).send(JSON.stringify(responseMessage))
+});
+
+exports.fcmToAll = functions.https.onRequest((request, response) => {
+    var payload = {
+        notification: {
+            title: "this is title",
+            body: "this is body"
+        }
+    };
+    var topic = "this is topic"
+    admin.messaging().sendToTopic(topic, payload)
+    .then(function(response) {
+        // See the MessagingTopicResponse reference documentation for the
+        // contents of response.
+        console.log("Successfully sent message:", response);
+    })
+    .catch(function(error) {
+        console.log("Error sending message:", error);
+    });
 });
