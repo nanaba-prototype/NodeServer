@@ -48,25 +48,25 @@ exports.jsonTest = functions.https.onRequest((request, response) => {
    response.status(200).send(JSON.stringify(responseMessage))
 });
 
-exports.fcmToAll = functions.https.onRequest((request, response) => {
+exports.fcmToAll = functions.https.onRequest((request, responseToClient) => {
     var responseMessage = {}
     var payload = {
-        notification: {
-            title: "this is title",
-            body: "this is body"
+        data: {
+            score: "850",
+            time: "2:45"
         }
     };
-    var topic = "this is topic"
+    var topic = "/topics/test"
     admin.messaging().sendToTopic(topic, payload)
     .then(function(response) {
         // See the MessagingTopicResponse reference documentation for the
         // contents of response.
         console.log("Successfully sent message:", response);
 
-        responseMessage = {"result" : "ok"}
+        responseMessage = {"result" : "ok", "message" : response}
 
-        response.setHeader('Content-Type', 'application/json');
-        response.status(200).send(JSON.stringify(responseMessage))
+        responseToClient.setHeader('Content-Type', 'application/json');
+        responseToClient.status(200).send(JSON.stringify(responseMessage))
 
     })
     .catch(function(error) {
@@ -74,7 +74,7 @@ exports.fcmToAll = functions.https.onRequest((request, response) => {
 
         responseMessage = {"result" : "fail"}
 
-        response.setHeader('Content-Type', 'application/json');
-        response.status(200).send(JSON.stringify(responseMessage))
+        responseToClient.setHeader('Content-Type', 'application/json');
+        responseToClient.status(200).send(JSON.stringify(responseMessage))
     });
 });
