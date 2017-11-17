@@ -16,6 +16,7 @@ Don't expect the backend work fully functional.
 
 You need to install [Node.js >= 6.11.1](https://nodejs.org/en/) in your Computer.
 And we are use webstorm >= 2017.2
+Firebase sdk version is >= 3.14.0
 
 Please install github desktop.
 
