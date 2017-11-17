@@ -49,6 +49,7 @@ exports.jsonTest = functions.https.onRequest((request, response) => {
 });
 
 exports.fcmToAll = functions.https.onRequest((request, response) => {
+    var responseMessage = {}
     var payload = {
         notification: {
             title: "this is title",
@@ -61,8 +62,19 @@ exports.fcmToAll = functions.https.onRequest((request, response) => {
         // See the MessagingTopicResponse reference documentation for the
         // contents of response.
         console.log("Successfully sent message:", response);
+
+        responseMessage = {"result" : "ok"}
+
+        response.setHeader('Content-Type', 'application/json');
+        response.status(200).send(JSON.stringify(responseMessage))
+
     })
     .catch(function(error) {
         console.log("Error sending message:", error);
+
+        responseMessage = {"result" : "fail"}
+
+        response.setHeader('Content-Type', 'application/json');
+        response.status(200).send(JSON.stringify(responseMessage))
     });
 });
