@@ -3,28 +3,36 @@ exports.PrintLogMessage = function (moduleName, methodName, message, logLevel) {
 
     logMsg = "" + logDateTime + " "
 
-    switch(logLevel) {
-        case global.defineManager.LOG_LEVEL_VERBOSE:
-            logMsg = logMsg + "V: "
-            break;
-        case global.defineManager.LOG_LEVEL_INFO:
-            logMsg = logMsg + "I: "
-            break;
-        case global.defineManager.LOG_LEVEL_DEBUG:
-            logMsg = logMsg + "D: "
-            break;
-        case global.defineManager.LOG_LEVEL_WARN:
-            logMsg = logMsg + "W: "
-            break;
-        case global.defineManager.LOG_LEVEL_ERROR:
-            logMsg = logMsg + "E: "
-            break;
-        default:
-            logMsg = logMsg + "W: "
-            break;
+    if(logLevel == global.defineManager.LOG_LEVEL_VERBOSE) {
+        logMsg = logMsg + "V: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
     }
-    logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
-    console.log(logMsg)
+    else if(logLevel == global.defineManager.LOG_LEVEL_INFO) {
+        logMsg = logMsg + "I: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
+    }
+    else if(logLevel == global.defineManager.LOG_LEVEL_DEBUG) {
+        logMsg = logMsg + "D: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
+    }
+    else if(logLevel == global.defineManager.LOG_LEVEL_WARN) {
+        logMsg = logMsg + "W: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
+    }
+    else if(logLevel == global.defineManager.LOG_LEVEL_ERROR) {
+        logMsg = logMsg + "E: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
+    }
+    else {
+        logMsg = logMsg + "W: "
+        logMsg = logMsg + "[" + moduleName + "] {" + methodName + "} (" + message + ")"
+        console.log(logMsg)
+    }
     return;
 }
 

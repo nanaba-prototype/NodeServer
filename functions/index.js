@@ -10,7 +10,7 @@ admin.initializeApp(functions.config().firebase);
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 exports.helloWorld = functions.https.onRequest((request, response) => {
-    global.logManager.PrintLogMessage("index", "helloWorld", "testing log manager", global.defineManager.LOG_LEVEL_INFO)
+    global.logManager.PrintLogMessage("index", "helloWorld", "testing log manager", global.defineManager.LOG_LEVEL_DEBUG)
 response.send("Hello from Firebase!");
 });
 
