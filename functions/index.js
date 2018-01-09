@@ -24,11 +24,16 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 
 exports.signUp = functions.https.onRequest((request, response) => {
     if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-        userManager.createUser(request.body)
+        try {
+            tempResponse = userManager.createUser(request.body)
 
-        tempResponse = {'msg': 200}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+        }
+        catch(err) {
+            tempResponse = {'msg': 500}
 
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
+        }
     }
     else {
         tempResponse = {'msg': 400}
