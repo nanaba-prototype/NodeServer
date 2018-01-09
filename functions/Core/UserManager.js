@@ -19,3 +19,27 @@ exports.createUser = function (userInfoData, admin, response) {
         responseManager.TemplateOfResponse(createUserResult, global.defineManager.HTTP_SERVER_ERROR, response)
     })
 }
+
+exports.getUserInfoAuth = function (uid, admin, response) {
+    global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user: " + uid, global.defineManager.LOG_LEVEL_INFO)
+    admin.auth().getUser(uid)
+        .then(function (userRecord) {
+            responseManager = require('../Utils/ResponseManager');
+            userRecordData = userRecord.toJSON()
+            getUserInfoResult = {
+                'email': userRecordData['email'],
+                'displayName': userRecordData['displayName']
+            }
+            responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SUCCESS, response)
+        })
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user failed error: " + error, global.defineManager.LOG_LEVEL_ERROR)
+            responseManager = require('../Utils/ResponseManager');
+
+            getUserInfoResult = {
+                'email': global.defineManager.NOT_AVAILABLE,
+                'displayName': global.defineManager.NOT_AVAILABLE
+            }
+            responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SERVER_ERROR, response)
+        })
+}

@@ -32,3 +32,29 @@ exports.signUp = functions.https.onRequest((request, response) => {
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     }
 });
+
+exports.getUserInfoAuth = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+        uid = request.query.uid;
+        if(typeof uid == 'undefined') {
+            tempResponse = {
+                'email': global.defineManager.NOT_AVAILABLE,
+                'displayName': global.defineManager.NOT_AVAILABLE
+            }
+
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        }
+        else {
+            global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
+            userManager.getUserInfoAuth(request.query.uid, admin, response)
+        }
+    }
+    else {
+        tempResponse = {
+            'email': global.defineManager.NOT_AVAILABLE,
+            'displayName': global.defineManager.NOT_AVAILABLE
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
