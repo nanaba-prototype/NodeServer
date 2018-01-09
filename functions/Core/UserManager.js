@@ -44,3 +44,28 @@ exports.getUserInfoAuth = function (uid, admin, response) {
             responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SERVER_ERROR, response)
         })
 }
+
+exports.makeAuthToken = function (uid, admin, response) {
+    global.logManager.PrintLogMessage("UserManager", "makeAuthToken", "make token user: " + uid, global.defineManager.LOG_LEVEL_INFO)
+    admin.auth().createCustomToken(uid)
+        .then(function (token) {
+            global.logManager.PrintLogMessage("UserManager", "makeAuthToken", "token is rdy: " + token, global.defineManager.LOG_LEVEL_INFO)
+
+            responseManager = require('../Utils/ResponseManager');
+            makeAuthTokenResult = {
+                'token': token
+            }
+
+            responseManager.TemplateOfResponse(makeAuthTokenResult, global.defineManager.HTTP_SUCCESS, response)
+        })
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("UserManager", "makeAuthToken", "token is not rdy: " + error, global.defineManager.LOG_LEVEL_INFO)
+
+            responseManager = require('../Utils/ResponseManager');
+            tempResponse = {
+                'token': global.defineManager.NOT_AVAILABLE
+            }
+
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
+        })
+}

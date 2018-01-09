@@ -9,7 +9,12 @@ const admin = require('firebase-admin');
 const userManager = require('./Core/UserManager');
 const responseManager = require('./Utils/ResponseManager');
 
-admin.initializeApp(functions.config().firebase);
+var serviceAccount = require("./service-account.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://nanaba-server.firebaseio.com/"
+});
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -53,6 +58,30 @@ exports.getUserInfoAuth = functions.https.onRequest((request, response) => {
         tempResponse = {
             'email': global.defineManager.NOT_AVAILABLE,
             'displayName': global.defineManager.NOT_AVAILABLE
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.makeAuthToken = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+        uid = request.query.uid;
+        if(typeof uid == 'undefined') {
+            tempResponse = {
+                'token': global.defineManager.NOT_AVAILABLE
+            }
+
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        }
+        else {
+            global.logManager.PrintLogMessage("index", "makeAuthToken", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
+            userManager.makeAuthToken(request.query.uid, admin, response)
+        }
+    }
+    else {
+        tempResponse = {
+            'token': global.defineManager.NOT_AVAILABLE
         }
 
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
