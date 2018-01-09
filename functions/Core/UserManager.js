@@ -30,6 +30,7 @@ exports.getUserInfoAuth = function (uid, admin, response) {
                 'email': userRecordData['email'],
                 'displayName': userRecordData['displayName']
             }
+            global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "user founded successfully data: " + JSON.stringify(getUserInfoResult), global.defineManager.LOG_LEVEL_INFO)
             responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SUCCESS, response)
         })
         .catch(function (error) {
