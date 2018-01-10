@@ -87,3 +87,27 @@ exports.makeAuthToken = functions.https.onRequest((request, response) => {
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     }
 });
+
+exports.checkToken = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+        token = request.query.token;
+        if(typeof token == 'undefined') {
+            tempResponse = {
+                'uid': global.defineManager.NOT_AVAILABLE
+            }
+
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        }
+        else {
+            global.logManager.PrintLogMessage("index", "checkToken", "checking token: " + token, global.defineManager.LOG_LEVEL_INFO)
+            userManager.checkToken(token, admin, response)
+        }
+    }
+    else {
+        tempResponse = {
+            'uid': global.defineManager.NOT_AVAILABLE
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});

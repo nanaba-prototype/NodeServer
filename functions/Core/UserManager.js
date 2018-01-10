@@ -69,3 +69,26 @@ exports.makeAuthToken = function (uid, admin, response) {
             responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
         })
 }
+
+exports.checkToken = function (token, admin, response) {
+    global.logManager.PrintLogMessage("UserManager", "checkToken", "is this available to use?", global.defineManager.LOG_LEVEL_INFO)
+    admin.auth().verifyIdToken(token)
+        .then(function (decodedToken) {
+            uid = decodedToken.uid
+            global.logManager.PrintLogMessage("UserManager", "checkToken", "token is verified: " + uid, global.defineManager.LOG_LEVEL_INFO)
+            responseManager = require('../Utils/ResponseManager');
+            checkTokenResult = {
+                'uid': uid
+            }
+            responseManager.TemplateOfResponse(makeAuthTokenResult, global.defineManager.HTTP_SUCCESS, response)
+        })
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("UserManager", "checkToken", "not available token", global.defineManager.LOG_LEVEL_ERROR)
+            responseManager = require('../Utils/ResponseManager');
+            tempResponse = {
+                'uid': global.defineManager.NOT_AVAILABLE
+            }
+
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
+        })
+}
