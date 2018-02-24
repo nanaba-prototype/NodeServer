@@ -58,6 +58,11 @@ If you want run this project locally, please type it in terminal.
 sudo firebase serve --only functions
 ```
 
+### Caution
+
+Before you run locally, you must have service-account.json file.
+It can download at `Firebase project site -> setting -> service account tab -> firebase admin sdk `
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
