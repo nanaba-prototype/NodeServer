@@ -111,3 +111,209 @@ exports.checkToken = functions.https.onRequest((request, response) => {
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     }
 });
+
+exports.createUser = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.searchRoutine = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+    // request.query.
+        routineList = {}
+        routineList["userPhoto"] = "user photo"
+        routineList["userDisplayName"] = "user display name"
+        routineList["age"] = 32
+        routineList["routineName"] = "routine name"
+        routineList["good"] = 15
+        routineList["comment"] = 20
+        routineList["isMyFavorite"] = true
+        tempResponse = {
+            "abcd": routineList
+
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+else {
+    tempResponse = {
+        'msg': global.defineManager.MESSAGE_FAILED
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.createRoutine = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.infoRoutine = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+    // request.query.
+    tempResponse = {
+        "writeDate": "2018-01-24T00:00:00.000Z",
+        "writer": "writer display name",
+        "writerPhoto": "writer profile photo url link",
+        "title": "title",
+        "description": "description of this routine",
+        "good": 20,
+        "favorite": 25,
+        "commentLength": 12,
+        "time": [
+            "AM"
+        ],
+        "season": [
+            "Warm"
+        ],
+        "areYouUseThis": "Yes",
+        "routineLength": 1,
+        "steps": {
+            "1": {
+                "name": "this is step name",
+                "frequency": [
+                    "Daily", "As Needed"
+                ],
+                "rating": 4,
+                "tags": [
+                    "sample;example;"
+                ],
+                "advice": "this is advice",
+                "productBrand": "this is product brand",
+                "productName": "this is product name",
+                "productPhoto": "this is product photo"
+            }
+        },
+        "commentUser": {
+            "cid": {
+                "date": "2018-01-24T00:00:00.000Z",
+                "positive": 12,
+                "body": "this is comment body",
+                "replyFor": "cid"
+            }
+        }
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {
+        'msg': global.defineManager.MESSAGE_FAILED
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.goodRoutine = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.favoriteRoutine = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.checkComments = functions.https.onRequest((request, response) => {
+    if(request.method == 'GET') {
+    // request.query.
+    tempResponse = {
+        "cid":{
+            "positive": 12,
+            "userDisplayName": "user display name",
+            "body": "this is comment body",
+            "replyFor": "cid",
+            "date": "2018-01-24T00:00:00.000Z"
+        }
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {
+        'msg': global.defineManager.MESSAGE_FAILED
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.addComment = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.favoriteComment = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
+
+exports.applyComment = functions.https.onRequest((request, response) => {
+    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+    // request.body, admin, response
+    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+else {
+    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+}
+});
