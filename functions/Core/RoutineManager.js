@@ -102,18 +102,52 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
     global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
         "searching routine based on query options",
         global.defineManager.LOG_LEVEL_INFO)
-    routineList = {}
-    routineList["userPhoto"] = "user photo"
-    routineList["userDisplayName"] = "user display name"
-    routineList["age"] = 32
-    routineList["routineName"] = "routine name"
-    routineList["good"] = 15
-    routineList["comment"] = 20
-    routineList["isMyFavorite"] = true
-    tempResponse = {
-        "abcd": routineList
 
+    for(indexOfQuery in query) {
+        global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
+            "index of query: " + indexOfQuery + " val: " + query[indexOfQuery],
+            global.defineManager.LOG_LEVEL_INFO)
     }
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+
+    // routineList["userPhoto"] = "user photo"
+    // routineList["userDisplayName"] = "user display name"
+    // routineList["age"] = 32
+    // routineList["routineName"] = "routine name"
+    // routineList["good"] = 15
+    // routineList["comment"] = 20
+    // routineList["isMyFavorite"] = true
+    tempResponse = {
+        // "abcd": routineList
+    }
+
+    admin.database().ref('/Routine').once('value', (snapshot) => {
+        databaseSnapshot = snapshot.val()
+
+        for(indexOfRoutine in databaseSnapshot) {
+            routineList = {}
+
+            indexOfRoutineData = databaseSnapshot[indexOfRoutine]
+            global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
+                "searching target rid: " + indexOfRoutine,
+                global.defineManager.LOG_LEVEL_INFO)
+
+            if(indexOfRoutineData["writer"] == query["writer"]) {
+                routineList["userPhoto"] = "user photo"
+                routineList["userDisplayName"] = indexOfRoutineData["wirter"]
+                routineList["age"] = global.defineManager.NOT_AVAILABLE
+                routineList["routineName"] = indexOfRoutineData["title"]
+                routineList["good"] = indexOfRoutineData["good"]
+                routineList["comment"] = indexOfRoutineData["commentLength"]
+                routineList["isMyFavorite"] = false
+
+                global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
+                    "rid: " + indexOfRoutine + " detected same writer: " + indexOfRoutineData["writer"],
+                    global.defineManager.LOG_LEVEL_INFO)
+
+                tempResponse[indexOfRoutine] = routineList
+            }
+        }
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    });
 }
