@@ -97,3 +97,7 @@ exports.DelRoutine = function () {
 exports.UpdateRoutine = function () {
     
 }
+
+exports.SearchRoutine = function () {
+    
+}
