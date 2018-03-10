@@ -98,6 +98,22 @@ exports.UpdateRoutine = function () {
     
 }
 
-exports.SearchRoutine = function () {
-    
+exports.SearchRoutine = function (admin, response, responseManager, generateManager, query) {
+    global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
+        "searching routine based on query options",
+        global.defineManager.LOG_LEVEL_INFO)
+    routineList = {}
+    routineList["userPhoto"] = "user photo"
+    routineList["userDisplayName"] = "user display name"
+    routineList["age"] = 32
+    routineList["routineName"] = "routine name"
+    routineList["good"] = 15
+    routineList["comment"] = 20
+    routineList["isMyFavorite"] = true
+    tempResponse = {
+        "abcd": routineList
+
+    }
+
+    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
 }

@@ -131,20 +131,8 @@ else {
 exports.searchRoutine = functions.https.onRequest((request, response) => {
     if(request.method == 'GET') {
     // request.query.
-        routineList = {}
-        routineList["userPhoto"] = "user photo"
-        routineList["userDisplayName"] = "user display name"
-        routineList["age"] = 32
-        routineList["routineName"] = "routine name"
-        routineList["good"] = 15
-        routineList["comment"] = 20
-        routineList["isMyFavorite"] = true
-        tempResponse = {
-            "abcd": routineList
 
-        }
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
     }
 else {
     tempResponse = {
