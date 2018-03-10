@@ -1,78 +1,93 @@
 exports.AddRoutine = function (admin, response, responseManager, generateManager, bodyData) {
 
-    dateStr = new Date().toISOString()
-    rid = generateManager.CreateHash(bodyData["uid"] + dateStr)
+    admin.auth().getUser(bodyData["uid"])
+        .then(function (userRecord) {
+            userRecordData = userRecord.toJSON()
 
-    global.logManager.PrintLogMessage("RoutineManager", "AddRoutine", "add new routine data to database rid: " + rid,
-        global.defineManager.LOG_LEVEL_INFO)
+            dateStr = new Date().toISOString()
+            rid = generateManager.CreateHash(bodyData["uid"] + dateStr)
 
-    routineDataTemplate = {
-        "areYouUseThis" : "Yes",
-        "commentLength" : 0,
-        "commentUser" : {
-        },
-        "description" : "",
-        "favorite" : 0,
-        "favoriteUser" : [],
-        "good" : 0,
-        "routineLength" : 0,
-        "season" : [],
-        "steps" : [],
-        "time" : [],
-        "title" : "",
-        "uid" : "",
-        "uploadDate" : "",
-        "writer" : ""
-    }
+            global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                "add new routine data to database rid: " + rid + " display name: " + userRecordData['displayName'],
+                global.defineManager.LOG_LEVEL_INFO)
 
-    routineDataTemplate["uid"] = bodyData["uid"]
-    routineDataTemplate["title"] = bodyData["title"]
-    routineDataTemplate["description"] = bodyData["description"]
-    routineDataTemplate["time"] = bodyData["time"]
-    routineDataTemplate["season"] = bodyData["season"]
-    routineDataTemplate["areYouUseThis"] = bodyData["areYouUseThis"]
-    routineDataTemplate["routineLength"] = bodyData["routineLength"]
-    routineDataTemplate["uploadDate"] = dateStr
+            routineDataTemplate = {
+                "areYouUseThis" : "Yes",
+                "commentLength" : 0,
+                "commentUser" : {
+                },
+                "description" : "",
+                "favorite" : 0,
+                "favoriteUser" : [],
+                "good" : 0,
+                "routineLength" : 0,
+                "season" : [],
+                "steps" : [],
+                "time" : [],
+                "title" : "",
+                "uid" : "",
+                "uploadDate" : "",
+                "writer" : ""
+            }
 
-    stepsData = {}
-    for(indexOfStep in bodyData["steps"]) {
-        indexOfStepData = bodyData["steps"][indexOfStep]
-        productBrand = indexOfStepData["productBrand"]
-        productName = indexOfStepData["productName"]
-        productPhoto = indexOfStepData["productPhoto"]
+            routineDataTemplate["uid"] = bodyData["uid"]
+            routineDataTemplate["title"] = bodyData["title"]
+            routineDataTemplate["description"] = bodyData["description"]
+            routineDataTemplate["time"] = bodyData["time"]
+            routineDataTemplate["season"] = bodyData["season"]
+            routineDataTemplate["areYouUseThis"] = bodyData["areYouUseThis"]
+            routineDataTemplate["routineLength"] = bodyData["routineLength"]
+            routineDataTemplate["uploadDate"] = dateStr
+            routineDataTemplate["writer"] = userRecordData['displayName']
 
-        pid = generateManager.CreateHash(productName + dateStr)
+            stepsData = {}
+            for(indexOfStep in bodyData["steps"]) {
+                indexOfStepData = bodyData["steps"][indexOfStep]
+                productBrand = indexOfStepData["productBrand"]
+                productName = indexOfStepData["productName"]
+                productPhoto = indexOfStepData["productPhoto"]
 
-        stepsData[indexOfStep] = {
-            "advice": indexOfStepData["advice"],
-            "name": indexOfStepData["name"],
-            "frequency": indexOfStepData["frequency"],
-            "rating": indexOfStepData["rating"],
-            "tags": indexOfStepData["tags"],
-            "pid": pid
-        }
+                pid = generateManager.CreateHash(productName + dateStr)
 
-        productData = {
-            "productBrand": productBrand,
-            "productName": productName,
-            "productPhoto": productPhoto
-        }
+                stepsData[indexOfStep] = {
+                    "advice": indexOfStepData["advice"],
+                    "name": indexOfStepData["name"],
+                    "frequency": indexOfStepData["frequency"],
+                    "rating": indexOfStepData["rating"],
+                    "tags": indexOfStepData["tags"],
+                    "pid": pid
+                }
 
-        status = admin.database().ref("/Product/" + pid + "/").set(productData);
-        global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
-            "save product data pid: " + pid + " status: " + status.message,
-            global.defineManager.LOG_LEVEL_INFO)
-    }
+                productData = {
+                    "productBrand": productBrand,
+                    "productName": productName,
+                    "productPhoto": productPhoto
+                }
 
-    routineDataTemplate["steps"] = stepsData
+                status = admin.database().ref("/Product/" + pid + "/").set(productData);
+                global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                    "save product data pid: " + pid + " status: " + status.message,
+                    global.defineManager.LOG_LEVEL_INFO)
+            }
 
-    status = admin.database().ref("/Routine/" + rid + "/").set(routineDataTemplate);
-    global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
-        "save routine data rid: " + rid + " status: " + status.message,
-        global.defineManager.LOG_LEVEL_INFO)
+            routineDataTemplate["steps"] = stepsData
 
-    tempResponse = {'rid': rid}
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+            status = admin.database().ref("/Routine/" + rid + "/").set(routineDataTemplate);
+            global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                "save routine data rid: " + rid + " status: " + status.message,
+                global.defineManager.LOG_LEVEL_INFO)
+
+            tempResponse = {'rid': rid}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+        })
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                "not available user accepted",
+                global.defineManager.LOG_LEVEL_ERROR)
+            tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        })
+
 }
 
 exports.DelRoutine = function () {
