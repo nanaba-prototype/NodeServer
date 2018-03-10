@@ -158,7 +158,7 @@ else {
 exports.createRoutine = functions.https.onRequest((request, response) => {
     if(request.method == 'POST' && request.get('content-type') == 'application/json') {
     // request.body, admin, response
-    routineManager.AddRoutine(admin, response, responseManager)
+    routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
 }
 else {
     tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
