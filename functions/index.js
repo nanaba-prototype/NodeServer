@@ -8,6 +8,8 @@ const admin = require('firebase-admin');
 //Custom const value
 const userManager = require('./Core/UserManager');
 const responseManager = require('./Utils/ResponseManager');
+const routineManager = require('./Core/RoutineManager');
+const generateManager = require('./Utils/GenerateManager');
 
 var serviceAccount = require("./service-account.json");
 
@@ -156,9 +158,7 @@ else {
 exports.createRoutine = functions.https.onRequest((request, response) => {
     if(request.method == 'POST' && request.get('content-type') == 'application/json') {
     // request.body, admin, response
-    tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    routineManager.AddRoutine(admin, response, responseManager)
 }
 else {
     tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
