@@ -77,8 +77,24 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
                 "save routine data rid: " + rid + " status: " + status.message,
                 global.defineManager.LOG_LEVEL_INFO)
 
-            tempResponse = {'rid': rid}
-            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+            admin.database().ref('/Users/' + bodyData["uid"] + "/myRoutine/").once('value', (snapshot) => {
+                databaseSnapshot = snapshot.val()
+                global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                    "check myRoutine data: " + databaseSnapshot,
+                    global.defineManager.LOG_LEVEL_DEBUG)
+                if(typeof databaseSnapshot == 'undefined' || databaseSnapshot == null) {
+                    databaseSnapshot = []
+                }
+                databaseSnapshot.push(rid)
+                status = admin.database().ref("/Users/" + bodyData["uid"] + "/myRoutine/").set(databaseSnapshot);
+                global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+                    "save routine data uid: " + bodyData["uid"] + " status: " + status.message,
+                    global.defineManager.LOG_LEVEL_INFO)
+
+                tempResponse = {'rid': rid}
+                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+
+            })
         })
         .catch(function (error) {
             global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
