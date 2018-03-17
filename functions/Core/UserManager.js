@@ -10,6 +10,23 @@ exports.createUser = function (userInfoData, admin, response) {
 
         responseManager = require('../Utils/ResponseManager');
         createUserResult = {'uid': userRecord.uid}
+
+        userInfoDataSave = {
+            "email": userInfoData["email"],
+            "displayName": userInfoData["displayName"],
+            "sex": userInfoData["sex"],
+            "birthYear": userInfoData["birthYear"],
+            "ethnicity": userInfoData["ethnicity"],
+            "location": userInfoData["location"],
+            "makeUpDays": userInfoData["makeUpDays"],
+            "sleepTimeAvg": userInfoData["sleepTimeAvg"],
+            "skinType": userInfoData["skinType"],
+            "skinConcern": userInfoData["skinConcern"],
+            "allergy": userInfoData["allergy"],
+            "photo": userInfoData["photo"]
+        }
+        admin.database().ref("/Users/" + userRecord.uid + "/").set(userInfoDataSave);
+
         responseManager.TemplateOfResponse(createUserResult, global.defineManager.HTTP_SUCCESS, response)
     }).catch(function (error) {
         global.logManager.PrintLogMessage("UserManager", "createUser", "user create failed error: " + error, global.defineManager.LOG_LEVEL_ERROR)
