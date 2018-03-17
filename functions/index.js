@@ -10,6 +10,7 @@ const userManager = require('./Core/UserManager');
 const responseManager = require('./Utils/ResponseManager');
 const routineManager = require('./Core/RoutineManager');
 const generateManager = require('./Utils/GenerateManager');
+const commentManager = require('./Core/CommentManager');
 
 var serviceAccount = require("./service-account.json");
 
@@ -267,9 +268,7 @@ else {
 exports.addComment = functions.https.onRequest((request, response) => {
     if(request.method == 'POST' && request.get('content-type') == 'application/json') {
     // request.body, admin, response
-    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    commentManager.addComment(admin, response, responseManager, generateManager, request.body)
 }
 else {
     tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
