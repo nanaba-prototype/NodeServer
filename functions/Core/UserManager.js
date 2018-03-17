@@ -48,8 +48,42 @@ exports.getUserInfoAuth = function (uid, admin, response) {
                 'email': userRecordData['email'],
                 'displayName': userRecordData['displayName']
             }
+            userInfoTemplate = {
+                "allergy" : null,
+                "birthYear" : null,
+                "displayName" : null,
+                "email" : null,
+                "ethnicity" : null,
+                "favoriteRoutine" : null,
+                "location" : null,
+                "makeUpDays" : null,
+                "myRoutine" : null,
+                "photo" : null,
+                "sex" : null,
+                "skinConcern" : null,
+                "skinType" : null,
+                "sleepTimeAvg" : null
+            }
             global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "user founded successfully data: " + JSON.stringify(getUserInfoResult), global.defineManager.LOG_LEVEL_INFO)
-            responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SUCCESS, response)
+            admin.database().ref('/Users/' + uid + "/").once('value', (snapshot) => {
+                databaseSnapshot = snapshot.val()
+                userInfoTemplate["allergy"] = databaseSnapshot["allergy"]
+                userInfoTemplate["birthYear"] = databaseSnapshot["birthYear"]
+                userInfoTemplate["displayName"] = databaseSnapshot["displayName"]
+                userInfoTemplate["email"] = databaseSnapshot["email"]
+                userInfoTemplate["ethnicity"] = databaseSnapshot["ethnicity"]
+                userInfoTemplate["favoriteRoutine"] = databaseSnapshot["favoriteRoutine"] || []
+                userInfoTemplate["location"] = databaseSnapshot["location"]
+                userInfoTemplate["makeUpDays"] = databaseSnapshot["makeUpDays"]
+                userInfoTemplate["myRoutine"] = databaseSnapshot["myRoutine"] || []
+                userInfoTemplate["photo"] = databaseSnapshot["photo"]
+                userInfoTemplate["sex"] = databaseSnapshot["sex"]
+                userInfoTemplate["skinConcern"] = databaseSnapshot["skinConcern"] || []
+                userInfoTemplate["skinType"] = databaseSnapshot["skinType"] || []
+                userInfoTemplate["sleepTimeAvg"] = databaseSnapshot["sleepTimeAvg"]
+
+                responseManager.TemplateOfResponse(userInfoTemplate, global.defineManager.HTTP_SUCCESS, response)
+            })
         })
         .catch(function (error) {
             global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user failed error: " + error, global.defineManager.LOG_LEVEL_ERROR)
