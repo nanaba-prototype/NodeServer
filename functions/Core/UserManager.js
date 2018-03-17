@@ -6,7 +6,7 @@ exports.createUser = function (userInfoData, admin, response) {
         displayName: userInfoData["displayName"],
         disabled: false
     }).then(function (userRecord) {
-        global.logManager.PrintLogMessage("UserManager", "createUser", "user created uid: " + userRecord.uid, global.defineManager.LOG_LEVEL_INFO)
+        global.logManager.PrintLogMessage("UserManager", "createUser", "user creating uid: " + userRecord.uid, global.defineManager.LOG_LEVEL_INFO)
 
         responseManager = require('../Utils/ResponseManager');
         createUserResult = {'uid': userRecord.uid}
@@ -26,6 +26,7 @@ exports.createUser = function (userInfoData, admin, response) {
             "photo": userInfoData["photo"]
         }
         admin.database().ref("/Users/" + userRecord.uid + "/").set(userInfoDataSave);
+        global.logManager.PrintLogMessage("UserManager", "createUser", "user data saved uid: " + userRecord.uid, global.defineManager.LOG_LEVEL_INFO)
 
         responseManager.TemplateOfResponse(createUserResult, global.defineManager.HTTP_SUCCESS, response)
     }).catch(function (error) {
