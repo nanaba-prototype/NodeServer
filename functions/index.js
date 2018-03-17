@@ -159,50 +159,7 @@ else {
 exports.infoRoutine = functions.https.onRequest((request, response) => {
     if(request.method == 'GET') {
     // request.query.
-    tempResponse = {
-        "writeDate": "2018-01-24T00:00:00.000Z",
-        "writer": "writer display name",
-        "writerPhoto": "writer profile photo url link",
-        "title": "title",
-        "description": "description of this routine",
-        "good": 20,
-        "favorite": 25,
-        "commentLength": 12,
-        "time": [
-            "AM"
-        ],
-        "season": [
-            "Warm"
-        ],
-        "areYouUseThis": "Yes",
-        "routineLength": 1,
-        "steps": {
-            "1": {
-                "name": "this is step name",
-                "frequency": [
-                    "Daily", "As Needed"
-                ],
-                "rating": 4,
-                "tags": [
-                    "sample;example;"
-                ],
-                "advice": "this is advice",
-                "productBrand": "this is product brand",
-                "productName": "this is product name",
-                "productPhoto": "this is product photo"
-            }
-        },
-        "commentUser": {
-            "cid": {
-                "date": "2018-01-24T00:00:00.000Z",
-                "positive": 12,
-                "body": "this is comment body",
-                "replyFor": "cid"
-            }
-        }
-    }
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    routineManager.GetDetailInfo(admin, response, responseManager, request.query)
 }
 else {
     tempResponse = {

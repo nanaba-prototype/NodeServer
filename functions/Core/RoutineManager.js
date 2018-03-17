@@ -167,3 +167,14 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     });
 }
+
+exports.GetDetailInfo = function (admin, response, responseManager, query) {
+    global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
+        "getting detail info rid: " + query.rid,
+        global.defineManager.LOG_LEVEL_INFO)
+    admin.database().ref('/Routine/' + query.rid + "/").once('value', (snapshot) => {
+        databaseSnapshot = snapshot.val()
+
+        responseManager.TemplateOfResponse(databaseSnapshot, global.defineManager.HTTP_SUCCESS, response)
+    })
+}
