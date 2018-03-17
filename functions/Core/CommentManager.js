@@ -15,7 +15,7 @@ exports.addComment = function (admin, response, responseManager, generateManager
                 "date": dateStr,
                 "positive": 0,
                 "uid": bodyData["uid"],
-                "replyFor": bodyData["replyFor"]
+                "replyFor": bodyData["replyFor"] || null
             }
 
             path = '/Routine/' + bodyData.rid + "/commentUser/" + cid + "/"
@@ -33,8 +33,9 @@ exports.addComment = function (admin, response, responseManager, generateManager
             responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
         })
         .catch(function (error) {
+
             global.logManager.PrintLogMessage("CommentManager", "addComment",
-                "there is something problem",
+                "there is something problem msg: " + error.message,
                 global.defineManager.LOG_LEVEL_ERROR)
             tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
 
