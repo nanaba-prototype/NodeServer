@@ -23,3 +23,4 @@ exports.HTTP_REQUEST_ERROR = 400
 exports.HTTP_SERVER_ERROR = 500
 
 exports.MESSAGE_FAILED = "fail"
+exports.MESSAGE_SUCCESS = "ok"

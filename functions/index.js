@@ -156,6 +156,18 @@ exports.createRoutine = functions.https.onRequest(function (request, response) {
     }
 });
 
+exports.editRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        routineManager.UpdateRoutine(admin, response, responseManager, generateManager, request.body)
+    }
+    else {
+        tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
 exports.infoRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'GET') {
         // request.query.

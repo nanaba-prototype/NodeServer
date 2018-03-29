@@ -109,8 +109,78 @@ exports.DelRoutine = function () {
 
 }
 
-exports.UpdateRoutine = function () {
+exports.UpdateRoutine = function (admin, response, responseManager, generateManager, editRoutineData) {
+    admin.auth().getUser(editRoutineData["uid"])
+        .then(function (userRecord) {
+            userRecordData = userRecord.toJSON()
+            dateStr = new Date().toISOString()
 
+            admin.database().ref('/Routine/' + editRoutineData["rid"] + "/").once('value', function (snapshot) {
+                databaseSnapshot = snapshot.val()
+                global.logManager.PrintLogMessage("RoutineManager", "UpdateRoutine", "try to update routine uid: " + userRecordData["uid"],
+                    global.defineManager.LOG_LEVEL_INFO)
+
+                routineDataTemplate = {
+                    "areYouUseThis": editRoutineData["areYouUseThis"],
+                    "description": editRoutineData["description"],
+                    "routineLength": editRoutineData["routineLength"],
+                    "season": editRoutineData["season"],
+                    "steps": {},
+                    "time": editRoutineData["time"],
+                    "title": editRoutineData["title"],
+                }
+
+                stepsData = {}
+                for (indexOfStep in editRoutineData["steps"]) {
+                    indexOfStepData = editRoutineData["steps"][indexOfStep]
+                    productBrand = indexOfStepData["productBrand"]
+                    productName = indexOfStepData["productName"]
+                    productPhoto = indexOfStepData["productPhoto"]
+
+                    pid = generateManager.CreateHash(productName + dateStr)
+
+                    stepsData[indexOfStep] = {
+                        "advice": indexOfStepData["advice"],
+                        "name": indexOfStepData["name"],
+                        "frequency": indexOfStepData["frequency"],
+                        "rating": indexOfStepData["rating"],
+                        "tags": indexOfStepData["tags"],
+                        "pid": pid
+                    }
+
+                    productData = {
+                        "productBrand": productBrand,
+                        "productName": productName,
+                        "productPhoto": productPhoto
+                    }
+
+                    status = admin.database().ref("/Product/" + pid + "/").set(productData);
+                    global.logManager.PrintLogMessage("RoutineManager", "UpdateRoutine",
+                        "save product data pid: " + pid + " status: " + status.message,
+                        global.defineManager.LOG_LEVEL_INFO)
+                }
+
+                routineDataTemplate["steps"] = stepsData
+
+                for(key in routineDataTemplate) {
+                    databaseSnapshot[key] = routineDataTemplate[key]
+                }
+
+                status = admin.database().ref("/Routine/" + editRoutineData["rid"] + "/").set(databaseSnapshot);
+                global.logManager.PrintLogMessage("RoutineManager", "UpdateRoutine",
+                    "update routine data rid: " + editRoutineData["rid"] + " status: " + status.message,
+                    global.defineManager.LOG_LEVEL_INFO)
+                tempResponse = {'msg': global.defineManager.MESSAGE_SUCCESS}
+                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+            })
+        })
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("RoutineManager", "UpdateRoutine",
+                "not available user accepted",
+                global.defineManager.LOG_LEVEL_ERROR)
+            tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        })
 }
 
 exports.SearchRoutine = function (admin, response, responseManager, generateManager, query) {
