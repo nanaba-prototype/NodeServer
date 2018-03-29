@@ -207,7 +207,35 @@ exports.goodRoutine = functions.https.onRequest(function (request, response) {
     }
 });
 
-exports.favoriteRoutine = functions.https.onRequest(function (request, response) {
+exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.delFavoriteRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.getMyFavoriteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' && request.get('content-type') == 'application/json') {
         // request.body, admin, response
         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
