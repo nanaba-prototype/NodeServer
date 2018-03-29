@@ -12,6 +12,7 @@ const routineManager = require('./Core/RoutineManager');
 const generateManager = require('./Utils/GenerateManager');
 const commentManager = require('./Core/CommentManager');
 const communityManager = require('./Core/CommunityManager');
+const favoriteManager = require('./Core/FavoriteManager');
 
 var serviceAccount = require("./service-account.json");
 
