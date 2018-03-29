@@ -12,22 +12,21 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
                 global.defineManager.LOG_LEVEL_INFO)
 
             routineDataTemplate = {
-                "areYouUseThis" : "Yes",
-                "commentLength" : 0,
-                "commentUser" : {
-                },
-                "description" : "",
-                "favorite" : 0,
-                "favoriteUser" : [],
-                "good" : 0,
-                "routineLength" : 0,
-                "season" : [],
-                "steps" : [],
-                "time" : [],
-                "title" : "",
-                "uid" : "",
-                "uploadDate" : "",
-                "writer" : ""
+                "areYouUseThis": "Yes",
+                "commentLength": 0,
+                "commentUser": {},
+                "description": "",
+                "favorite": 0,
+                "favoriteUser": [],
+                "good": 0,
+                "routineLength": 0,
+                "season": [],
+                "steps": [],
+                "time": [],
+                "title": "",
+                "uid": "",
+                "uploadDate": "",
+                "writer": ""
             }
 
             routineDataTemplate["uid"] = bodyData["uid"]
@@ -41,7 +40,7 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
             routineDataTemplate["writer"] = userRecordData['displayName']
 
             stepsData = {}
-            for(indexOfStep in bodyData["steps"]) {
+            for (indexOfStep in bodyData["steps"]) {
                 indexOfStepData = bodyData["steps"][indexOfStep]
                 productBrand = indexOfStepData["productBrand"]
                 productName = indexOfStepData["productName"]
@@ -77,12 +76,12 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
                 "save routine data rid: " + rid + " status: " + status.message,
                 global.defineManager.LOG_LEVEL_INFO)
 
-            admin.database().ref('/Users/' + bodyData["uid"] + "/myRoutine/").once('value', (snapshot) => {
+            admin.database().ref('/Users/' + bodyData["uid"] + "/myRoutine/").once('value', function (snapshot) {
                 databaseSnapshot = snapshot.val()
                 global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
                     "check myRoutine data: " + databaseSnapshot,
                     global.defineManager.LOG_LEVEL_DEBUG)
-                if(typeof databaseSnapshot == 'undefined' || databaseSnapshot == null) {
+                if (typeof databaseSnapshot == 'undefined' || databaseSnapshot == null) {
                     databaseSnapshot = []
                 }
                 databaseSnapshot.push(rid)
@@ -107,11 +106,11 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
 }
 
 exports.DelRoutine = function () {
-    
+
 }
 
 exports.UpdateRoutine = function () {
-    
+
 }
 
 exports.SearchRoutine = function (admin, response, responseManager, generateManager, query) {
@@ -119,7 +118,7 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
         "searching routine based on query options",
         global.defineManager.LOG_LEVEL_INFO)
 
-    for(indexOfQuery in query) {
+    for (indexOfQuery in query) {
         global.logManager.PrintLogMessage("RoutineManager", "SearchRoutine",
             "index of query: " + indexOfQuery + " val: " + query[indexOfQuery],
             global.defineManager.LOG_LEVEL_INFO)
@@ -137,10 +136,10 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
         // "abcd": routineList
     }
 
-    admin.database().ref('/Routine').once('value', (snapshot) => {
+    admin.database().ref('/Routine').once('value', function (snapshot) {
         databaseSnapshot = snapshot.val()
 
-        for(indexOfRoutine in databaseSnapshot) {
+        for (indexOfRoutine in databaseSnapshot) {
             routineList = {}
 
             indexOfRoutineData = databaseSnapshot[indexOfRoutine]
@@ -148,7 +147,7 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
                 "searching target rid: " + indexOfRoutine,
                 global.defineManager.LOG_LEVEL_INFO)
 
-            if(indexOfRoutineData["writer"] == query["writer"]) {
+            if (indexOfRoutineData["writer"] == query["writer"]) {
                 routineList["userPhoto"] = "user photo"
                 routineList["userDisplayName"] = indexOfRoutineData["wirter"]
                 routineList["age"] = global.defineManager.NOT_AVAILABLE
@@ -172,7 +171,7 @@ exports.GetDetailInfo = function (admin, response, responseManager, query) {
     global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
         "getting detail info rid: " + query.rid,
         global.defineManager.LOG_LEVEL_INFO)
-    admin.database().ref('/Routine/' + query.rid + "/").once('value', (snapshot) => {
+    admin.database().ref('/Routine/' + query.rid + "/").once('value', function (snapshot) {
         databaseSnapshot = snapshot.val()
 
         responseManager.TemplateOfResponse(databaseSnapshot, global.defineManager.HTTP_SUCCESS, response)

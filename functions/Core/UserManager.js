@@ -49,23 +49,23 @@ exports.getUserInfoAuth = function (uid, admin, response) {
                 'displayName': userRecordData['displayName']
             }
             userInfoTemplate = {
-                "allergy" : null,
-                "birthYear" : null,
-                "displayName" : null,
-                "email" : null,
-                "ethnicity" : null,
-                "favoriteRoutine" : null,
-                "location" : null,
-                "makeUpDays" : null,
-                "myRoutine" : null,
-                "photo" : null,
-                "sex" : null,
-                "skinConcern" : null,
-                "skinType" : null,
-                "sleepTimeAvg" : null
+                "allergy": null,
+                "birthYear": null,
+                "displayName": null,
+                "email": null,
+                "ethnicity": null,
+                "favoriteRoutine": null,
+                "location": null,
+                "makeUpDays": null,
+                "myRoutine": null,
+                "photo": null,
+                "sex": null,
+                "skinConcern": null,
+                "skinType": null,
+                "sleepTimeAvg": null
             }
             global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "user founded successfully data: " + JSON.stringify(getUserInfoResult), global.defineManager.LOG_LEVEL_INFO)
-            admin.database().ref('/Users/' + uid + "/").once('value', (snapshot) => {
+            admin.database().ref('/Users/' + uid + "/").once('value', function (snapshot) {
                 databaseSnapshot = snapshot.val()
                 userInfoTemplate["allergy"] = databaseSnapshot["allergy"]
                 userInfoTemplate["birthYear"] = databaseSnapshot["birthYear"]

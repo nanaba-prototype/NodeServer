@@ -22,7 +22,7 @@ admin.initializeApp({
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-exports.helloWorld = functions.https.onRequest((request, response) => {
+exports.helloWorld = functions.https.onRequest(function (request, response) {
     global.logManager.PrintLogMessage("index", "helloWorld", "testing log manager", global.defineManager.LOG_LEVEL_INFO)
 
     tempResponse = {'msg': "Hello world!"}
@@ -30,8 +30,8 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
     responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
 });
 
-exports.signUp = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
+exports.signUp = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
         userManager.createUser(request.body, admin, response)
     }
     else {
@@ -41,10 +41,10 @@ exports.signUp = functions.https.onRequest((request, response) => {
     }
 });
 
-exports.getUserInfoAuth = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
+exports.getUserInfoAuth = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
         uid = request.query.uid;
-        if(typeof uid == 'undefined') {
+        if (typeof uid == 'undefined') {
             tempResponse = {
                 'email': global.defineManager.NOT_AVAILABLE,
                 'displayName': global.defineManager.NOT_AVAILABLE
@@ -67,10 +67,10 @@ exports.getUserInfoAuth = functions.https.onRequest((request, response) => {
     }
 });
 
-exports.makeAuthToken = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
+exports.makeAuthToken = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
         uid = request.query.uid;
-        if(typeof uid == 'undefined') {
+        if (typeof uid == 'undefined') {
             tempResponse = {
                 'token': global.defineManager.NOT_AVAILABLE
             }
@@ -91,10 +91,10 @@ exports.makeAuthToken = functions.https.onRequest((request, response) => {
     }
 });
 
-exports.checkToken = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
+exports.checkToken = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
         token = request.query.token;
-        if(typeof token == 'undefined') {
+        if (typeof token == 'undefined') {
             tempResponse = {
                 'uid': global.defineManager.NOT_AVAILABLE
             }
@@ -115,149 +115,149 @@ exports.checkToken = functions.https.onRequest((request, response) => {
     }
 });
 
-exports.createUser = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
+exports.createUser = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
 });
 
-exports.searchRoutine = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
-    // request.query.
+exports.searchRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
+        // request.query.
 
         routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
     }
-else {
-    tempResponse = {
-        'msg': global.defineManager.MESSAGE_FAILED
-    }
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-});
-
-exports.createRoutine = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
-}
-else {
-    tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-});
-
-exports.infoRoutine = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
-    // request.query.
-    routineManager.GetDetailInfo(admin, response, responseManager, request.query)
-}
-else {
-    tempResponse = {
-        'msg': global.defineManager.MESSAGE_FAILED
-    }
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-});
-
-exports.goodRoutine = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-});
-
-exports.favoriteRoutine = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-});
-
-exports.checkComments = functions.https.onRequest((request, response) => {
-    if(request.method == 'GET') {
-    // request.query.
-    tempResponse = {
-        "cid":{
-            "positive": 12,
-            "userDisplayName": "user display name",
-            "body": "this is comment body",
-            "replyFor": "cid",
-            "date": "2018-01-24T00:00:00.000Z"
+    else {
+        tempResponse = {
+            'msg': global.defineManager.MESSAGE_FAILED
         }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     }
+});
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {
-        'msg': global.defineManager.MESSAGE_FAILED
+exports.createRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
     }
+    else {
+        tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
 });
 
-exports.addComment = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    commentManager.addComment(admin, response, responseManager, generateManager, request.body)
-}
-else {
-    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+exports.infoRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
+        // request.query.
+        routineManager.GetDetailInfo(admin, response, responseManager, request.query)
+    }
+    else {
+        tempResponse = {
+            'msg': global.defineManager.MESSAGE_FAILED
+        }
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
 });
 
-exports.favoriteComment = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+exports.goodRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
 });
 
-exports.applyComment = functions.https.onRequest((request, response) => {
-    if(request.method == 'POST' && request.get('content-type') == 'application/json') {
-    // request.body, admin, response
-    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+exports.favoriteRoutine = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
-else {
-    tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
-    responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-}
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.checkComments = functions.https.onRequest(function (request, response) {
+    if (request.method == 'GET') {
+        // request.query.
+        tempResponse = {
+            "cid": {
+                "positive": 12,
+                "userDisplayName": "user display name",
+                "body": "this is comment body",
+                "replyFor": "cid",
+                "date": "2018-01-24T00:00:00.000Z"
+            }
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {
+            'msg': global.defineManager.MESSAGE_FAILED
+        }
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.addComment = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        commentManager.addComment(admin, response, responseManager, generateManager, request.body)
+    }
+    else {
+        tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.favoriteComment = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+});
+
+exports.applyComment = functions.https.onRequest(function (request, response) {
+    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+        // request.body, admin, response
+        tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+    else {
+        tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
 });
