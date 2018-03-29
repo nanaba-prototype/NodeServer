@@ -105,8 +105,28 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
 
 }
 
-exports.DelRoutine = function () {
+exports.DelRoutine = function (admin, response, responseManager, deleteRoutineData) {
+    admin.auth().getUser(deleteRoutineData["uid"])
+        .then(function (userRecord) {
+            userRecordData = userRecord.toJSON()
+            global.logManager.PrintLogMessage("RoutineManager", "DelRoutine", "try to update routine uid: " + deleteRoutineData["uid"],
+                global.defineManager.LOG_LEVEL_INFO)
 
+            status = admin.database().ref("/Routine/" + deleteRoutineData["rid"] + "/").set(null);
+            global.logManager.PrintLogMessage("RoutineManager", "DelRoutine",
+                "delete routine data rid: " + deleteRoutineData["rid"] + " status: " + status.message,
+                global.defineManager.LOG_LEVEL_INFO)
+            tempResponse = {'msg': global.defineManager.MESSAGE_SUCCESS}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+        })
+
+        .catch(function (error) {
+            global.logManager.PrintLogMessage("RoutineManager", "DelRoutine",
+                "not available user accepted",
+                global.defineManager.LOG_LEVEL_ERROR)
+            tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        })
 }
 
 exports.UpdateRoutine = function (admin, response, responseManager, generateManager, editRoutineData) {
@@ -178,7 +198,7 @@ exports.UpdateRoutine = function (admin, response, responseManager, generateMana
             global.logManager.PrintLogMessage("RoutineManager", "UpdateRoutine",
                 "not available user accepted",
                 global.defineManager.LOG_LEVEL_ERROR)
-            tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+            tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
             responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
         })
 }
