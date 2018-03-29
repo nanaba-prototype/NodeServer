@@ -237,7 +237,7 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
                 "searching target rid: " + indexOfRoutine,
                 global.defineManager.LOG_LEVEL_INFO)
 
-            if (indexOfRoutineData["writer"] == query["writer"]) {
+            if (indexOfRoutineData["writer"].includes(query["writer"])) {
                 routineList["userPhoto"] = "user photo"
                 routineList["userDisplayName"] = indexOfRoutineData["wirter"]
                 routineList["age"] = global.defineManager.NOT_AVAILABLE
