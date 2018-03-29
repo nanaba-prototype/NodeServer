@@ -211,9 +211,7 @@ exports.goodRoutine = functions.https.onRequest(function (request, response) {
 exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' && request.get('content-type') == 'application/json') {
         // request.body, admin, response
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        favoriteManager.AddMyFavoriteRoutine(admin, response, responseManager, request.body)
     }
     else {
         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
