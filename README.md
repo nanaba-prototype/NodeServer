@@ -57,6 +57,10 @@ If you want run this project locally, please type it in terminal.
 ```
 sudo firebase serve --only functions
 ```
+And this is how to deploy hosting
+```
+firebase deploy --only hosting
+```
 
 ### Caution
 
