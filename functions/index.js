@@ -33,7 +33,9 @@ exports.helloWorld = functions.https.onRequest(function (request, response) {
 });
 
 exports.signUp = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         userManager.createUser(request.body, admin, response)
     }
     else {
@@ -118,7 +120,9 @@ exports.checkToken = functions.https.onRequest(function (request, response) {
 });
 
 exports.createUser = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
 
@@ -147,7 +151,9 @@ exports.searchRoutine = functions.https.onRequest(function (request, response) {
 });
 
 exports.createRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
     }
@@ -159,7 +165,9 @@ exports.createRoutine = functions.https.onRequest(function (request, response) {
 });
 
 exports.editRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         routineManager.UpdateRoutine(admin, response, responseManager, generateManager, request.body)
     }
@@ -171,7 +179,9 @@ exports.editRoutine = functions.https.onRequest(function (request, response) {
 });
 
 exports.deleteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         routineManager.DelRoutine(admin, response, responseManager, request.body)
     }
@@ -197,7 +207,9 @@ exports.infoRoutine = functions.https.onRequest(function (request, response) {
 });
 
 exports.goodRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         communityManager.IncreaseRoutineGoodPoint(admin, response, responseManager, request.body)
     }
@@ -209,7 +221,9 @@ exports.goodRoutine = functions.https.onRequest(function (request, response) {
 });
 
 exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         favoriteManager.AddMyFavoriteRoutine(admin, response, responseManager, request.body)
     }
@@ -221,7 +235,9 @@ exports.addFavoriteRoutine = functions.https.onRequest(function (request, respon
 });
 
 exports.delFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
@@ -235,7 +251,9 @@ exports.delFavoriteRoutine = functions.https.onRequest(function (request, respon
 });
 
 exports.getMyFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
@@ -273,7 +291,9 @@ exports.checkComments = functions.https.onRequest(function (request, response) {
 });
 
 exports.addComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         commentManager.addComment(admin, response, responseManager, generateManager, request.body)
     }
@@ -285,7 +305,9 @@ exports.addComment = functions.https.onRequest(function (request, response) {
 });
 
 exports.favoriteComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
@@ -299,7 +321,9 @@ exports.favoriteComment = functions.https.onRequest(function (request, response)
 });
 
 exports.applyComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' && request.get('content-type') == 'application/json') {
+    if (request.method == 'POST' &&
+        (request.get('content-type') == 'application/json' ||
+        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
 

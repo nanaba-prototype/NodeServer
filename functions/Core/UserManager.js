@@ -1,9 +1,17 @@
 exports.createUser = function (userInfoData, admin, response) {
     global.logManager.PrintLogMessage("UserManager", "createUser", "recv data: " + JSON.stringify(userInfoData), global.defineManager.LOG_LEVEL_INFO)
+
+    displayNameStr = ""
+    if(userInfoData["displayName"] == null) {
+        displayNameStr = userInfoData["email"].split("@")[0]
+        global.logManager.PrintLogMessage("UserManager", "createUser", "user display name is null temp name: " + displayNameStr,
+            global.defineManager.LOG_LEVEL_WARN)
+    }
+
     admin.auth().createUser({
         email: userInfoData["email"],
         password: userInfoData["password"],
-        displayName: userInfoData["displayName"],
+        displayName: displayNameStr,
         disabled: false
     }).then(function (userRecord) {
         global.logManager.PrintLogMessage("UserManager", "createUser", "user creating uid: " + userRecord.uid, global.defineManager.LOG_LEVEL_INFO)
@@ -13,17 +21,17 @@ exports.createUser = function (userInfoData, admin, response) {
 
         userInfoDataSave = {
             "email": userInfoData["email"],
-            "displayName": userInfoData["displayName"],
+            "displayName": displayNameStr,
             "sex": userInfoData["sex"],
             "birthYear": userInfoData["birthYear"],
             "ethnicity": userInfoData["ethnicity"],
             "location": userInfoData["location"],
             "makeUpDays": userInfoData["makeUpDays"],
             "sleepTimeAvg": userInfoData["sleepTimeAvg"],
-            "skinType": userInfoData["skinType"],
-            "skinConcern": userInfoData["skinConcern"],
+            "skinType": userInfoData["skinType"] || [],
+            "skinConcern": userInfoData["skinConcern"] || [],
             "allergy": userInfoData["allergy"],
-            "photo": userInfoData["photo"]
+            "photo": userInfoData["photo"] || ""
         }
         admin.database().ref("/Users/" + userRecord.uid + "/").set(userInfoDataSave);
         global.logManager.PrintLogMessage("UserManager", "createUser", "user data saved uid: " + userRecord.uid, global.defineManager.LOG_LEVEL_INFO)
