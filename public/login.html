@@ -63,6 +63,12 @@
                         </div>
                     </div>
                 </form>
+                <h4 class="12u$ 12u$(xsmall)">SignIn info</h4>
+                <ul class="alt 12u$ 12u$(xsmall)">
+                    <li id="displayName"></li>
+                    <li id="uid"></li>
+                </ul>
+                <input class="12u$ 12u$(xsmall)" type="button" value="Sign out" onclick="authManager.SignOut()"/>
             </div>
         </div>
     </div>
@@ -93,6 +99,7 @@
 <script src="js/utils/ConvertManager.js"></script>
 <script src="js/utils/DataTransferManager.js"></script>
 <script src="js/utils/LogManager.js"></script>
+<script src="js/view/SignInManager.js"></script>
 <script src="js/core/AuthManager.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script>
@@ -107,11 +114,14 @@
     };
     firebase.initializeApp(config);
 
+    authManager = new AuthManager()
+
     $('#form-login').submit(function(e){
         e.preventDefault();
-        authManager = new AuthManager()
         authManager.SignIn($('#form-login'))
     });
+
+    authManager.GetSignedInUser()
 </script>
 </body>
 </html>
