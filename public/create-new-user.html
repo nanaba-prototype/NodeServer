@@ -1,11 +1,123 @@
+<form method="post" action="#">
+    <div class="row uniform">
+        <div class="12u$ 12u$(xsmall)">
+            <input type="email" name="email" id="email" value="" placeholder="Email" />
+        </div>
+        <div class="12u$ 12u$(xsmall)">
+            <input type="password" name="password" id="password" value="" placeholder="Password" />
+        </div>
+        <!-- Break -->
+        <!-- Break -->
+        <div class="6u 6u(small)">
+            <input type="radio" id="male" name="maleOrFemale" checked>
+            <label for="male">Male</label>
+        </div>
+        <div class="6u$ 6u$(small)">
+            <input type="radio" id="female" name="maleOrFemale">
+            <label for="female">Female</label>
+        </div>
+        <div class="12u$ 12u$(xsmall)">
+            <input type="text" name="birthday" id="birthday" value="" placeholder="Birthday" />
+        </div>
+        <div class="12u$">
+            <div class="select-wrapper">
+                <select name="ethnicity" id="ethnicity">
+                    <option value="Ethnicity">Ethnicity</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
+                    <option value="Yellow">Yellow</option>
+                </select>
+            </div>
+        </div>
+        <div class="12u$ 12u$(xsmall)">
+            <input type="text" name="location" id="location" value="" placeholder="City, Country" />
+        </div>
+        <!-- Break -->
+        <div class="8u 12u$(small)">
+            <label>Days Wearing Makeup (in a week)</label>
+        </div>
+        <div class="2u 4u(small)">
+            <input type="text" name="makeupDays" id="makeupDays" value="" placeholder="#" />
+        </div>
+        <div class="2u 8u$(small)">
+            <label>days</label>
+        </div>
+        <!-- Break -->
+        <div class="8u 12u$(small)">
+            <label>Average Hours of Sleep</label>
+        </div>
+        <div class="2u 4u(small)">
+            <input type="text" name="avgSleepHour" id="avgSleepHour" value="" placeholder="#" />
+        </div>
+        <div class="2u 8u$(small)">
+            <label>hours</label>
+        </div>
 
-<h4 class="12u$ 12u$(xsmall)">SignIn info</h4>
-<ul class="alt 12u$ 12u$(xsmall)">
-    <li id="displayName"></li>
-    <li id="uid"></li>
-</ul>
-<script src="js/core/AuthManager.js"></script>
-<script>
-    authManager = new AuthManager()
-    authManager.GetSignedInUser()
-</script>
+        <div class="12u 12u$(small)">
+            <label>Skin Type</label>
+        </div>
+        <div class="3u 6u(small)">
+            <input type="checkbox" id="skinTypeDry" name="skinType">
+            <label for="skinTypeDry">Dry</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinTypeOily" name="skinType">
+            <label for="skinTypeOily">Oily</label>
+        </div>
+        <div class="3u 6u(small)">
+            <input type="checkbox" id="skinTypeNormal" name="skinType">
+            <label for="skinTypeNormal">Normal</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinTypeCombination" name="skinType">
+            <label for="skinTypeCombination">Combination</label>
+        </div>
+
+        <div class="12u 12u$(small)">
+            <label>Skin Concern</label>
+        </div>
+        <div class="3u 6u(small)">
+            <input type="checkbox" id="skinConcernTexture" name="skinConcern">
+            <label for="skinConcernTexture">Texture</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinConcernAcne" name="skinConcern">
+            <label for="skinConcernAcne">Acne</label>
+        </div>
+        <div class="3u 6u(small)">
+            <input type="checkbox" id="skinConcernAging" name="skinConcern">
+            <label for="skinConcernAging">Aging</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinConcernSensitivity" name="skinConcern">
+            <label for="skinConcernSensitivity">Sensitivity</label>
+        </div>
+        <div class="3u 6u(small)">
+            <input type="checkbox" id="skinConcernEczema" name="skinConcern">
+            <label for="skinConcernEczema">Eczema</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinConcernRedness" name="skinConcern">
+            <label for="skinConcernRedness">Redness</label>
+        </div>
+        <div class="3u 6u$(small)">
+            <input type="checkbox" id="skinConcernCustom" name="skinConcern">
+            <label for="skinConcernCustom">Custom</label>
+        </div>
+
+        <div class="12u 12u$(small)">
+            <label>Allergy</label>
+        </div>
+        <!-- Break -->
+        <div class="12u$">
+            <textarea name="allergy" id="allergy" placeholder="Separated by a ';'" rows="6"></textarea>
+        </div>
+        <!-- Break -->
+        <div class="12u$">
+            <ul class="actions">
+                <li><input type="submit" value="Sign Up" /></li>
+                <li><input type="reset" value="Reset" class="alt" /></li>
+            </ul>
+        </div>
+    </div>
+</form>
