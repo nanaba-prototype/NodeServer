@@ -39,11 +39,14 @@ AuthManager.prototype.SignUp = function (signUpFormData) {
 }
 
 AuthManager.prototype.SignUpSuccess = function (data) {
+    resultText = JSON.stringify(data)
     PrintLogMessage("AuthManager", "SignUpSuccess", "sign up successfully", LOG_LEVEL_INFO)
+    SetServerRequestResult(resultText)
 }
 
 AuthManager.prototype.SignUpFail = function (errorText, errorStatus) {
     PrintLogMessage("AuthManager", "SignUpFail", "failed to sign up", LOG_LEVEL_INFO)
+    SetServerRequestResult("Something crashed. Shit!")
 }
 
 AuthManager.prototype.SignInSuccess = function () {
