@@ -47,7 +47,7 @@
                     <p>Test feature</p>
                     <h2>Sign in</h2>
                 </header>
-                <form method="post" action="#">
+                <form method="post" action="#" id="form-login">
                     <div class="row uniform">
                         <div class="12u$ 12u$(xsmall)">
                             <input type="email" name="email" id="email" value="" placeholder="Email" />
@@ -90,6 +90,7 @@
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="js/settings/DefineManager.js"></script>
+<script src="js/utils/ConvertManager.js"></script>
 <script src="js/utils/DataTransferManager.js"></script>
 <script src="js/utils/LogManager.js"></script>
 <script src="js/core/AuthManager.js"></script>
@@ -105,6 +106,12 @@
         messagingSenderId: "150518808128"
     };
     firebase.initializeApp(config);
+
+    $('#form-login').submit(function(e){
+        e.preventDefault();
+        authManager = new AuthManager()
+        authManager.SignIn($('#form-login'))
+    });
 </script>
 </body>
 </html>
