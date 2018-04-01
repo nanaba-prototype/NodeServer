@@ -9,11 +9,11 @@
         <!-- Break -->
         <!-- Break -->
         <div class="6u 6u(small)">
-            <input type="radio" id="male" name="maleOrFemale" checked>
+            <input type="radio" id="male" name="maleOrFemale" value="male" checked>
             <label for="male">Male</label>
         </div>
         <div class="6u$ 6u$(small)">
-            <input type="radio" id="female" name="maleOrFemale">
+            <input type="radio" id="female" name="maleOrFemale" value="female">
             <label for="female">Female</label>
         </div>
         <div class="12u$ 12u$(xsmall)">
@@ -37,7 +37,7 @@
             <label>Days Wearing Makeup (in a week)</label>
         </div>
         <div class="2u 4u(small)">
-            <input type="text" name="makeupDays" id="makeupDays" value="" placeholder="#" />
+            <input type="text" name="makeupDays" id="makeupDays" value="0" placeholder="#" />
         </div>
         <div class="2u 8u$(small)">
             <label>days</label>
@@ -47,7 +47,7 @@
             <label>Average Hours of Sleep</label>
         </div>
         <div class="2u 4u(small)">
-            <input type="text" name="avgSleepHour" id="avgSleepHour" value="" placeholder="#" />
+            <input type="text" name="avgSleepHour" id="avgSleepHour" value="0" placeholder="#" />
         </div>
         <div class="2u 8u$(small)">
             <label>hours</label>
@@ -57,19 +57,19 @@
             <label>Skin Type</label>
         </div>
         <div class="3u 6u(small)">
-            <input type="checkbox" id="skinTypeDry" name="skinType">
+            <input type="checkbox" id="skinTypeDry" name="skinType" value="Dry">
             <label for="skinTypeDry">Dry</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinTypeOily" name="skinType">
+            <input type="checkbox" id="skinTypeOily" name="skinType" value="Oily">
             <label for="skinTypeOily">Oily</label>
         </div>
         <div class="3u 6u(small)">
-            <input type="checkbox" id="skinTypeNormal" name="skinType">
+            <input type="checkbox" id="skinTypeNormal" name="skinType" value="Normal">
             <label for="skinTypeNormal">Normal</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinTypeCombination" name="skinType">
+            <input type="checkbox" id="skinTypeCombination" name="skinType" value="Combination">
             <label for="skinTypeCombination">Combination</label>
         </div>
 
@@ -77,31 +77,31 @@
             <label>Skin Concern</label>
         </div>
         <div class="3u 6u(small)">
-            <input type="checkbox" id="skinConcernTexture" name="skinConcern">
+            <input type="checkbox" id="skinConcernTexture" name="skinConcern" value="Texture">
             <label for="skinConcernTexture">Texture</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinConcernAcne" name="skinConcern">
+            <input type="checkbox" id="skinConcernAcne" name="skinConcern" value="Acne">
             <label for="skinConcernAcne">Acne</label>
         </div>
         <div class="3u 6u(small)">
-            <input type="checkbox" id="skinConcernAging" name="skinConcern">
+            <input type="checkbox" id="skinConcernAging" name="skinConcern" value="Aging">
             <label for="skinConcernAging">Aging</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinConcernSensitivity" name="skinConcern">
+            <input type="checkbox" id="skinConcernSensitivity" name="skinConcern" value="Sensitivity">
             <label for="skinConcernSensitivity">Sensitivity</label>
         </div>
         <div class="3u 6u(small)">
-            <input type="checkbox" id="skinConcernEczema" name="skinConcern">
+            <input type="checkbox" id="skinConcernEczema" name="skinConcern" value="Eczema">
             <label for="skinConcernEczema">Eczema</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinConcernRedness" name="skinConcern">
+            <input type="checkbox" id="skinConcernRedness" name="skinConcern" value="Redness">
             <label for="skinConcernRedness">Redness</label>
         </div>
         <div class="3u 6u$(small)">
-            <input type="checkbox" id="skinConcernCustom" name="skinConcern">
+            <input type="checkbox" id="skinConcernCustom" name="skinConcern" value="Custom">
             <label for="skinConcernCustom">Custom</label>
         </div>
 
@@ -131,7 +131,7 @@
 
     $('#form-sign-up').submit(function(e){
         e.preventDefault();
-        authManager.SignUp($('#form-sign-up'))
+        authManager.SignUp($('#form-sign-up').serialize())
     });
 
     authManager.GetSignedInUser()

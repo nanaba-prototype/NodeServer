@@ -1,5 +1,6 @@
 function AuthManager() {
     PrintLogMessage("AuthManager", "AuthManager", "init", LOG_LEVEL_INFO)
+    this.dataTransferManager = new DataTransferManager()
 }
 
 AuthManager.prototype.SignIn = function (signInForm) {
@@ -27,9 +28,22 @@ AuthManager.prototype.SignOut = function () {
     });
 }
 
-AuthManager.prototype.SignUp = function (signUpForm) {
-    signUpData = GetFormData(signUpForm)
-    PrintLogMessage("AuthManager", "SignUp", "trying sign up dataSet: " + signUpData["email"], LOG_LEVEL_INFO)
+AuthManager.prototype.SignUp = function (signUpFormData) {
+    PrintLogMessage("AuthManager", "SignUp", "trying sign up", LOG_LEVEL_INFO)
+    this.dataTransferManager.PostRequestWithCallbackFunc(
+        DOMAIN + "signUp",
+        signUpFormData,
+        this.SignUpSuccess,
+        this.SignUpFail
+    )
+}
+
+AuthManager.prototype.SignUpSuccess = function (data) {
+    PrintLogMessage("AuthManager", "SignUpSuccess", "sign up successfully", LOG_LEVEL_INFO)
+}
+
+AuthManager.prototype.SignUpFail = function (errorText, errorStatus) {
+    PrintLogMessage("AuthManager", "SignUpFail", "failed to sign up", LOG_LEVEL_INFO)
 }
 
 AuthManager.prototype.SignInSuccess = function () {
