@@ -27,6 +27,11 @@ AuthManager.prototype.SignOut = function () {
     });
 }
 
+AuthManager.prototype.SignUp = function (signUpForm) {
+    signUpData = GetFormData(signUpForm)
+    PrintLogMessage("AuthManager", "SignUp", "trying sign up dataSet: " + signUpData["email"], LOG_LEVEL_INFO)
+}
+
 AuthManager.prototype.SignInSuccess = function () {
 
 }

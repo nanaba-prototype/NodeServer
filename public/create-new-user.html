@@ -1,4 +1,4 @@
-<form method="post" action="#">
+<form id="form-sign-up">
     <div class="row uniform">
         <div class="12u$ 12u$(xsmall)">
             <input type="email" name="email" id="email" value="" placeholder="Email" />
@@ -121,3 +121,18 @@
         </div>
     </div>
 </form>
+<h3>Server response data</h3>
+<pre><code id="serverResult">
+</code></pre>
+<script src="js/core/AuthManager.js"></script>
+<script>
+
+    authManager = new AuthManager()
+
+    $('#form-sign-up').submit(function(e){
+        e.preventDefault();
+        authManager.SignUp($('#form-sign-up'))
+    });
+
+    authManager.GetSignedInUser()
+</script>
