@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="ko">
+<head>
+    <title>nanaba cloud functions test page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="subpage">
+
+<!-- Header -->
+<header id="header">
+    <div class="logo"><a href="#">nanaba <span> backend test page</span></a></div>
+    <a href="#menu">Menu</a>
+</header>
+
+<!-- Nav -->
+<nav id="menu">
+    <ul class="links">
+        <li><a class="sub-links" href="#" data-html="login.html">Sign in / out</a></li>
+        <!--<li><a href="generic.html">Generic</a></li>-->
+        <!--<li><a href="elements.html">Elements</a></li>-->
+    </ul>
+</nav>
+
+<!-- One -->
+<section id="One" class="wrapper style3">
+    <div class="inner">
+        <header class="align-center">
+            <p>Backend test page</p>
+            <h2>nanaba</h2>
+        </header>
+    </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="wrapper style2">
+    <div class="inner">
+        <div class="box">
+            <div class="content">
+                <header class="align-center">
+                    <p>Test feature</p>
+                    <h2 id="test-feature-name"></h2> <!-- add test feature name -->
+                </header>
+
+                <div id="test-content">
+                    <!-- Add elements here what you want -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <ul class="icons">
+            <!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>-->
+        </ul>
+    </div>
+    <div class="copyright">
+        &copy; nanaba. All rights reserved.
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="js/view/TestLabManager.js"></script>
+<script src="js/settings/DefineManager.js"></script>
+<script src="js/utils/ConvertManager.js"></script>
+<script src="js/utils/DataTransferManager.js"></script>
+<script src="js/utils/LogManager.js"></script>
+<script src="js/view/SignInManager.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAqnDWedRifEumv8DeBUMhgQsUocjGjl2I",
+        authDomain: "nanaba-server.firebaseapp.com",
+        databaseURL: "https://nanaba-server.firebaseio.com",
+        projectId: "nanaba-server",
+        storageBucket: "nanaba-server.appspot.com",
+        messagingSenderId: "150518808128"
+    };
+    firebase.initializeApp(config);
+
+    testLabManager = new TestLabManager()
+    testLabManager.LoadAnotherPage("login.html", "Sign in / out")
+</script>
+</body>
+</html>
