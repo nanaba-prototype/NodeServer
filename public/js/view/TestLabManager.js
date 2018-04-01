@@ -3,7 +3,7 @@ function TestLabManager() {
     $(".sub-links").click(function(){
         htmlDataPath = $(this).attr("data-html")
         testFeatureName = $(this).text()
-        this.LoadAnotherPage(htmlDataPath, testFeatureName)
+        testLabManager.LoadAnotherPage(htmlDataPath, testFeatureName)
     })
 }
 
