@@ -1,0 +1,30 @@
+<h4 class="12u$ 12u$(xsmall)">SignIn info</h4>
+<ul class="alt 12u$ 12u$(xsmall)">
+    <li id="displayName"></li>
+    <li id="uid"></li>
+</ul>
+<form id="verifyTokenForm">
+    <div class="row uniform">
+        <h4 class="12u$ 12u$(xsmall)">Generated token</h4>
+        <div class="12u$ 12u$(xsmall)">
+            <input type="text" name="token" id="token" value="" placeholder="Automatic generated token value" />
+        </div>
+
+        <div class="12u$">
+            <ul class="actions">
+                <li><input type="submit" value="Verify token" /></li>
+                <li><input type="reset" value="Reset" class="alt" /></li>
+            </ul>
+        </div>
+    </div>
+</form>
+<h3>Server response data</h3>
+<pre><code id="serverResult">
+</code></pre>
+<script src="js/view/TokenCheckManager.js"></script>
+<script src="js/core/AuthManager.js"></script>
+<script>
+
+    authManager = new AuthManager()
+    authManager.GetSignedInUser()
+</script>
