@@ -27,4 +27,10 @@
 
     authManager = new AuthManager()
     authManager.GetSignedInUser()
+    authManager.GenerateToken()
+
+    $('#verifyTokenForm').submit(function(e){
+        e.preventDefault();
+        authManager.VerifyToken($('#verifyTokenForm').serialize())
+    });
 </script>

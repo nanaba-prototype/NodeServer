@@ -49,6 +49,42 @@ AuthManager.prototype.SignUpFail = function (errorText, errorStatus) {
     SetServerRequestResult("Something crashed. Shit!")
 }
 
+AuthManager.prototype.GenerateToken = function () {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+        .then(function(idToken) {
+        // Send token to your backend via HTTPS
+        // ...
+            PrintLogMessage("AuthManager", "GenerateToken", "this is my token: " + idToken, LOG_LEVEL_INFO)
+            SetTokenVal(idToken)
+        })
+        .catch(function(error) {
+        // Handle error
+            PrintLogMessage("AuthManager", "GenerateToken", "there is something problem", LOG_LEVEL_ERROR)
+            SetTokenVal("Something crashed. Shit!")
+        });
+}
+
+AuthManager.prototype.VerifyToken = function (formData) {
+    PrintLogMessage("AuthManager", "VerifyToken", "try to verify token", LOG_LEVEL_INFO)
+    this.dataTransferManager.GetRequestWithCallbackFunc(
+        DOMAIN + "checkToken",
+        formData,
+        this.VerifyTokenSuccess,
+        this.VerifyTokenFail
+    )
+}
+
+AuthManager.prototype.VerifyTokenSuccess = function (data) {
+    data = JSON.stringify(data)
+    PrintLogMessage("AuthManager", "VerifyToken", "verify token successfully", LOG_LEVEL_INFO)
+    SetServerRequestResult(data)
+}
+
+AuthManager.prototype.VerifyTokenFail = function (errorText, errorStatus) {
+    PrintLogMessage("AuthManager", "VerifyToken", "failed to verify token", LOG_LEVEL_WARN)
+    SetServerRequestResult("Something crashed. Shit!")
+}
+
 AuthManager.prototype.SignInSuccess = function () {
 
 }
