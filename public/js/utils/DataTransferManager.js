@@ -67,3 +67,25 @@ DataTransferManager.prototype.GetRequest = function (url, data, callbackObj) {
             callbackObj.RequestFail(xhr.responseText, textStatus)
         });
 }
+
+DataTransferManager.prototype.GetRequestWithCallbackFunc = function (url, data, successFunc, failFunc) {
+    PrintLogMessage("DataTransferManager", "GetRequest", "send data to url: " + url, LOG_LEVEL_INFO)
+    $.ajax({
+        type: "GET",
+        dataType: 'text',
+        url: url,
+        data: data,
+        crossDomain : true,
+        xhrFields: {
+            withCredentials: false
+        }
+    })
+        .done(function( receivedData ) {
+            PrintLogMessage("DataTransferManager", "GetRequest", "data received successfully", LOG_LEVEL_INFO)
+            successFunc(receivedData)
+        })
+        .fail( function(xhr, textStatus, errorThrown) {
+            PrintLogMessage("DataTransferManager", "GetRequest", "something has problem: " + textStatus, LOG_LEVEL_ERROR)
+            failFunc(xhr.responseText, textStatus)
+        });
+}
