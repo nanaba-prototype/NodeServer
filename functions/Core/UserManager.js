@@ -140,7 +140,7 @@ exports.checkToken = function (token, admin, response) {
             checkTokenResult = {
                 'uid': uid
             }
-            responseManager.TemplateOfResponse(makeAuthTokenResult, global.defineManager.HTTP_SUCCESS, response)
+            responseManager.TemplateOfResponse(checkTokenResult, global.defineManager.HTTP_SUCCESS, response)
         })
         .catch(function (error) {
             global.logManager.PrintLogMessage("UserManager", "checkToken", "not available token", global.defineManager.LOG_LEVEL_ERROR)
