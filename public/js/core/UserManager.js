@@ -21,8 +21,10 @@ UserManager.prototype.GetUserInfo = function () {
 
 UserManager.prototype.GetUserInfoSuccess = function (data) {
     resultText = JSON.stringify(data)
+    data = JSON.parse(data)
     PrintLogMessage("UserManager", "GetUserInfoSuccess", "getting user info successfully", LOG_LEVEL_INFO)
     SetServerRequestResult(resultText)
+    SetUserInfo(data["data"])
 }
 
 UserManager.prototype.GetUserInfoFail = function (errorText, errorStatus) {
