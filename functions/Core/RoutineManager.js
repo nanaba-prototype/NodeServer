@@ -253,7 +253,7 @@ exports.SearchRoutine = function (admin, response, responseManager, generateMana
                 tempResponse[indexOfRoutine] = routineList
             }
         }
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
     });
 }
 
