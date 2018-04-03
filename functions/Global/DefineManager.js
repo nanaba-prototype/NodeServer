@@ -21,6 +21,7 @@ exports.NOT_AVAILABLE = -1
 exports.HTTP_SUCCESS = 200
 exports.HTTP_REQUEST_ERROR = 400
 exports.HTTP_SERVER_ERROR = 500
+exports.HTTP_UNAUTHORIZED = 401
 
 exports.MESSAGE_FAILED = "fail"
 exports.MESSAGE_SUCCESS = "ok"
