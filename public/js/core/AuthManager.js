@@ -56,9 +56,9 @@ AuthManager.prototype.GenerateToken = function () {
         // Send token to your backend via HTTPS
         // ...
 
-            this.myToken = idToken
-            PrintLogMessage("AuthManager", "GenerateToken", "this is my token: " + this.myToken, LOG_LEVEL_INFO)
-            SetTokenVal(this.myToken)
+            authManager.myToken = idToken
+            PrintLogMessage("AuthManager", "GenerateToken", "this is my token: " + authManager.myToken, LOG_LEVEL_INFO)
+            SetTokenVal(authManager.myToken)
         })
         .catch(function(error) {
         // Handle error
@@ -108,4 +108,8 @@ AuthManager.prototype.GetSignedInUser = function () {
             SetSignInInfo("Not signed in", "")
         }
     });
+}
+
+AuthManager.prototype.GetMyToken = function () {
+    return this.myToken
 }

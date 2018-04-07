@@ -10,6 +10,9 @@
             <input type="text" name="limit" id="limit" value="10" placeholder="Limit of search routine size" />
         </div>
         <div class="12u$ 12u$(small)">
+            <input type="text" name="token" id="token" value="" placeholder="Auto generated token" />
+        </div>
+        <div class="12u$ 12u$(small)">
             <input type="text" name="writer" id="writer" value="" placeholder="Username" />
         </div>
         <div class="12u$ 12u$(small)">
@@ -165,13 +168,16 @@
     <td></td>
     <td></td>
 </tr>
-
+<script src="js/core/RoutineManager.js"></script>
 <script src="js/view/SearchRoutineManager.js"></script>
 <script>
     authManager.GetSignedInUser()
+    SetTokenVal(authManager)
+    routineManager = new RoutineManager()
 
     $('#searchRoutine').submit(function(e){
         e.preventDefault();
         // ($('#searchRoutine').serialize())
+        routineManager.SearchRoutine($('#searchRoutine').serialize())
     });
 </script>
