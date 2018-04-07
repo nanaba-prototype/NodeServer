@@ -1,6 +1,7 @@
-function RoutineManager() {
+function RoutineManager(authManager) {
     PrintLogMessage("RoutineManager", "RoutineManager", "init", LOG_LEVEL_INFO)
     this.dataTransferManager = new DataTransferManager()
+    this.authManager = authManager
 }
 
 RoutineManager.prototype.SearchRoutine = function (searchOptions) {
@@ -9,7 +10,8 @@ RoutineManager.prototype.SearchRoutine = function (searchOptions) {
         DOMAIN + "searchRoutine",
         searchOptions,
         this.SearchRoutineSuccess,
-        this.SearchRoutineFail
+        this.SearchRoutineFail,
+        this.authManager.GetMyToken()
     )
 }
 

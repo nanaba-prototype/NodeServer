@@ -2,7 +2,7 @@ function DataTransferManager() {
     PrintLogMessage("DataTransferManager", "DataTransferManager", "init", LOG_LEVEL_INFO)
 }
 
-DataTransferManager.prototype.PostRequest = function (url, data, callbackObj) {
+DataTransferManager.prototype.PostRequest = function (url, data, callbackObj, token) {
     PrintLogMessage("DataTransferManager", "PostRequest", "send data to url: " + url, LOG_LEVEL_INFO)
     $.ajax({
         type: "POST",
@@ -10,6 +10,9 @@ DataTransferManager.prototype.PostRequest = function (url, data, callbackObj) {
         url: url,
         data: data,
         crossDomain : true,
+        headers: {
+            "Authorization": token
+        },
         xhrFields: {
             withCredentials: false
         }
@@ -24,7 +27,7 @@ DataTransferManager.prototype.PostRequest = function (url, data, callbackObj) {
         });
 }
 
-DataTransferManager.prototype.PostRequestWithCallbackFunc = function (url, data, successFunc, failFunc) {
+DataTransferManager.prototype.PostRequestWithCallbackFunc = function (url, data, successFunc, failFunc, token) {
     PrintLogMessage("DataTransferManager", "PostRequestWithCallbackFunc", "send data to url: " + url, LOG_LEVEL_INFO)
     $.ajax({
         type: "POST",
@@ -32,6 +35,9 @@ DataTransferManager.prototype.PostRequestWithCallbackFunc = function (url, data,
         url: url,
         data: data,
         crossDomain : true,
+        headers: {
+            "Authorization": token
+        },
         xhrFields: {
             withCredentials: false
         }
@@ -46,7 +52,7 @@ DataTransferManager.prototype.PostRequestWithCallbackFunc = function (url, data,
         });
 }
 
-DataTransferManager.prototype.GetRequest = function (url, data, callbackObj) {
+DataTransferManager.prototype.GetRequest = function (url, data, callbackObj, token) {
     PrintLogMessage("DataTransferManager", "GetRequest", "send data to url: " + url, LOG_LEVEL_INFO)
     $.ajax({
         type: "GET",
@@ -54,6 +60,9 @@ DataTransferManager.prototype.GetRequest = function (url, data, callbackObj) {
         url: url,
         data: data,
         crossDomain : true,
+        headers: {
+            "Authorization": token
+        },
         xhrFields: {
             withCredentials: false
         }
@@ -68,7 +77,7 @@ DataTransferManager.prototype.GetRequest = function (url, data, callbackObj) {
         });
 }
 
-DataTransferManager.prototype.GetRequestWithCallbackFunc = function (url, data, successFunc, failFunc) {
+DataTransferManager.prototype.GetRequestWithCallbackFunc = function (url, data, successFunc, failFunc, token) {
     PrintLogMessage("DataTransferManager", "GetRequest", "send data to url: " + url, LOG_LEVEL_INFO)
     $.ajax({
         type: "GET",
@@ -76,6 +85,9 @@ DataTransferManager.prototype.GetRequestWithCallbackFunc = function (url, data, 
         url: url,
         data: data,
         crossDomain : true,
+        headers: {
+            "Authorization": token
+        },
         xhrFields: {
             withCredentials: false
         }
