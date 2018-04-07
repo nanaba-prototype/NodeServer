@@ -47,19 +47,21 @@ exports.signUp = functions.https.onRequest(function (request, response) {
 
 exports.getUserInfoAuth = functions.https.onRequest(function (request, response) {
     if (request.method == 'GET') {
-        uid = request.query.uid;
-        if (typeof uid == 'undefined') {
-            tempResponse = {
-                'email': global.defineManager.NOT_AVAILABLE,
-                'displayName': global.defineManager.NOT_AVAILABLE
-            }
+        token = request.get('Authorization')
+        admin.auth().verifyIdToken(token)
+            .then(function (decodedToken) {
+                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+                request.query["uid"] = decodedToken.uid
+                uid = request.query["uid"]
+                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
+                userManager.getUserInfoAuth(request.query.uid, admin, response)
+            })
+            .catch(function (error) {
+                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
 
-            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-        }
-        else {
-            global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
-            userManager.getUserInfoAuth(request.query.uid, admin, response)
-        }
+                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+            })
     }
     else {
         tempResponse = {

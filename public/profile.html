@@ -89,6 +89,6 @@
 <script>
     authManager.GetSignedInUser()
 
-    userInfoManager = new UserManager()
+    userInfoManager = new UserManager(authManager)
     userInfoManager.GetUserInfo()
 </script>

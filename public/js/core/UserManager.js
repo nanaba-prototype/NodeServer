@@ -1,5 +1,6 @@
-function UserManager() {
+function UserManager(authManager) {
     this.dataTransferManager = new DataTransferManager()
+    this.authManager = authManager
 }
 
 UserManager.prototype.GetUserInfo = function () {
@@ -11,7 +12,8 @@ UserManager.prototype.GetUserInfo = function () {
             DOMAIN + "getUserInfoAuth",
             {"uid": currentUserUid},
             this.GetUserInfoSuccess,
-            this.GetUserInfoFail
+            this.GetUserInfoFail,
+            this.authManager.GetMyToken()
         )
     }
     else {
