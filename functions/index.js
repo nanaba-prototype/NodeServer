@@ -142,7 +142,7 @@ exports.searchRoutine = functions.https.onRequest(function (request, response) {
         admin.auth().verifyIdToken(token)
             .then(function (decodedToken) {
                 global.logManager.PrintLogMessage("index", "searchRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
+                request.query["uid"] = decodedToken.uid
                 routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
             })
             .catch(function (error) {
@@ -246,7 +246,7 @@ exports.infoRoutine = functions.https.onRequest(function (request, response) {
         admin.auth().verifyIdToken(token)
             .then(function (decodedToken) {
                 global.logManager.PrintLogMessage("index", "infoRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
+                request.query["uid"] = decodedToken.uid
                 routineManager.GetDetailInfo(admin, response, responseManager, request.query)
             })
             .catch(function (error) {
@@ -380,7 +380,7 @@ exports.checkComments = functions.https.onRequest(function (request, response) {
         admin.auth().verifyIdToken(token)
             .then(function (decodedToken) {
                 global.logManager.PrintLogMessage("index", "", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
+                request.query["uid"] = decodedToken.uid
                 tempResponse = {
                     "cid": {
                         "positive": 12,
