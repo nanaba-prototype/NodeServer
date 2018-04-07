@@ -1,6 +1,7 @@
 function AuthManager() {
     PrintLogMessage("AuthManager", "AuthManager", "init", LOG_LEVEL_INFO)
     this.dataTransferManager = new DataTransferManager()
+    this.myToken = null
 }
 
 AuthManager.prototype.SignIn = function (signInForm) {
@@ -54,8 +55,10 @@ AuthManager.prototype.GenerateToken = function () {
         .then(function(idToken) {
         // Send token to your backend via HTTPS
         // ...
-            PrintLogMessage("AuthManager", "GenerateToken", "this is my token: " + idToken, LOG_LEVEL_INFO)
-            SetTokenVal(idToken)
+
+            this.myToken = idToken
+            PrintLogMessage("AuthManager", "GenerateToken", "this is my token: " + this.myToken, LOG_LEVEL_INFO)
+            SetTokenVal(this.myToken)
         })
         .catch(function(error) {
         // Handle error

@@ -7,6 +7,9 @@
     <div class="row uniform">
         <!--  -->
         <div class="12u$ 12u$(small)">
+            <input type="text" name="limit" id="limit" value="10" placeholder="Limit of search routine size" />
+        </div>
+        <div class="12u$ 12u$(small)">
             <input type="text" name="writer" id="writer" value="" placeholder="Username" />
         </div>
         <div class="12u$ 12u$(small)">
@@ -130,14 +133,41 @@
         </div>
     </div>
 </form>
+<div class="table-wrapper">
+    <table class="alt">
+        <thead>
+        <tr>
+            <th>Routine name</th>
+            <th>Writer</th>
+            <th>Good</th>
+            <th>Comments</th>
+            <th>Is my favorite</th>
+        </tr>
+        </thead>
+        <tbody id="bodyOfTable">
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4"></td>
+            <td id="resultRowNum">0</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <h3>Server response data</h3>
 <pre><code id="serverResult">
 </code></pre>
-<script src="js/view/SearchRoutineManager.js"></script>
-<script src="js/core/AuthManager.js"></script>
-<script>
 
-    authManager = new AuthManager()
+<tr id="templateOfRoutineSearchRow" hidden="hidden">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+
+<script src="js/view/SearchRoutineManager.js"></script>
+<script>
     authManager.GetSignedInUser()
 
     $('#searchRoutine').submit(function(e){

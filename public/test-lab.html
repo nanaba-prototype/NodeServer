@@ -89,6 +89,7 @@
 <script src="js/utils/LogManager.js"></script>
 <script src="js/view/SignInManager.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="js/core/AuthManager.js"></script>
 <script>
     // Initialize Firebase
     var config = {
@@ -100,6 +101,8 @@
         messagingSenderId: "150518808128"
     };
     firebase.initializeApp(config);
+
+    authManager = new AuthManager()
 
     testLabManager = new TestLabManager()
     testLabManager.LoadAnotherPage("login.html", "Sign in / out")
