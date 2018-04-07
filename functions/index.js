@@ -20,10 +20,43 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://nanaba-server.firebaseio.com/"
 });
+const express = require('express');
+const cors = require('cors')({origin: true});
+const app = express();
+
+const verifyAuthToken = function (request, response, next) {
+    try {
+        token = request.get('Authorization')
+        admin.auth().verifyIdToken(token)
+            .then(function (decodedToken) {
+                global.logManager.PrintLogMessage("index", "verifyAuthToken", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+                request.user = decodedToken
+                return next();
+            })
+            .catch(function (error) {
+                global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+            })
+    }
+    catch (exception) {
+        global.logManager.PrintLogMessage("index", "verifyAuthToken", "server crashed", global.defineManager.LOG_LEVEL_ERROR)
+        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SERVER_ERROR, response)
+    }
+}
+
+app.use(cors)
+app.use(verifyAuthToken)
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
+
+//No need auth header
+
 exports.helloWorld = functions.https.onRequest(function (request, response) {
     global.logManager.PrintLogMessage("index", "helloWorld", "testing log manager", global.defineManager.LOG_LEVEL_INFO)
 
@@ -40,58 +73,6 @@ exports.signUp = functions.https.onRequest(function (request, response) {
     }
     else {
         tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.getUserInfoAuth = functions.https.onRequest(function (request, response) {
-    if (request.method == 'GET') {
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.query["uid"] = decodedToken.uid
-                uid = request.query["uid"]
-                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
-                userManager.getUserInfoAuth(request.query.uid, admin, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "getUserInfoAuth", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {
-            'email': global.defineManager.NOT_AVAILABLE,
-            'displayName': global.defineManager.NOT_AVAILABLE
-        }
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.makeAuthToken = functions.https.onRequest(function (request, response) {
-    if (request.method == 'GET') {
-        uid = request.query.uid;
-        if (typeof uid == 'undefined') {
-            tempResponse = {
-                'token': global.defineManager.NOT_AVAILABLE
-            }
-
-            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-        }
-        else {
-            global.logManager.PrintLogMessage("index", "makeAuthToken", "req uid: " + uid, global.defineManager.LOG_LEVEL_INFO)
-            userManager.makeAuthToken(request.query.uid, admin, response)
-        }
-    }
-    else {
-        tempResponse = {
-            'token': global.defineManager.NOT_AVAILABLE
-        }
 
         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
     }
@@ -124,7 +105,7 @@ exports.checkToken = functions.https.onRequest(function (request, response) {
 exports.createUser = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+            request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
         // request.body, admin, response
         tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
 
@@ -137,31 +118,20 @@ exports.createUser = functions.https.onRequest(function (request, response) {
     }
 });
 
-exports.searchRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'GET') {
-        // request.query.
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "searchRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.query["uid"] = decodedToken.uid
-                routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "searchRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//Need auth header functions
 
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {
-            'msg': global.defineManager.MESSAGE_FAILED
-        }
+app.get('/getUserInfoAuth', function (request, response) {
+    global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + request.user.uid, global.defineManager.LOG_LEVEL_INFO)
+    userManager.getUserInfoAuth(request.user.uid, admin, response)
+})
 
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
+app.get('/searchRoutine', function (request, response) {
+    global.logManager.PrintLogMessage("index", "searchRoutine", "token verified uid: " + request.user.uid, global.defineManager.LOG_LEVEL_INFO)
+    request.query["uid"] = request.user.uid
+    routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
+})
+
+exports.app = functions.https.onRequest(app);
 
 exports.createRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&

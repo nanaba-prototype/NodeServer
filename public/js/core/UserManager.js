@@ -1,6 +1,6 @@
 function UserManager(authManager) {
-    this.dataTransferManager = new DataTransferManager()
     this.authManager = authManager
+    this.dataTransferManager = new DataTransferManager(this.authManager.GetMyToken())
 }
 
 UserManager.prototype.GetUserInfo = function () {
@@ -9,7 +9,7 @@ UserManager.prototype.GetUserInfo = function () {
         currentUserUid = currentUser.uid
         PrintLogMessage("UserManager", "GetUserInfo", "request get user info uid: " + currentUserUid, LOG_LEVEL_INFO)
         this.dataTransferManager.GetRequestWithCallbackFunc(
-            DOMAIN + "getUserInfoAuth",
+            DOMAIN + "app/getUserInfoAuth",
             {},
             this.GetUserInfoSuccess,
             this.GetUserInfoFail,
