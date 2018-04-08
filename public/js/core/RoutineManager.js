@@ -7,7 +7,7 @@ function RoutineManager(authManager) {
 RoutineManager.prototype.SearchRoutine = function (searchOptions) {
     PrintLogMessage("RoutineManager", "SearchRoutine", "search routines based on options", LOG_LEVEL_INFO)
     this.dataTransferManager.GetRequestWithCallbackFunc(
-        DOMAIN + "searchRoutine",
+        DOMAIN + SUB_DIRECTORY + "searchRoutine",
         searchOptions,
         this.SearchRoutineSuccess,
         this.SearchRoutineFail,

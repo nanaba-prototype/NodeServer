@@ -9,7 +9,7 @@ UserManager.prototype.GetUserInfo = function () {
         currentUserUid = currentUser.uid
         PrintLogMessage("UserManager", "GetUserInfo", "request get user info uid: " + currentUserUid, LOG_LEVEL_INFO)
         this.dataTransferManager.GetRequestWithCallbackFunc(
-            DOMAIN + "app/getUserInfoAuth",
+            DOMAIN + SUB_DIRECTORY + "getUserInfoAuth",
             {},
             this.GetUserInfoSuccess,
             this.GetUserInfoFail,
