@@ -10,12 +10,21 @@ function SetTokenVal(authManager) {
     $("#token").val(authManager.GetMyToken())
 }
 
-function PushTableRow() {
+function PushTableRow(rowData) {
     id = "row" + routineTableArray.length
     rowTemplate = $("#templateOfRoutineSearchRow").clone()
     rowTemplate.removeAttr("hidden")
     rowTemplate.appendTo("#bodyOfTable")
     rowTemplate.attr("id", id)
+
+    dataColCounter = 0
+    // for(indexOfCol in rowTemplate.children("td")) {
+    //     $(rowTemplate.children("td")[indexOfCol]).text(rowData[dataColCounter])
+    // }
+    for(dataColCounter = 0; dataColCounter < rowTemplate.children("td").length; dataColCounter += 1) {
+        $(rowTemplate.children("td")[dataColCounter]).text(rowData[dataColCounter])
+    }
+
     routineTableArray.push(rowTemplate)
     PrintLogMessage("SearchRoutineManager", "PushTableRow", "added new table row", LOG_LEVEL_DEBUG)
 }
