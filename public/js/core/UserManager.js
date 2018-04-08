@@ -32,5 +32,5 @@ UserManager.prototype.GetUserInfoSuccess = function (data) {
 
 UserManager.prototype.GetUserInfoFail = function (errorText, errorStatus) {
     PrintLogMessage("UserManager", "GetUserInfoFail", "something has problem", LOG_LEVEL_WARN)
-    SetServerRequestResult("Something crashed. Shit!")
+    SetServerRequestResult(SERVER_RESULT_FAILED)
 }

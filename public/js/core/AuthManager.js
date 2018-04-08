@@ -47,7 +47,7 @@ AuthManager.prototype.SignUpSuccess = function (data) {
 
 AuthManager.prototype.SignUpFail = function (errorText, errorStatus) {
     PrintLogMessage("AuthManager", "SignUpFail", "failed to sign up", LOG_LEVEL_INFO)
-    SetServerRequestResult("Something crashed. Shit!")
+    SetServerRequestResult(SERVER_RESULT_FAILED)
 }
 
 AuthManager.prototype.GenerateToken = function () {
@@ -63,7 +63,7 @@ AuthManager.prototype.GenerateToken = function () {
         .catch(function(error) {
         // Handle error
             PrintLogMessage("AuthManager", "GenerateToken", "there is something problem", LOG_LEVEL_ERROR)
-            SetTokenVal("Something crashed. Shit!")
+            SetTokenVal(SERVER_RESULT_FAILED)
         });
 }
 
@@ -85,7 +85,7 @@ AuthManager.prototype.VerifyTokenSuccess = function (data) {
 
 AuthManager.prototype.VerifyTokenFail = function (errorText, errorStatus) {
     PrintLogMessage("AuthManager", "VerifyToken", "failed to verify token", LOG_LEVEL_WARN)
-    SetServerRequestResult("Something crashed. Shit!")
+    SetServerRequestResult(SERVER_RESULT_FAILED)
 }
 
 AuthManager.prototype.SignInSuccess = function () {

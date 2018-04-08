@@ -8,3 +8,5 @@ DOMAIN = "http://localhost:5000/nanaba-server/us-central1/"
 // http://localhost:5000/nanaba-server/us-central1/
 // https://us-central1-nanaba-server.cloudfunctions.net/
 SUB_DIRECTORY = "app/"
+
+SERVER_RESULT_FAILED = "Something crashed. Shit!"
