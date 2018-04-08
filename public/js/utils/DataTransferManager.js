@@ -1,11 +1,11 @@
 function DataTransferManager(token) {
     PrintLogMessage("DataTransferManager", "DataTransferManager", "init", LOG_LEVEL_INFO)
-    $.ajaxSetup({
-        beforeSend: function(xhr) {
-            PrintLogMessage("DataTransferManager", "DataTransferManager", "setup auth: " + token, LOG_LEVEL_DEBUG)
-            xhr.setRequestHeader('Authorization', token);
-        }
-    });
+    // $.ajaxSetup({
+    //     beforeSend: function(xhr) {
+    //         PrintLogMessage("DataTransferManager", "DataTransferManager", "setup auth: " + token, LOG_LEVEL_DEBUG)
+    //         xhr.setRequestHeader('Authorization', token);
+    //     }
+    // });
 }
 
 DataTransferManager.prototype.PostRequest = function (url, data, callbackObj, token) {
@@ -23,10 +23,15 @@ DataTransferManager.prototype.PostRequest = function (url, data, callbackObj, to
         xhrFields: {
             withCredentials: false
         },
-        // beforeSend: function (xhr) {
-        //     PrintLogMessage("DataTransferManager", "PostRequest", "auth: " + token, LOG_LEVEL_DEBUG)
-        //     xhr.setRequestHeader ("Authorization", token);
-        // }
+        beforeSend: function (xhr) {
+            if(typeof token != 'undefined') {
+                PrintLogMessage("DataTransferManager", "PostRequest", "auth: " + token, LOG_LEVEL_DEBUG)
+                xhr.setRequestHeader ("Authorization", token);
+            }
+            else {
+                PrintLogMessage("DataTransferManager", "PostRequest", "no token sending", LOG_LEVEL_WARN)
+            }
+        }
     })
         .done(function( receivedData ) {
             PrintLogMessage("DataTransferManager", "PostRequest", "data received successfully", LOG_LEVEL_INFO)
@@ -53,10 +58,15 @@ DataTransferManager.prototype.PostRequestWithCallbackFunc = function (url, data,
         xhrFields: {
             withCredentials: false
         },
-        // beforeSend: function (xhr) {
-        //     PrintLogMessage("DataTransferManager", "PostRequestWithCallbackFunc", "auth: " + token, LOG_LEVEL_DEBUG)
-        //     xhr.setRequestHeader ("Authorization", token);
-        // }
+        beforeSend: function (xhr) {
+            if(typeof token != 'undefined') {
+                PrintLogMessage("DataTransferManager", "PostRequestWithCallbackFunc", "auth: " + token, LOG_LEVEL_DEBUG)
+                xhr.setRequestHeader ("Authorization", token);
+            }
+            else {
+                PrintLogMessage("DataTransferManager", "PostRequestWithCallbackFunc", "no token sending", LOG_LEVEL_WARN)
+            }
+        }
     })
         .done(function( receivedData ) {
             PrintLogMessage("DataTransferManager", "PostRequestWithCallbackFunc", "data received successfully", LOG_LEVEL_INFO)
@@ -83,10 +93,15 @@ DataTransferManager.prototype.GetRequest = function (url, data, callbackObj, tok
         xhrFields: {
             withCredentials: false
         },
-        // beforeSend: function (xhr) {
-        //     PrintLogMessage("DataTransferManager", "GetRequest", "auth: " + token, LOG_LEVEL_DEBUG)
-        //     xhr.setRequestHeader ("Authorization", token);
-        // }
+        beforeSend: function (xhr) {
+            if(typeof token != 'undefined') {
+                PrintLogMessage("DataTransferManager", "GetRequest", "auth: " + token, LOG_LEVEL_DEBUG)
+                xhr.setRequestHeader ("Authorization", token);
+            }
+            else {
+                PrintLogMessage("DataTransferManager", "GetRequest", "no token sending", LOG_LEVEL_WARN)
+            }
+        }
     })
         .done(function( receivedData ) {
             PrintLogMessage("DataTransferManager", "GetRequest", "data received successfully", LOG_LEVEL_INFO)
@@ -114,10 +129,15 @@ DataTransferManager.prototype.GetRequestWithCallbackFunc = function (url, data, 
         xhrFields: {
             withCredentials: false
         },
-        // beforeSend: function (xhr) {
-        //     PrintLogMessage("DataTransferManager", "GetRequestWithCallbackFunc", "auth: " + token, LOG_LEVEL_DEBUG)
-        //     xhr.setRequestHeader ("Authorization", token);
-        // }
+        beforeSend: function (xhr) {
+            if(typeof token != 'undefined') {
+                PrintLogMessage("DataTransferManager", "GetRequestWithCallbackFunc", "auth: " + token, LOG_LEVEL_DEBUG)
+                xhr.setRequestHeader ("Authorization", token);
+            }
+            else {
+                PrintLogMessage("DataTransferManager", "GetRequestWithCallbackFunc", "no token sending", LOG_LEVEL_WARN)
+            }
+        }
     })
         .done(function( receivedData ) {
             PrintLogMessage("DataTransferManager", "GetRequestWithCallbackFunc", "data received successfully", LOG_LEVEL_INFO)

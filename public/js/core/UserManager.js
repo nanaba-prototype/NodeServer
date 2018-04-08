@@ -1,6 +1,6 @@
 function UserManager(authManager) {
     this.authManager = authManager
-    this.dataTransferManager = new DataTransferManager(this.authManager.GetMyToken())
+    this.dataTransferManager = new DataTransferManager()
 }
 
 UserManager.prototype.GetUserInfo = function () {

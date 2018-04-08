@@ -68,7 +68,7 @@ exports.helloWorld = functions.https.onRequest(function (request, response) {
 exports.signUp = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         userManager.createUser(request.body, admin, response)
     }
     else {
@@ -105,7 +105,7 @@ exports.checkToken = functions.https.onRequest(function (request, response) {
 exports.createUser = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-            request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+            request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         tempResponse = {'uid': global.defineManager.NOT_AVAILABLE}
 
@@ -136,7 +136,7 @@ exports.app = functions.https.onRequest(app);
 exports.createRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -162,7 +162,7 @@ exports.createRoutine = functions.https.onRequest(function (request, response) {
 exports.editRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -188,7 +188,7 @@ exports.editRoutine = functions.https.onRequest(function (request, response) {
 exports.deleteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -240,7 +240,7 @@ exports.infoRoutine = functions.https.onRequest(function (request, response) {
 exports.goodRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -266,7 +266,7 @@ exports.goodRoutine = functions.https.onRequest(function (request, response) {
 exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -292,7 +292,7 @@ exports.addFavoriteRoutine = functions.https.onRequest(function (request, respon
 exports.delFavoriteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -320,7 +320,7 @@ exports.delFavoriteRoutine = functions.https.onRequest(function (request, respon
 exports.getMyFavoriteRoutine = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -384,7 +384,7 @@ exports.checkComments = functions.https.onRequest(function (request, response) {
 exports.addComment = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -410,7 +410,7 @@ exports.addComment = functions.https.onRequest(function (request, response) {
 exports.favoriteComment = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
@@ -438,7 +438,7 @@ exports.favoriteComment = functions.https.onRequest(function (request, response)
 exports.applyComment = functions.https.onRequest(function (request, response) {
     if (request.method == 'POST' &&
         (request.get('content-type') == 'application/json' ||
-        request.get('content-type') == 'application/x-www-form-urlencoded; charset=UTF-8')) {
+        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
         // request.body, admin, response
         token = request.get('Authorization')
         admin.auth().verifyIdToken(token)
