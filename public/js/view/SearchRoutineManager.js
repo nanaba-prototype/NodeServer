@@ -50,6 +50,7 @@ function ResetTableRow() {
 }
 
 function ShowSearchedRoutineData(searchedRoutineData) {
+    ResetTableRow()
     for(key in searchedRoutineData) {
         indexOfRoutineData = searchedRoutineData[key]
         PushTableRow([
