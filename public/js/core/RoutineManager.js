@@ -19,6 +19,7 @@ RoutineManager.prototype.SearchRoutineSuccess = function (data) {
     PrintLogMessage("RoutineManager", "SearchRoutineSuccess", "search routines based on options", LOG_LEVEL_INFO)
     resultText = JSON.stringify(data["data"])
     SetServerRequestResult(resultText)
+    ShowSearchedRoutineData(data["data"])
 }
 
 RoutineManager.prototype.SearchRoutineFail = function (errorText, errorStatus) {

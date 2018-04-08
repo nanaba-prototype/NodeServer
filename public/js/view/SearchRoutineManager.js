@@ -49,4 +49,17 @@ function ResetTableRow() {
     PrintLogMessage("SearchRoutineManager", "ResetTableRow", "table row resetted", LOG_LEVEL_DEBUG)
 }
 
+function ShowSearchedRoutineData(searchedRoutineData) {
+    for(key in searchedRoutineData) {
+        indexOfRoutineData = searchedRoutineData[key]
+        PushTableRow([
+            indexOfRoutineData["routineName"],
+            "API NOT SUPPORT",
+            indexOfRoutineData["good"],
+            indexOfRoutineData["comment"],
+            indexOfRoutineData["isMyFavorite"]
+        ])
+    }
+}
+
 routineTableArray = []
