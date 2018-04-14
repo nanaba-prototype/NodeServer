@@ -1,0 +1,121 @@
+<div class="row">
+
+    <h4 class="12u$">Routine Name</h4>
+    <div class="12u$ 12u$(xsmall)">
+        <input type="text" name="routineName" id="routineName" value="" placeholder="Routine name" />
+    </div>
+
+    <h4 class="12u$">Routine Description</h4>
+    <div class="12u$">
+        <textarea name="routineDes" id="routineDes" placeholder="Enter description here(100 character limit)" rows="6" maxlength="100"></textarea>
+    </div>
+
+    <h4 class="12u$">Morning or Night</h4>
+    <div class="4u 6u(small)">
+        <input type="radio" id="morning" name="morningOrNight">
+        <label for="morning">AM</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="radio" id="night" name="morningOrNight">
+        <label for="night">PM</label>
+    </div>
+
+    <h4 class="12u$">Which season(s) is this routine for?</h4>
+    <div class="4u 6u(small)">
+        <input type="radio" id="warm" name="seasons">
+        <label for="warm">Warm</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="radio" id="cold" name="seasons">
+        <label for="cold">Cold</label>
+    </div>
+
+    <h4 class="12u$">Are you currently using this routine?</h4>
+    <div class="4u 3u(small)">
+        <input type="radio" id="useRoutineYes" name="useRoutine">
+        <label for="useRoutineYes">Yes</label>
+    </div>
+    <div class="4u 3u(small)">
+        <input type="radio" id="useRoutineNo" name="useRoutine">
+        <label for="useRoutineNo">No</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="radio" id="useRoutineAsNeeded" name="useRoutine">
+        <label for="useRoutineAsNeeded">As Needed</label>
+    </div>
+
+    <h4 class="12u$">Steps</h4>
+    <ul class="actions 12u$">
+        <li><a href="#" class="button">-</a></li>
+        <li>13</li>
+        <li><a href="#" class="button">+</a></li>
+    </ul>
+
+    <div id="listOfSteps" class="row 12u$">
+        <div class="row 12u$" id="templateOfStep">
+            <h4 class="12u$">Step Name</h4>
+            <div class="12u$ 12u$(xsmall)">
+                <input type="text" name="stepName" id="stepName" value="" placeholder="Step name" />
+            </div>
+
+            <h4 class="12u$">Product Brand</h4>
+            <div class="12u$ 12u$(xsmall)">
+                <input type="text" name="productBrand" id="productBrand" value="" placeholder="Product brand" />
+            </div>
+
+            <h4 class="12u$">Product Name</h4>
+            <div class="12u$ 12u$(xsmall)">
+                <input type="text" name="productName" id="productName" value="" placeholder="Product name" />
+            </div>
+
+            <h4 class="12u$">Frequency</h4>
+            <div class="4u 6u(small)">
+                <input type="radio" id="frequencyDaily" name="frequency">
+                <label for="frequencyDaily">Daily</label>
+            </div>
+            <div class="4u 6u$(small)">
+                <input type="radio" id="frequencyWeekly" name="frequency">
+                <label for="frequencyWeekly">Weekly</label>
+            </div>
+            <div class="4u 6u(small)">
+                <input type="radio" id="frequencyMonthly" name="frequency">
+                <label for="frequencyMonthly">Monthly</label>
+            </div>
+            <div class="4u$ 6u$(small)">
+                <input type="radio" id="frequencyAsNeeded" name="frequency">
+                <label for="frequencyAsNeeded">As Needed</label>
+            </div>
+
+            <h4 class="12u$">Rating</h4>
+            <div class="12u$ 12u$(xsmall)">
+                <input type="text" name="rating" id="rating" value="" placeholder="Rating" />
+            </div>
+
+            <h4 class="12u$">Tags</h4>
+            <div class="12u$ 12u$(xsmall)">
+                <input type="text" name="rating" id="tags" value="" placeholder="Tags" />
+            </div>
+
+            <h4 class="12u$">Advice (optional)</h4>
+            <div class="12u$">
+                <textarea name="advice" id="advice" placeholder="Instructions on how to use or feedback" rows="6"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="12u$">Save Routine</h4>
+    <div class="6u$ 12u$(small)">
+        <ul class="actions">
+            <li><a href="#" class="button special">Upload</a></li>
+        </ul>
+    </div>
+
+    <h4 class="12u$">Server response data</h4>
+    <pre class="12u$">
+        <code id="serverResult">
+        </code>
+    </pre>
+</div>
+<script>
+
+</script>
