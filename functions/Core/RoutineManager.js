@@ -276,16 +276,22 @@ exports.GetDetailInfo = function (admin, response, responseManager, query) {
     })
 }
 
-exports.GetRoutineHistory = function (admin, response, responseManager, request) {
+exports.GetRoutineHistory = function (admin, response, responseManager, request, routineManager) {
     targetUid = request.query.uid
+
     global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
         "getting detail info rid: " + targetUid,
         global.defineManager.LOG_LEVEL_INFO)
 
-    showLimit = Number(request.query.limit) || 10
+    showLimit = Number(request.query.limit) || global.defineManager.QUERY_RETURN_LIMIT
 
     admin.database().ref('/Users/' + targetUid + "/myRoutine").orderByChild("uploadDateTimeSec")
         .limitToLast(showLimit).on("value", function (snapshot) {
+            snapshotStr = JSON.stringify(snapshot)
+        global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
+            "routine history string: " + snapshotStr,
+            global.defineManager.LOG_LEVEL_DEBUG)
+
         responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
     })
 }
