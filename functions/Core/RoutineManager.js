@@ -87,7 +87,7 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
     admin.database().ref('/Users/' + uid + "/myRoutine/").once('value', function (snapshot) {
         databaseSnapshot = snapshot.val()
         global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
-            "check myRoutine data: " + databaseSnapshot,
+            "check myRoutine data: " + JSON.stringify(databaseSnapshot),
             global.defineManager.LOG_LEVEL_DEBUG)
         if (typeof databaseSnapshot == 'undefined' || databaseSnapshot == null) {
             databaseSnapshot = []
@@ -97,6 +97,10 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
                 "rid": rid,
                 "uploadDateTimeSec": dateTimeSec
             })
+
+        global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
+            "now myRoutine data: " + JSON.stringify(databaseSnapshot),
+            global.defineManager.LOG_LEVEL_DEBUG)
         status = admin.database().ref("/Users/" + uid + "/myRoutine/").set(databaseSnapshot);
         global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
             "save routine data uid: " + uid + " status: " + status.message,
@@ -278,7 +282,7 @@ exports.GetRoutineHistory = function (admin, response, responseManager, request)
         "getting detail info rid: " + targetUid,
         global.defineManager.LOG_LEVEL_INFO)
 
-    admin.database().ref('/Routine').orderByChild("uid").equalTo(targetUid)
+    admin.database().ref('/Users/' + targetUid + "/myRoutine").orderByChild("uploadDateTimeSec")
         .limitToLast(10).on("value", function (snapshot) {
         responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
     })
