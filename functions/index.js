@@ -33,6 +33,7 @@ const verifyAuthToken = function (request, response, next) {
                 request.user = decodedToken
                 admin.auth().getUser(decodedToken.uid)
                     .then(function (userRecord) {
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "we found user info", global.defineManager.LOG_LEVEL_DEBUG)
                         userRecordData = userRecord.toJSON()
                         userRecordDataStr = JSON.stringify(userRecordData)
                         request.userRecordData = userRecordData
@@ -145,7 +146,8 @@ app.get('/searchRoutine', function (request, response) {
 })
 
 app.post('/createRoutine', function (request, response) {
-
+    global.logManager.PrintLogMessage("index", "createRoutine", "create new routine: " + request.user.uid, global.defineManager.LOG_LEVEL_INFO)
+    routineManager.AddRoutine(admin, response, responseManager, generateManager, request)
 })
 
 exports.app = functions.https.onRequest(app);
