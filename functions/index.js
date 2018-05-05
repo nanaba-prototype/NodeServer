@@ -31,7 +31,20 @@ const verifyAuthToken = function (request, response, next) {
             .then(function (decodedToken) {
                 global.logManager.PrintLogMessage("index", "verifyAuthToken", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
                 request.user = decodedToken
-                return next();
+                admin.auth().getUser(decodedToken.uid)
+                    .then(function (userRecord) {
+                        userRecordData = userRecord.toJSON()
+                        userRecordDataStr = JSON.stringify(userRecordData)
+                        request.userRecordData = userRecordData
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "user info decoded : " + userRecordDataStr, global.defineManager.LOG_LEVEL_INFO)
+                        return next();
+                    })
+                    .catch(function (error) {
+                        global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify user", global.defineManager.LOG_LEVEL_ERROR)
+                        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+
+                        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+                    })
             })
             .catch(function (error) {
                 global.logManager.PrintLogMessage("index", "verifyAuthToken", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
@@ -122,13 +135,17 @@ exports.createUser = functions.https.onRequest(function (request, response) {
 
 app.get('/getUserInfoAuth', function (request, response) {
     global.logManager.PrintLogMessage("index", "getUserInfoAuth", "req uid: " + request.user.uid, global.defineManager.LOG_LEVEL_INFO)
-    userManager.getUserInfoAuth(request.user.uid, admin, response)
+    userManager.getUserInfoAuth(request.userRecordData, admin, response)
 })
 
 app.get('/searchRoutine', function (request, response) {
     global.logManager.PrintLogMessage("index", "searchRoutine", "token verified uid: " + request.user.uid, global.defineManager.LOG_LEVEL_INFO)
     request.query["uid"] = request.user.uid
     routineManager.SearchRoutine(admin, response, responseManager, generateManager, request.query)
+})
+
+app.post('/createRoutine', function (request, response) {
+
 })
 
 exports.app = functions.https.onRequest(app);

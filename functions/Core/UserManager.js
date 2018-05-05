@@ -46,63 +46,49 @@ exports.createUser = function (userInfoData, admin, response) {
     })
 }
 
-exports.getUserInfoAuth = function (uid, admin, response) {
-    global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user: " + uid, global.defineManager.LOG_LEVEL_INFO)
-    admin.auth().getUser(uid)
-        .then(function (userRecord) {
-            responseManager = require('../Utils/ResponseManager');
-            userRecordData = userRecord.toJSON()
-            getUserInfoResult = {
-                'email': userRecordData['email'],
-                'displayName': userRecordData['displayName']
-            }
-            userInfoTemplate = {
-                "allergy": null,
-                "birthYear": null,
-                "displayName": null,
-                "email": null,
-                "ethnicity": null,
-                "favoriteRoutine": null,
-                "location": null,
-                "makeUpDays": null,
-                "myRoutine": null,
-                "photo": null,
-                "sex": null,
-                "skinConcern": null,
-                "skinType": null,
-                "sleepTimeAvg": null
-            }
-            global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "user founded successfully data: " + JSON.stringify(getUserInfoResult), global.defineManager.LOG_LEVEL_INFO)
-            admin.database().ref('/Users/' + uid + "/").once('value', function (snapshot) {
-                databaseSnapshot = snapshot.val()
-                userInfoTemplate["allergy"] = databaseSnapshot["allergy"]
-                userInfoTemplate["birthYear"] = databaseSnapshot["birthYear"]
-                userInfoTemplate["displayName"] = databaseSnapshot["displayName"]
-                userInfoTemplate["email"] = databaseSnapshot["email"]
-                userInfoTemplate["ethnicity"] = databaseSnapshot["ethnicity"]
-                userInfoTemplate["favoriteRoutine"] = databaseSnapshot["favoriteRoutine"] || []
-                userInfoTemplate["location"] = databaseSnapshot["location"]
-                userInfoTemplate["makeUpDays"] = databaseSnapshot["makeUpDays"]
-                userInfoTemplate["myRoutine"] = databaseSnapshot["myRoutine"] || []
-                userInfoTemplate["photo"] = databaseSnapshot["photo"]
-                userInfoTemplate["sex"] = databaseSnapshot["sex"]
-                userInfoTemplate["skinConcern"] = databaseSnapshot["skinConcern"] || []
-                userInfoTemplate["skinType"] = databaseSnapshot["skinType"] || []
-                userInfoTemplate["sleepTimeAvg"] = databaseSnapshot["sleepTimeAvg"]
+exports.getUserInfoAuth = function (userRecordData, admin, response) {
+    global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user: " + userRecordData.uid, global.defineManager.LOG_LEVEL_INFO)
+    responseManager = require('../Utils/ResponseManager');
+    getUserInfoResult = {
+        'email': userRecordData['email'],
+        'displayName': userRecordData['displayName']
+    }
+    userInfoTemplate = {
+        "allergy": null,
+        "birthYear": null,
+        "displayName": null,
+        "email": null,
+        "ethnicity": null,
+        "favoriteRoutine": null,
+        "location": null,
+        "makeUpDays": null,
+        "myRoutine": null,
+        "photo": null,
+        "sex": null,
+        "skinConcern": null,
+        "skinType": null,
+        "sleepTimeAvg": null
+    }
+    global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "user founded successfully data: " + JSON.stringify(getUserInfoResult), global.defineManager.LOG_LEVEL_INFO)
+    admin.database().ref('/Users/' + userRecordData.uid + "/").once('value', function (snapshot) {
+        databaseSnapshot = snapshot.val()
+        userInfoTemplate["allergy"] = databaseSnapshot["allergy"]
+        userInfoTemplate["birthYear"] = databaseSnapshot["birthYear"]
+        userInfoTemplate["displayName"] = databaseSnapshot["displayName"]
+        userInfoTemplate["email"] = databaseSnapshot["email"]
+        userInfoTemplate["ethnicity"] = databaseSnapshot["ethnicity"]
+        userInfoTemplate["favoriteRoutine"] = databaseSnapshot["favoriteRoutine"] || []
+        userInfoTemplate["location"] = databaseSnapshot["location"]
+        userInfoTemplate["makeUpDays"] = databaseSnapshot["makeUpDays"]
+        userInfoTemplate["myRoutine"] = databaseSnapshot["myRoutine"] || []
+        userInfoTemplate["photo"] = databaseSnapshot["photo"]
+        userInfoTemplate["sex"] = databaseSnapshot["sex"]
+        userInfoTemplate["skinConcern"] = databaseSnapshot["skinConcern"] || []
+        userInfoTemplate["skinType"] = databaseSnapshot["skinType"] || []
+        userInfoTemplate["sleepTimeAvg"] = databaseSnapshot["sleepTimeAvg"]
 
-                responseManager.TemplateOfResponse(userInfoTemplate, global.defineManager.HTTP_SUCCESS, response)
-            })
-        })
-        .catch(function (error) {
-            global.logManager.PrintLogMessage("UserManager", "getUserInfoAuth", "finding user failed error: " + error, global.defineManager.LOG_LEVEL_ERROR)
-            responseManager = require('../Utils/ResponseManager');
-
-            getUserInfoResult = {
-                'email': global.defineManager.NOT_AVAILABLE,
-                'displayName': global.defineManager.NOT_AVAILABLE
-            }
-            responseManager.TemplateOfResponse(getUserInfoResult, global.defineManager.HTTP_SERVER_ERROR, response)
-        })
+        responseManager.TemplateOfResponse(userInfoTemplate, global.defineManager.HTTP_SUCCESS, response)
+    })
 }
 
 exports.makeAuthToken = function (uid, admin, response) {
