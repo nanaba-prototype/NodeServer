@@ -150,6 +150,11 @@ app.post('/createRoutine', function (request, response) {
     routineManager.AddRoutine(admin, response, responseManager, generateManager, request)
 })
 
+app.get('/getRoutineHistory', function (request, response) {
+    global.logManager.PrintLogMessage("index", "getRoutineHistory", "getting routine history", global.defineManager.LOG_LEVEL_INFO)
+    routineManager.GetRoutineHistory(admin, response, responseManager, request)
+})
+
 exports.app = functions.https.onRequest(app);
 
 exports.createRoutine = functions.https.onRequest(function (request, response) {

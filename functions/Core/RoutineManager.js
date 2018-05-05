@@ -3,7 +3,9 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
     userRecordData = request.userRecordData
     bodyData = request.body
 
-    dateStr = new Date().toISOString()
+    date = new Date()
+    dateStr = date.toISOString()
+    dateTimeSec = date.getTime() / 1000;
     // rid = generateManager.CreateHash(bodyData["uid"] + dateStr)
     newRoutineRef = admin.database().ref("/Routine/").push()
     rid = newRoutineRef.key
@@ -28,6 +30,7 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
         "title": "",
         "uid": "",
         "uploadDate": "",
+        "uploadDateTimeSec": 0,
         "writer": ""
     }
 
@@ -39,6 +42,7 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
     routineDataTemplate["areYouUseThis"] = bodyData["areYouUseThis"]
     routineDataTemplate["routineLength"] = bodyData["routineLength"]
     routineDataTemplate["uploadDate"] = dateStr
+    routineDataTemplate["uploadDateTimeSec"] = dateTimeSec
     routineDataTemplate["writer"] = userRecordData['displayName']
 
     stepsData = {}
@@ -88,7 +92,11 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
         if (typeof databaseSnapshot == 'undefined' || databaseSnapshot == null) {
             databaseSnapshot = []
         }
-        databaseSnapshot.push(rid)
+        databaseSnapshot.push(
+            {
+                "rid": rid,
+                "uploadDateTimeSec": dateTimeSec
+            })
         status = admin.database().ref("/Users/" + uid + "/myRoutine/").set(databaseSnapshot);
         global.logManager.PrintLogMessage("RoutineManager", "AddRoutine",
             "save routine data uid: " + uid + " status: " + status.message,
@@ -261,5 +269,17 @@ exports.GetDetailInfo = function (admin, response, responseManager, query) {
         databaseSnapshot = snapshot.val()
 
         responseManager.TemplateOfResponse(databaseSnapshot, global.defineManager.HTTP_SUCCESS, response)
+    })
+}
+
+exports.GetRoutineHistory = function (admin, response, responseManager, request) {
+    targetUid = request.query.uid
+    global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
+        "getting detail info rid: " + targetUid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    admin.database().ref('/Routine').orderByChild("uid").equalTo(targetUid)
+        .limitToLast(10).on("value", function (snapshot) {
+        responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
     })
 }
