@@ -282,8 +282,10 @@ exports.GetRoutineHistory = function (admin, response, responseManager, request)
         "getting detail info rid: " + targetUid,
         global.defineManager.LOG_LEVEL_INFO)
 
+    showLimit = Number(request.query.limit) || 10
+
     admin.database().ref('/Users/' + targetUid + "/myRoutine").orderByChild("uploadDateTimeSec")
-        .limitToLast(10).on("value", function (snapshot) {
+        .limitToLast(showLimit).on("value", function (snapshot) {
         responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
     })
 }
