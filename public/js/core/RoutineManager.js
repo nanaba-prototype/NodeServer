@@ -50,3 +50,27 @@ RoutineManager.prototype.CreateNewRoutineSuccess = function (data) {
 RoutineManager.prototype.CreateNewRoutineFail = function (errorText, errorStatus) {
     PrintLogMessage("RoutineManager", "CreateNewRoutineFail", "create new routine failed: " + errorText, LOG_LEVEL_INFO)
 }
+
+RoutineManager.prototype.GetRoutineHistoryRidList = function () {
+    
+}
+
+RoutineManager.prototype.GetRoutineHistoryRidListSuccess = function (data) {
+    
+}
+
+RoutineManager.prototype.GetRoutineHistoryRidListFail = function (errorText, errorStatus) {
+    
+}
+
+RoutineManager.prototype.GetRoutineHistoryRidToInfo = function (rid) {
+    
+}
+
+RoutineManager.prototype.GetRoutineHistoryRidToInfoSuccess = function (data) {
+    
+}
+
+RoutineManager.prototype.GetRoutineHistoryRidToInfoFail = function (errorText, errorStatus) {
+    
+}
