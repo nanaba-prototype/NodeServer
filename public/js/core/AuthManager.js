@@ -113,3 +113,7 @@ AuthManager.prototype.GetSignedInUser = function () {
 AuthManager.prototype.GetMyToken = function () {
     return this.myToken
 }
+
+AuthManager.prototype.GetCurrentUser = function () {
+    return firebase.auth().currentUser
+}

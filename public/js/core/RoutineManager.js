@@ -52,7 +52,16 @@ RoutineManager.prototype.CreateNewRoutineFail = function (errorText, errorStatus
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidList = function () {
-    
+    targetUid = this.authManager.GetCurrentUser().uid
+    limit = 5
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidList", "get my routine history uid: " + targetUid + " limit: " + limit, LOG_LEVEL_INFO)
+    this.dataTransferManager.GetRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "getRoutineHistoryAsRid",
+        {"uid": targetUid, "limit": limit},
+        this.GetRoutineHistoryRidListSuccess,
+        this.GetRoutineHistoryRidListFail,
+        this.authManager.GetMyToken()
+    )
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidListSuccess = function (data) {

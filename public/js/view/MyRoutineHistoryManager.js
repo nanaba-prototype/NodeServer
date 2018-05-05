@@ -34,3 +34,8 @@ function ResetRoutineInfoRow() {
 
     }
 }
+
+$().ready(function () {
+    routineManager = new RoutineManager()
+    routineManager.GetRoutineHistoryRidList()
+})
