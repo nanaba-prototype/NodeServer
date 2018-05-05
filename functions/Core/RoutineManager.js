@@ -315,7 +315,8 @@ exports.GetRoutineHistoryInfo = function (admin, response, responseManager, requ
             "title": routineData["title"],
             "rating": Math.floor(0 / global.defineManager.ROUTINE_RATING_MAX),
             "good": routineData["good"],
-            "favorite": routineData["favorite"]
+            "favorite": routineData["favorite"],
+            "rid": targetRid
         }
 
         responseManager.TemplateOfResponse(routineInfoData, global.defineManager.HTTP_SUCCESS, response)
