@@ -276,22 +276,48 @@ exports.GetDetailInfo = function (admin, response, responseManager, query) {
     })
 }
 
-exports.GetRoutineHistory = function (admin, response, responseManager, request, routineManager) {
+exports.GetRoutineHistoryAsRidList = function (admin, response, responseManager, request) {
     targetUid = request.query.uid
+    showLimit = Number(request.query.limit) || global.defineManager.QUERY_RETURN_LIMIT
 
-    global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
+    global.logManager.PrintLogMessage("RoutineManager", "GetRoutineHistoryAsRidList",
         "getting detail info rid: " + targetUid,
         global.defineManager.LOG_LEVEL_INFO)
 
-    showLimit = Number(request.query.limit) || global.defineManager.QUERY_RETURN_LIMIT
+
 
     admin.database().ref('/Users/' + targetUid + "/myRoutine").orderByChild("uploadDateTimeSec")
         .limitToLast(showLimit).on("value", function (snapshot) {
             snapshotStr = JSON.stringify(snapshot)
-        global.logManager.PrintLogMessage("RoutineManager", "GetDetailInfo",
+        global.logManager.PrintLogMessage("RoutineManager", "GetRoutineHistoryAsRidList",
             "routine history string: " + snapshotStr,
             global.defineManager.LOG_LEVEL_DEBUG)
 
         responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
+    })
+}
+
+exports.GetRoutineHistoryInfo = function (admin, response, responseManager, request) {
+    targetRid = request.query.rid
+
+    global.logManager.PrintLogMessage("RoutineManager", "GetRoutineHistoryInfo",
+        "getting detail info rid: " + targetRid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    admin.database().ref('/Routine/' + targetRid + "/").on("value", function (snapshot) {
+        global.logManager.PrintLogMessage("RoutineManager", "GetRoutineHistoryInfo",
+            "target routine info: " + JSON.stringify(snapshot),
+            global.defineManager.LOG_LEVEL_INFO)
+
+        routineData = JSON.parse(JSON.stringify(snapshot))
+        routineInfoData = {
+            "date": routineData["uploadDate"],
+            "title": routineData["title"],
+            "rating": Math.floor(0 / global.defineManager.ROUTINE_RATING_MAX),
+            "good": routineData["good"],
+            "favorite": routineData["favorite"]
+        }
+
+        responseManager.TemplateOfResponse(routineInfoData, global.defineManager.HTTP_SUCCESS, response)
     })
 }
