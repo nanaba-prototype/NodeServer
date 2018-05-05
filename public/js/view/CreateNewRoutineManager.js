@@ -43,6 +43,23 @@ function PushRoutineStep() {
     cloneStepObj = $("#templateOfStep").clone()
     cloneStepObj.removeAttr("hidden")
     cloneStepObj.attr("id", "step" + stackPoint)
+
+    cloneStepObj.find("#frequencyDaily").attr("name", "frequency" + stackPoint)
+    cloneStepObj.find("#frequencyDaily").attr("id", "frequencyDaily" + stackPoint)
+    cloneStepObj.find("#frequencyDailyLabel").attr("for", "frequencyDaily" + stackPoint)
+
+    cloneStepObj.find("#frequencyWeekly").attr("name", "frequency" + stackPoint)
+    cloneStepObj.find("#frequencyWeekly").attr("id", "frequencyWeekly" + stackPoint)
+    cloneStepObj.find("#frequencyWeeklyLabel").attr("for", "frequencyWeekly" + stackPoint)
+
+    cloneStepObj.find("#frequencyMonthly").attr("name", "frequency" + stackPoint)
+    cloneStepObj.find("#frequencyMonthly").attr("id", "frequencyMonthly" + stackPoint)
+    cloneStepObj.find("#frequencyMonthlyLabel").attr("for", "frequencyMonthly" + stackPoint)
+
+    cloneStepObj.find("#frequencyAsNeeded").attr("name", "frequency" + stackPoint)
+    cloneStepObj.find("#frequencyAsNeeded").attr("id", "frequencyAsNeeded" + stackPoint)
+    cloneStepObj.find("#frequencyAsNeededLabel").attr("for", "frequencyAsNeeded" + stackPoint)
+
     cloneStepObj.appendTo("#listOfSteps")
 
     routineStepStack.push(cloneStepObj)
@@ -75,10 +92,18 @@ function GetStepInfo() {
         indexOfStepData["productName"] = $(indexOfStep).find("#productName").val()
 
         frequency = []
-        frequency.push($(indexOfStep).find("#frequencyDaily").val())
-        frequency.push($(indexOfStep).find("#frequencyWeekly").val())
-        frequency.push($(indexOfStep).find("#frequencyMonthly").val())
-        frequency.push($(indexOfStep).find("#frequencyAsNeeded").val())
+        if($(indexOfStep).find("#frequencyDaily" + checkingCounter).is(':checked')) {
+            frequency.push("Daily")
+        }
+        if($(indexOfStep).find("#frequencyWeekly" + checkingCounter).is(':checked')) {
+            frequency.push("Weekly")
+        }
+        if($(indexOfStep).find("#frequencyMonthly" + checkingCounter).is(':checked')) {
+            frequency.push("Monthly")
+        }
+        if($(indexOfStep).find("#frequencyAsNeeded" + checkingCounter).is(':checked')) {
+            frequency.push("As Needed")
+        }
         indexOfStepData["frequency"] = frequency
 
         indexOfStepData["rating"] = $(indexOfStep).find("#rating").val()
