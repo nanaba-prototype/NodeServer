@@ -2,14 +2,16 @@
     <table class="alt">
         <thead>
         <tr>
-            <th>Routine name</th>
+            <th>Routine</th>
             <th>More info</th>
         </tr>
         </thead>
         <tbody id="bodyOfTable">
         <tr id="templateOfRoutineRow" hidden="hidden">
-            <td></td>
-            <td><a href="#" class="button fit">Detail</a></td>
+            <div class="row">
+                <td class="8u" id="routineInfo"></td>
+                <td class="4u"><a href="#" class="button fit" id="detailBtn" data-url="">Detail</a></td>
+            </div>
         </tr>
         </tbody>
         <tfoot>
@@ -28,4 +30,6 @@
     </pre>
 </div>
 <script>
+    routineHistoryStack = []
 </script>
+<script src="js/view/MyRoutineHistoryManager.js"></script>
