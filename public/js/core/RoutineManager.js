@@ -49,6 +49,7 @@ RoutineManager.prototype.CreateNewRoutineSuccess = function (data) {
 
 RoutineManager.prototype.CreateNewRoutineFail = function (errorText, errorStatus) {
     PrintLogMessage("RoutineManager", "CreateNewRoutineFail", "create new routine failed: " + errorText, LOG_LEVEL_INFO)
+    SetServerRequestResult(resultText)
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidList = function () {
@@ -65,21 +66,41 @@ RoutineManager.prototype.GetRoutineHistoryRidList = function () {
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidListSuccess = function (data) {
-    
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidListSuccess", "create routine success", LOG_LEVEL_INFO)
+    resultText = JSON.stringify(data["data"])
+    SetServerRequestResult(resultText)
+
+    for(indexOfRoutine in data["data"]) {
+        rid = data["data"][indexOfRoutine]["rid"]
+        routineManager.GetRoutineHistoryRidToInfo(rid)
+    }
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidListFail = function (errorText, errorStatus) {
-    
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidListFail", "get rid list failed: " + errorText, LOG_LEVEL_WARN)
+    SetServerRequestResult(SERVER_RESULT_FAILED)
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidToInfo = function (rid) {
-    
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidToInfo", "get routine info rid: " + rid, LOG_LEVEL_INFO)
+    this.dataTransferManager.GetRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "getRoutineHistoryInfo",
+        {"rid": rid},
+        this.GetRoutineHistoryRidToInfoSuccess,
+        this.GetRoutineHistoryRidToInfoFail,
+        this.authManager.GetMyToken()
+    )
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidToInfoSuccess = function (data) {
-    
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidToInfoSuccess", "get routine info based on rid successfully", LOG_LEVEL_INFO)
+    resultText = JSON.stringify(data["data"])
+    SetServerRequestResult(resultText)
+
+    PushRoutineInfoRow(resultText, "")
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidToInfoFail = function (errorText, errorStatus) {
-    
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidToInfoFail", "get routine info based on rid failed: " + errorText, LOG_LEVEL_WARN)
+    SetServerRequestResult(SERVER_RESULT_FAILED)
 }

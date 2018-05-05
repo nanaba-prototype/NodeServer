@@ -36,6 +36,12 @@ function ResetRoutineInfoRow() {
 }
 
 $().ready(function () {
-    routineManager = new RoutineManager()
+
+    ResetRoutineInfoRow()
+    routineManager = new RoutineManager(authManager)
     routineManager.GetRoutineHistoryRidList()
 })
+
+function SetRoutineList(routineDataList) {
+
+}
