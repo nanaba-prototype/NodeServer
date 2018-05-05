@@ -52,7 +52,7 @@
     </ul>
 
     <div id="listOfSteps" class="row 12u$">
-        <div class="row 12u$" id="templateOfStep">
+        <div class="row 12u$" id="templateOfStep" hidden="hidden">
             <h4 class="12u$">Step Name</h4>
             <div class="12u$ 12u$(xsmall)">
                 <input type="text" name="stepName" id="stepName" value="" placeholder="Step name" />
@@ -100,6 +100,10 @@
             <div class="12u$">
                 <textarea name="advice" id="advice" placeholder="Instructions on how to use or feedback" rows="6"></textarea>
             </div>
+
+            <div class="12u$">
+                <label>-------------------------</label>
+            </div>
         </div>
     </div>
 
@@ -116,7 +120,8 @@
         </code>
     </pre>
 </div>
-<script src="js/view/CreateNewRoutineManager.js"></script>
 <script>
-    routineNum = 1
+    routineStepNum = 1
+    routineStepStack = []
 </script>
+<script src="js/view/CreateNewRoutineManager.js"></script>

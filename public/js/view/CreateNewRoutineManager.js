@@ -14,17 +14,47 @@ $().ready(function () {
 })
 
 function DecreaseRoutineNum() {
-    if(routineNum > 1) {
-        routineNum -= 1
+    if(routineStepNum > 1) {
+        routineStepNum -= 1
     }
-    PrintLogMessage("CreateNewRoutineManager", "DecreaseRoutineNum", "now routine num: " + routineNum, LOG_LEVEL_DEBUG)
-    $("#routineNum").text(routineNum)
+    PrintLogMessage("CreateNewRoutineManager", "DecreaseRoutineNum", "now routine num: " + routineStepNum, LOG_LEVEL_DEBUG)
+    $("#routineNum").text(routineStepNum)
+
+    PopRoutineStep()
 }
 
 function IncreaseRoutineNum() {
-    if(routineNum < 13) {
-        routineNum += 1
+    if(routineStepNum < 13) {
+        routineStepNum += 1
     }
-    PrintLogMessage("CreateNewRoutineManager", "IncreaseRoutineNum", "now routine num: " + routineNum, LOG_LEVEL_DEBUG)
-    $("#routineNum").text(routineNum)
+    PrintLogMessage("CreateNewRoutineManager", "IncreaseRoutineNum", "now routine num: " + routineStepNum, LOG_LEVEL_DEBUG)
+    $("#routineNum").text(routineStepNum)
+
+    PushRoutineStep()
 }
+
+function PushRoutineStep() {
+    stackPoint = routineStepStack.length
+
+    cloneStepObj = $("#templateOfStep").clone()
+    cloneStepObj.removeAttr("hidden")
+    cloneStepObj.attr("id", "step" + stackPoint)
+    cloneStepObj.appendTo("#listOfSteps")
+
+    routineStepStack.push(cloneStepObj)
+}
+
+function PopRoutineStep() {
+    lastStepObj = routineStepStack[routineStepStack.length - 1]
+    lastStepObj.remove()
+    routineStepStack.pop()
+    return true
+}
+
+function ResetRoutineStep() {
+    while(PopRoutineStep()){
+
+    }
+}
+
+PushRoutineStep()
