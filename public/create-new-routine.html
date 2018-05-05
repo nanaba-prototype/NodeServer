@@ -12,21 +12,21 @@
 
     <h4 class="12u$">Morning or Night</h4>
     <div class="4u 6u(small)">
-        <input type="radio" id="morning" name="morningOrNight">
+        <input type="checkbox" id="morning" name="morningOrNight">
         <label for="morning">AM</label>
     </div>
     <div class="4u$ 6u$(small)">
-        <input type="radio" id="night" name="morningOrNight">
+        <input type="checkbox" id="night" name="morningOrNight">
         <label for="night">PM</label>
     </div>
 
     <h4 class="12u$">Which season(s) is this routine for?</h4>
     <div class="4u 6u(small)">
-        <input type="radio" id="warm" name="seasons">
+        <input type="checkbox" id="warm" name="seasons">
         <label for="warm">Warm</label>
     </div>
     <div class="4u$ 6u$(small)">
-        <input type="radio" id="cold" name="seasons">
+        <input type="checkbox" id="cold" name="seasons">
         <label for="cold">Cold</label>
     </div>
 
@@ -124,4 +124,5 @@
     routineStepNum = 1
     routineStepStack = []
 </script>
+<script src="js/core/RoutineManager.js"></script>
 <script src="js/view/CreateNewRoutineManager.js"></script>

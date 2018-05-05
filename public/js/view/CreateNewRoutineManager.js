@@ -13,7 +13,8 @@ $().ready(function () {
     })
     $("#uploadMyRoutine").click(function () {
         PrintLogMessage("CreateNewRoutineManager", "ready", "clicked upload routine", LOG_LEVEL_DEBUG)
-        GetStepInfo()
+        routineManager = new RoutineManager()
+        routineManager.CreateNewRoutine()
     })
 })
 
@@ -112,9 +113,51 @@ function GetStepInfo() {
 
         PrintLogMessage("CreateNewRoutineManager", "GetStepInfo", "#" + checkingCounter + " data: " + JSON.stringify(indexOfStepData), LOG_LEVEL_DEBUG)
 
-        listOfStepsData[checkingCounter] = indexOfStepData
+        listOfStepsData[(checkingCounter + 1)] = indexOfStepData
     }
     return listOfStepsData
+}
+
+function GetRoutineInfo() {
+    routineInfoData = {}
+    routineInfoData["title"] = $("#routineName").val()
+    routineInfoData["description"] = $("#routineDes").val()
+
+    morningOrNight = []
+    if($("#morning").is(":checked")) {
+        morningOrNight.push("AM")
+    }
+    if($("#night").is(":checked")) {
+        morningOrNight.push("PM")
+    }
+    routineInfoData["time"] = morningOrNight
+
+    seasons = []
+    if($("#warm").is(":checked")) {
+        seasons.push("Warm")
+    }
+    if($("#cold").is(":checked")) {
+        seasons.push("Cold")
+    }
+    routineInfoData["season"] = seasons
+
+    routineInfoData["areYouUseThis"] = "No"
+    if($("#useRoutineYes").is(":checked")) {
+        seasons.push("Yes")
+    }
+    if($("#useRoutineNo").is(":checked")) {
+        seasons.push("No")
+    }
+    if($("#useRoutineAsNeeded").is(":checked")) {
+        seasons.push("AsNeeded")
+    }
+
+    listOfStepsData = GetStepInfo()
+    routineInfoData["routineLength"] = $("#routineNum").text()
+    routineInfoData["steps"] = listOfStepsData
+
+    return routineInfoData
+
 }
 
 PushRoutineStep()
