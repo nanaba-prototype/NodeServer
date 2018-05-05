@@ -13,7 +13,7 @@ $().ready(function () {
     })
     $("#uploadMyRoutine").click(function () {
         PrintLogMessage("CreateNewRoutineManager", "ready", "clicked upload routine", LOG_LEVEL_DEBUG)
-        routineManager = new RoutineManager()
+        routineManager = new RoutineManager(authManager)
         routineManager.CreateNewRoutine()
     })
 })
@@ -91,6 +91,7 @@ function GetStepInfo() {
         indexOfStepData["name"] = $(indexOfStep).find("#stepName").val()
         indexOfStepData["productBrand"] = $(indexOfStep).find("#productBrand").val()
         indexOfStepData["productName"] = $(indexOfStep).find("#productName").val()
+        indexOfStepData["productPhoto"] = $(indexOfStep).find("#productPhoto").val()
 
         frequency = []
         if($(indexOfStep).find("#frequencyDaily" + checkingCounter).is(':checked')) {

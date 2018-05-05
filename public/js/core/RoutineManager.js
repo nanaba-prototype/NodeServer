@@ -31,6 +31,14 @@ RoutineManager.prototype.CreateNewRoutine = function () {
     PrintLogMessage("RoutineManager", "CreateNewRoutine", "upload user wrote routine data", LOG_LEVEL_INFO)
     routineInfoData = GetRoutineInfo()
     PrintLogMessage("RoutineManager", "CreateNewRoutine", "collected routine data: " + JSON.stringify(routineInfoData), LOG_LEVEL_INFO)
+    this.dataTransferManager.PostRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "createRoutine",
+        routineInfoData,
+        this.CreateNewRoutineSuccess,
+        this.CreateNewRoutineFail,
+        this.authManager.GetMyToken()
+    )
+
 }
 
 RoutineManager.prototype.CreateNewRoutineSuccess = function (data) {
