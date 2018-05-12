@@ -1,0 +1,195 @@
+<style>
+    .routineBasicInfo {
+        border: 2px solid #D1A9F9;
+        padding: 10px;
+        /*border-radius: 50px 20px;*/
+        background: #D1A9F9;
+    }
+    .stepBox {
+        border: 2px solid #B7E1B3;
+        padding: 10px;
+        /*border-radius: 50px 20px;*/
+        background: #DAEFD8;
+    }
+    .topCommentBox {
+        border: 2px solid #B5DEFB;
+        padding: 10px;
+        /*border-radius: 50px 20px;*/
+        background: #B5DEFB;
+    }
+</style>
+
+<div class="content routineBasicInfo">
+
+    <h4 class="12u$">Routine Unique ID</h4>
+    <div class="12u$">
+        <input type="text" name="rid" id="rid" value="" placeholder="Routine unique ID"/>
+    </div>
+
+    <h4 class="12u$">Upload Date</h4>
+    <div class="12u$">
+        <input type="text" name="uploadDate" id="uploadDate" value="" placeholder="Upload date"/>
+    </div>
+
+    <h4 class="12u$">Username</h4>
+    <div class="12u$">
+        <input type="text" name="userName" id="userName" value="" placeholder="Username"/>
+    </div>
+
+    <h4 class="12u$">Rating</h4>
+    <div class="12u$">
+        <input type="text" name="basicRating" id="basicRating" value="" placeholder="Rating"/>
+    </div>
+
+    <h4 class="12u$">Good</h4>
+    <div class="12u$">
+        <input type="text" name="good" id="good" value="" placeholder="Good"/>
+    </div>
+
+    <h4 class="12u$">Favorite</h4>
+    <div class="12u$">
+        <input type="text" name="favorite" id="favorite" value="" placeholder="Favorite"/>
+    </div>
+
+    <h4 class="12u$">Routine Name</h4>
+    <div class="12u$ 12u$(xsmall)">
+        <input type="text" name="routineName" id="routineName" value="" placeholder="Routine name" />
+    </div>
+
+    <h4 class="12u$">Routine Description</h4>
+    <div class="12u$">
+        <textarea name="routineDes" id="routineDes" placeholder="Enter description here(100 character limit)" rows="6" maxlength="100"></textarea>
+    </div>
+
+    <h4 class="12u$">Morning or Night</h4>
+    <div class="4u 6u(small)">
+        <input type="checkbox" id="morning" name="morningOrNight">
+        <label for="morning">AM</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="checkbox" id="night" name="morningOrNight">
+        <label for="night">PM</label>
+    </div>
+
+    <h4 class="12u$">Which season(s) is this routine for?</h4>
+    <div class="4u 6u(small)">
+        <input type="checkbox" id="warm" name="seasons">
+        <label for="warm">Warm</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="checkbox" id="cold" name="seasons">
+        <label for="cold">Cold</label>
+    </div>
+
+    <h4 class="12u$">Are you currently using this routine?</h4>
+    <div class="4u 3u(small)">
+        <input type="radio" id="useRoutineYes" name="useRoutine">
+        <label for="useRoutineYes">Yes</label>
+    </div>
+    <div class="4u 3u(small)">
+        <input type="radio" id="useRoutineNo" name="useRoutine">
+        <label for="useRoutineNo">No</label>
+    </div>
+    <div class="4u$ 6u$(small)">
+        <input type="radio" id="useRoutineAsNeeded" name="useRoutine">
+        <label for="useRoutineAsNeeded">As Needed</label>
+    </div>
+</div>
+
+<br>
+
+<div id="listOfSteps">
+    <div id="templateOfStep">
+        <div class="content stepBox">
+            <div class="row 12u$">
+                <h4 class="12u$">Step Name</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="stepName" id="stepName" value="" placeholder="Step name" />
+                </div>
+
+                <h4 class="12u$">Product Brand</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="productBrand" id="productBrand" value="" placeholder="Product brand" />
+                </div>
+
+                <h4 class="12u$">Product Name</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="productName" id="productName" value="" placeholder="Product name" />
+                </div>
+
+                <h4 class="12u$">Product Photo</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="productPhoto" id="productPhoto" value="" placeholder="Product photo" />
+                </div>
+
+                <h4 class="12u$">Frequency</h4>
+                <div class="4u 6u(small)">
+                    <input type="checkbox" id="frequencyDaily" name="frequency">
+                    <label id="frequencyDailyLabel" for="frequencyDaily">Daily</label>
+                </div>
+                <div class="4u 6u$(small)">
+                    <input type="checkbox" id="frequencyWeekly" name="frequency">
+                    <label id="frequencyWeeklyLabel" for="frequencyWeekly">Weekly</label>
+                </div>
+                <div class="4u 6u(small)">
+                    <input type="checkbox" id="frequencyMonthly" name="frequency">
+                    <label id="frequencyMonthlyLabel" for="frequencyMonthly">Monthly</label>
+                </div>
+                <div class="4u$ 6u$(small)">
+                    <input type="checkbox" id="frequencyAsNeeded" name="frequency">
+                    <label id="frequencyAsNeededLabel" for="frequencyAsNeeded">As Needed</label>
+                </div>
+
+                <h4 class="12u$">Rating</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="rating" id="rating" value="" placeholder="Rating" />
+                </div>
+
+                <h4 class="12u$">Tags</h4>
+                <div class="12u$ 12u$(xsmall)">
+                    <input type="text" name="rating" id="tags" value="" placeholder="Tags" />
+                </div>
+
+                <h4 class="12u$">Advice (optional)</h4>
+                <div class="12u$">
+                    <textarea name="advice" id="advice" placeholder="Instructions on how to use or feedback" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="12u$">
+            <br>
+        </div>
+    </div>
+</div>
+
+
+<div class="content topCommentBox">
+    <h4 class="12u$">Top Comment UserName</h4>
+    <div class="12u$">
+        <input type="text" name="topCommentUserName" id="topCommentUserName" value="" placeholder="Top comment username"/>
+    </div>
+
+    <h4 class="12u$">Top Comment Score</h4>
+    <div class="12u$">
+        <input type="text" name="topCommentScore" id="topCommentScore" value="" placeholder="Top comment score"/>
+    </div>
+
+    <h4 class="12u$">Top Comment Upload Date</h4>
+    <div class="12u$">
+        <input type="text" name="topCommentUploadDate" id="topCommentUploadDate" value="" placeholder="Top comment date"/>
+    </div>
+
+    <h4 class="12u$">Top Comment Text</h4>
+    <div class="12u$">
+        <input type="text" name="topCommentText" id="topCommentText" value="" placeholder="Top comment text"/>
+    </div>
+</div>
+
+<h4 class="12u$">Server response data</h4>
+<pre class="12u$">
+        <code id="serverResult">
+        </code>
+    </pre>
+</div>
+<script>
+</script>
