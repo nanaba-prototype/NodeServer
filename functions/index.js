@@ -13,6 +13,7 @@ const generateManager = require('./Utils/GenerateManager');
 const commentManager = require('./Core/CommentManager');
 const communityManager = require('./Core/CommunityManager');
 const favoriteManager = require('./Core/FavoriteManager');
+const productManager = require('./Core/ProductManager');
 
 var serviceAccount = require("./service-account.json");
 
@@ -163,6 +164,11 @@ app.get('/getRoutineHistoryInfo', function (request, response) {
 app.get('/getRoutineDetailInfo', function (request, response) {
     global.logManager.PrintLogMessage("index", "getRoutineDetailInfo", "getting routine detail info", global.defineManager.LOG_LEVEL_INFO)
     routineManager.GetRoutineDetailInfo(admin, response, responseManager, request)
+})
+
+app.get('/getProductDetailInfo', function(request, response) {
+    global.logManager.PrintLogMessage("index", "getProductDetailInfo", "getting product detail info", global.defineManager.LOG_LEVEL_INFO)
+    productManager.GetProductDetailInfo(admin, response, responseManager, request)
 })
 
 exports.app = functions.https.onRequest(app);
