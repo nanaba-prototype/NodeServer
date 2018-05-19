@@ -160,6 +160,11 @@ app.get('/getRoutineHistoryInfo', function (request, response) {
     routineManager.GetRoutineHistoryInfo(admin, response, responseManager, request)
 })
 
+app.get('/getRoutineDetailInfo', function (request, response) {
+    global.logManager.PrintLogMessage("index", "getRoutineDetailInfo", "getting routine detail info", global.defineManager.LOG_LEVEL_INFO)
+    routineManager.GetRoutineDetailInfo(admin, response, responseManager, request)
+})
+
 exports.app = functions.https.onRequest(app);
 
 exports.createRoutine = functions.https.onRequest(function (request, response) {

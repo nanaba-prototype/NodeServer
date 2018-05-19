@@ -322,3 +322,39 @@ exports.GetRoutineHistoryInfo = function (admin, response, responseManager, requ
         responseManager.TemplateOfResponse(routineInfoData, global.defineManager.HTTP_SUCCESS, response)
     })
 }
+
+exports.GetRoutineDetailInfo = function (admin, response, responseManager, request) {
+    targetRid = request.query.rid
+
+    global.logManager.PrintLogMessage("RoutineManager", "GetRoutineDetailInfo",
+        "getting detail info rid: " + targetRid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    admin.database().ref('/Routine/' + targetRid + "/").on("value", function (routineInfoSnapshot) {
+
+        routineInfoSnapshot = JSON.stringify(routineInfoSnapshot)
+
+        global.logManager.PrintLogMessage("RoutineManager", "GetRoutineDetailInfo",
+            "target routine info: " + routineInfoSnapshot,
+            global.defineManager.LOG_LEVEL_INFO)
+
+        routineInfoSnapshot = JSON.parse(routineInfoSnapshot)
+
+        routineDetailData = {
+            "areYouUseThis": routineInfoSnapshot["areYouUseThis"],
+            "commentLength": global.defineManager.NOT_AVAILABLE,
+            "description": routineInfoSnapshot["description"],
+            "favorite": routineInfoSnapshot["favorite"],
+            "good": routineInfoSnapshot["good"],
+            "routineLength": routineInfoSnapshot["routineLength"],
+            "season": routineInfoSnapshot["season"],
+            "time": routineInfoSnapshot["time"],
+            "title": routineInfoSnapshot["title"],
+            "uploadDate": routineInfoSnapshot["uploadDate"],
+            "writer": routineInfoSnapshot["writer"],
+            "steps": routineInfoSnapshot["steps"]
+        }
+
+        responseManager.TemplateOfResponse(routineDetailData, global.defineManager.HTTP_SUCCESS, response)
+    })
+}
