@@ -97,7 +97,10 @@ RoutineManager.prototype.GetRoutineHistoryRidToInfoSuccess = function (data) {
     resultText = JSON.stringify(data["data"])
     SetServerRequestResult(resultText)
 
-    PushRoutineInfoRow(resultText, "routine-detail-view.html?rid=" + data["data"]["rid"])
+    url = "routine-detail.html?rid=" + data["data"]["rid"]
+    PrintLogMessage("RoutineManager", "GetRoutineHistoryRidToInfoSuccess", "link url: " + url, LOG_LEVEL_DEBUG)
+
+    PushRoutineInfoRow(resultText, url, data["data"]["rid"])
 }
 
 RoutineManager.prototype.GetRoutineHistoryRidToInfoFail = function (errorText, errorStatus) {

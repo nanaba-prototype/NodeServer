@@ -122,3 +122,8 @@ function SetRoutineBasicInfo(routineDetailData) {
 function SetRoutineTopCommentInfo() {
 
 }
+
+$().ready(function () {
+    // console.log("url : "+$(location).attr('protocol')+"//"+$(location).attr('host')+""+$(location).attr('pathname')+""+$(location).attr('search'));
+    $("#rid").val(testLabManager.LoadTempData())
+})
