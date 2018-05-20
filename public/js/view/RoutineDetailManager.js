@@ -29,11 +29,20 @@ function PushStepData(indexOfStepData) {
 }
 
 function PopStepData() {
-
+    stackPoint = routineStepStack.length - 1
+    if(stackPoint < 0) {
+        return false
+    }
+    lastStepObj = routineStepStack[stackPoint]
+    lastStepObj.remove()
+    routineStepStack.pop()
+    return true
 }
 
 function ResetSteps() {
+    while(PopStepData()) {
 
+    }
 }
 
 function SearchRoutineDetailData() {
