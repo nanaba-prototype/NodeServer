@@ -25,6 +25,30 @@ function PushStepData(indexOfStepData) {
     stepCloneObj.find("#frequencyAsNeeded").attr("id", "frequencyAsNeeded" + stackPoint)
     stepCloneObj.find("#frequencyAsNeededLabel").attr("for", "frequencyAsNeeded" + stackPoint)
 
+    stepCloneObj.find("#stepName").val(indexOfStepData["name"])
+    stepCloneObj.find("#tags").val(JSON.stringify(indexOfStepData["tags"]))
+    stepCloneObj.find("#advice").val(indexOfStepData["advice"])
+
+    stepCloneObj.find("#frequencyDaily" + stackPoint).prop('checked', false);
+    stepCloneObj.find("#frequencyWeekly" + stackPoint).prop('checked', false);
+    stepCloneObj.find("#frequencyMonthly" + stackPoint).prop('checked', false);
+    stepCloneObj.find("#frequencyAsNeeded" + stackPoint).prop('checked', false);
+
+    for(index in indexOfStepData["frequency"]) {
+        if(indexOfStepData["frequency"][index] == "Daily") {
+            stepCloneObj.find("#frequencyDaily" + stackPoint).prop('checked', true);
+        }
+        else if(indexOfStepData["frequency"][index] == "Weekly") {
+            stepCloneObj.find("#frequencyWeekly" + stackPoint).prop('checked', true);
+        }
+        else if(indexOfStepData["frequency"][index] == "Monthly") {
+            stepCloneObj.find("#frequencyMonthly" + stackPoint).prop('checked', true);
+        }
+        else if(indexOfStepData["frequency"][index] == "AsNeeded") {
+            stepCloneObj.find("#frequencyAsNeeded" + stackPoint).prop('checked', true);
+        }
+    }
+
     routineStepStack.push(stepCloneObj)
 }
 
