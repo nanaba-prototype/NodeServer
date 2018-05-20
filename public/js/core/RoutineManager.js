@@ -104,3 +104,16 @@ RoutineManager.prototype.GetRoutineHistoryRidToInfoFail = function (errorText, e
     PrintLogMessage("RoutineManager", "GetRoutineHistoryRidToInfoFail", "get routine info based on rid failed: " + errorText, LOG_LEVEL_WARN)
     SetServerRequestResult(SERVER_RESULT_FAILED)
 }
+
+RoutineManager.prototype.GetRoutineDetailInfo = function(targetRid) {
+    PrintLogMessage("RoutineManager", "GetRoutineDetailInfo", "search routine detail info: " + targetRid,
+        LOG_LEVEL_INFO)
+}
+
+RoutineManager.prototype.GetRoutineDetailInfoSuccess = function(data) {
+
+}
+
+RoutineManager.prototype.GetRoutineDetailInfoFail = function(errorText, errorStatus) {
+
+}

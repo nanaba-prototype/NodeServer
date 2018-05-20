@@ -46,7 +46,8 @@ function ResetSteps() {
 }
 
 function SearchRoutineDetailData() {
-
+    targetRid = $("#rid").val()
+    routineManager.GetRoutineDetailInfo(targetRid)
 }
 
 function SetRoutineBasicInfo() {

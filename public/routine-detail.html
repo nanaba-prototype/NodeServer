@@ -28,7 +28,7 @@
         </div>
 
         <div class="3u$ 6u$(small)">
-            <a class="button fit">Search</a>
+            <a class="button fit" onclick="SearchRoutineDetailData()">Search</a>
         </div>
     </div>
 
@@ -197,9 +197,10 @@
         </code>
     </pre>
 </div>
+<script src="js/view/RoutineDetailManager.js"></script>
+<script src="js/core/RoutineManager.js"></script>
 <script>
     routineStepNum = 1
     routineStepStack = []
+    routineManager = new RoutineManager(authManager)
 </script>
-<script src="js/view/RoutineDetailManager.js"></script>
-<script src="js/core/RoutineManager.js"></script>
