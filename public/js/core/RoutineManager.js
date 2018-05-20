@@ -108,12 +108,28 @@ RoutineManager.prototype.GetRoutineHistoryRidToInfoFail = function (errorText, e
 RoutineManager.prototype.GetRoutineDetailInfo = function(targetRid) {
     PrintLogMessage("RoutineManager", "GetRoutineDetailInfo", "search routine detail info: " + targetRid,
         LOG_LEVEL_INFO)
+
+    this.dataTransferManager.GetRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "getRoutineDetailInfo",
+        {"rid": targetRid},
+        this.GetRoutineDetailInfoSuccess,
+        this.GetRoutineDetailInfoFail,
+        this.authManager.GetMyToken()
+    )
 }
 
 RoutineManager.prototype.GetRoutineDetailInfoSuccess = function(data) {
+    PrintLogMessage("RoutineManager", "GetRoutineDetailInfoSuccess", "routine detail info received successfully",
+        LOG_LEVEL_INFO)
 
+    stepList = data["steps"]
+    for(index in stepList) {
+        PushStepData(stepList[index])
+    }
+    SetRoutineBasicInfo(data)
 }
 
 RoutineManager.prototype.GetRoutineDetailInfoFail = function(errorText, errorStatus) {
-
+    PrintLogMessage("RoutineManager", "GetRoutineDetailInfoFail", "something wrong with getting routine detail info",
+        LOG_LEVEL_WARN)
 }

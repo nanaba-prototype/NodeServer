@@ -50,7 +50,7 @@ function SearchRoutineDetailData() {
     routineManager.GetRoutineDetailInfo(targetRid)
 }
 
-function SetRoutineBasicInfo() {
+function SetRoutineBasicInfo(routineDetailData) {
 
 }
 
