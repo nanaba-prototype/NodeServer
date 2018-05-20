@@ -122,11 +122,15 @@ RoutineManager.prototype.GetRoutineDetailInfoSuccess = function(data) {
     PrintLogMessage("RoutineManager", "GetRoutineDetailInfoSuccess", "routine detail info received successfully",
         LOG_LEVEL_INFO)
 
-    stepList = data["steps"]
+    routineDetailData = data["data"]
+
+    stepList = routineDetailData["steps"]
     for(index in stepList) {
         PushStepData(stepList[index])
     }
-    SetRoutineBasicInfo(data)
+    SetRoutineBasicInfo(routineDetailData)
+
+    SetServerRequestResult(JSON.stringify(data))
 }
 
 RoutineManager.prototype.GetRoutineDetailInfoFail = function(errorText, errorStatus) {

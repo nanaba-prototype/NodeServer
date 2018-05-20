@@ -51,7 +51,48 @@ function SearchRoutineDetailData() {
 }
 
 function SetRoutineBasicInfo(routineDetailData) {
+    $("#uploadDate").val(routineDetailData["uploadDate"])
+    $("#userName").val(routineDetailData["writer"])
+    $("#basicRating").val()
+    $("#good").val(routineDetailData["good"])
+    $("#favorite").val(routineDetailData["favorite"])
+    $("#routineName").val(routineDetailData["title"])
+    $("#routineDes").val(routineDetailData["description"])
 
+    $("#morning").prop('checked', false);
+    $("#night").prop('checked', false);
+    for(index in routineDetailData["time"]) {
+        if(routineDetailData["time"][index] == "AM") {
+            $("#morning").prop('checked', true);
+        }
+        else if(routineDetailData["time"][index] == "PM") {
+            $("#night").prop('checked', true);
+        }
+    }
+
+    $("#warm").prop('checked', false);
+    $("#cold").prop('checked', false);
+    for(index in routineDetailData["season"]) {
+        if(routineDetailData["season"][index] == "Warm") {
+            $("#warm").prop('checked', true);
+        }
+        else if(routineDetailData["season"][index] == "Cold") {
+            $("#cold").prop('checked', true);
+        }
+    }
+
+    $("#useRoutineYes").prop('checked', false);
+    $("#useRoutineNo").prop('checked', false);
+    $("#useRoutineAsNeeded").prop('checked', false);
+    if(routineDetailData["areYouUseThis"] == "Yes") {
+        $("#useRoutineYes").prop('checked', true);
+    }
+    else if(routineDetailData["areYouUseThis"] == "No") {
+        $("#useRoutineNo").prop('checked', true);
+    }
+    else if(routineDetailData["areYouUseThis"] == "As Needed") {
+        $("#useRoutineAsNeeded").prop('checked', true);
+    }
 }
 
 function SetRoutineTopCommentInfo() {
