@@ -171,334 +171,339 @@ app.get('/getProductDetailInfo', function(request, response) {
     productManager.GetProductDetailInfo(admin, response, responseManager, request)
 })
 
+app.post('/addNewComment', function (request, response) {
+    global.logManager.PrintLogMessage("index", "addNewComment", "try to add new comment", global.defineManager.LOG_LEVEL_INFO)
+    commentManager.AddNewComment(admin, request, response, responseManager)
+})
+
 exports.app = functions.https.onRequest(app);
-
-exports.createRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "createRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "createRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.editRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "editRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                routineManager.UpdateRoutine(admin, response, responseManager, generateManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "editRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.deleteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "deleteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                routineManager.DelRoutine(admin, response, responseManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "deleteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.infoRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'GET') {
-        // request.query.
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "infoRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.query["uid"] = decodedToken.uid
-                routineManager.GetDetailInfo(admin, response, responseManager, request.query)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "infoRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {
-            'msg': global.defineManager.MESSAGE_FAILED
-        }
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.goodRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "goodRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                communityManager.IncreaseRoutineGoodPoint(admin, response, responseManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "goodRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "addFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                favoriteManager.AddMyFavoriteRoutine(admin, response, responseManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "addFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.delFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "delFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "delFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.getMyFavoriteRoutine = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "getMyFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "getMyFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.checkComments = functions.https.onRequest(function (request, response) {
-    if (request.method == 'GET') {
-        // request.query.
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.query["uid"] = decodedToken.uid
-                tempResponse = {
-                    "cid": {
-                        "positive": 12,
-                        "userDisplayName": "user display name",
-                        "body": "this is comment body",
-                        "replyFor": "cid",
-                        "date": "2018-01-24T00:00:00.000Z"
-                    }
-                }
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {
-            'msg': global.defineManager.MESSAGE_FAILED
-        }
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.addComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "addComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                commentManager.addComment(admin, response, responseManager, generateManager, request.body)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "addComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.favoriteComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "favoriteComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "favoriteComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
-
-exports.applyComment = functions.https.onRequest(function (request, response) {
-    if (request.method == 'POST' &&
-        (request.get('content-type') == 'application/json' ||
-        request.get('content-type').includes('application/x-www-form-urlencoded'))) {
-        // request.body, admin, response
-        token = request.get('Authorization')
-        admin.auth().verifyIdToken(token)
-            .then(function (decodedToken) {
-                global.logManager.PrintLogMessage("index", "applyComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
-                request.body["uid"] = decodedToken.uid
-                tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-            })
-            .catch(function (error) {
-                global.logManager.PrintLogMessage("index", "applyComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
-                tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
-
-                responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
-            })
-    }
-    else {
-        tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
-
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
-    }
-});
+//
+// exports.createRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "createRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 routineManager.AddRoutine(admin, response, responseManager, generateManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "createRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.editRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "editRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 routineManager.UpdateRoutine(admin, response, responseManager, generateManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "editRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.deleteRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "deleteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 routineManager.DelRoutine(admin, response, responseManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "deleteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'rid': global.defineManager.NOT_AVAILABLE}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.infoRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'GET') {
+//         // request.query.
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "infoRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.query["uid"] = decodedToken.uid
+//                 routineManager.GetDetailInfo(admin, response, responseManager, request.query)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "infoRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {
+//             'msg': global.defineManager.MESSAGE_FAILED
+//         }
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.goodRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "goodRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 communityManager.IncreaseRoutineGoodPoint(admin, response, responseManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "goodRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.addFavoriteRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "addFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 favoriteManager.AddMyFavoriteRoutine(admin, response, responseManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "addFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.delFavoriteRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "delFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "delFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.getMyFavoriteRoutine = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "getMyFavoriteRoutine", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "getMyFavoriteRoutine", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.checkComments = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'GET') {
+//         // request.query.
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.query["uid"] = decodedToken.uid
+//                 tempResponse = {
+//                     "cid": {
+//                         "positive": 12,
+//                         "userDisplayName": "user display name",
+//                         "body": "this is comment body",
+//                         "replyFor": "cid",
+//                         "date": "2018-01-24T00:00:00.000Z"
+//                     }
+//                 }
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {
+//             'msg': global.defineManager.MESSAGE_FAILED
+//         }
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.addComment = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "addComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 commentManager.addComment(admin, response, responseManager, generateManager, request.body)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "addComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.favoriteComment = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "favoriteComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "favoriteComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });
+//
+// exports.applyComment = functions.https.onRequest(function (request, response) {
+//     if (request.method == 'POST' &&
+//         (request.get('content-type') == 'application/json' ||
+//         request.get('content-type').includes('application/x-www-form-urlencoded'))) {
+//         // request.body, admin, response
+//         token = request.get('Authorization')
+//         admin.auth().verifyIdToken(token)
+//             .then(function (decodedToken) {
+//                 global.logManager.PrintLogMessage("index", "applyComment", "token verified uid: " + decodedToken.uid, global.defineManager.LOG_LEVEL_INFO)
+//                 request.body["uid"] = decodedToken.uid
+//                 tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//             })
+//             .catch(function (error) {
+//                 global.logManager.PrintLogMessage("index", "applyComment", "cannot verify token", global.defineManager.LOG_LEVEL_ERROR)
+//                 tempResponse = {'msg': global.defineManager.MESSAGE_FAILED}
+//
+//                 responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_UNAUTHORIZED, response)
+//             })
+//     }
+//     else {
+//         tempResponse = {'cid': global.defineManager.NOT_AVAILABLE}
+//
+//         responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
+//     }
+// });

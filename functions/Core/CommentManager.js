@@ -42,3 +42,7 @@ exports.addComment = function (admin, response, responseManager, generateManager
             responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_REQUEST_ERROR, response)
         })
 }
+
+exports.AddNewComment = function (admin, request, response, responseManager) {
+
+}
