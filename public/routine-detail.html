@@ -204,7 +204,7 @@
             <input type="text" name="addCommentText" id="addCommentText" value="" placeholder="Add comment text"/>
         </div>
         <div class="4u$ 12u$(small)">
-            <a class="button fit" onclick="">Add comment</a>
+            <a class="button fit" onclick="AddNewComment()">Add comment</a>
         </div>
     </div>
 
@@ -221,8 +221,10 @@
 </div>
 <script src="js/view/RoutineDetailManager.js"></script>
 <script src="js/core/RoutineManager.js"></script>
+<script src="js/core/CommentManager.js"></script>
 <script>
     routineStepNum = 1
     routineStepStack = []
     routineManager = new RoutineManager(authManager)
+    commentManager = new CommentManager(authManager)
 </script>
