@@ -177,6 +177,11 @@ app.post('/addNewComment', function (request, response) {
     commentManager.AddNewComment(admin, request, response, responseManager)
 })
 
+app.get('/getListOfComments', function (request, response) {
+    global.logManager.PrintLogMessage("index", "getListOfComments", "try to get comments", global.defineManager.LOG_LEVEL_INFO)
+    commentManager.GetListOfComments(admin, request, response, responseManager)
+})
+
 exports.app = functions.https.onRequest(app);
 //
 // exports.createRoutine = functions.https.onRequest(function (request, response) {

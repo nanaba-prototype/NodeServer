@@ -87,3 +87,33 @@ exports.AddNewComment = function (admin, request, response, responseManager) {
         {"msg": global.defineManager.MESSAGE_SUCCESS},
         global.defineManager.HTTP_SUCCESS, response)
 }
+
+exports.GetListOfComments = function (admin, request, response, responseManager) {
+
+    targetRid = request.query.rid
+    showLimit = Number(request.query.limit) || global.defineManager.QUERY_RETURN_LIMIT
+
+    if(targetRid == null) {
+        global.logManager.PrintLogMessage("CommentManager", "GetListOfComments",
+            "you should send target rid",
+            global.defineManager.LOG_LEVEL_WARN)
+
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    global.logManager.PrintLogMessage("CommentManager", "GetListOfComments",
+        "getting list of comments: " + targetRid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + "/commentUser/").orderByChild("dateSec")
+        .limitToLast(showLimit).on("value", function (snapshot) {
+        snapshotStr = JSON.stringify(snapshot)
+        global.logManager.PrintLogMessage("CommentManager", "GetListOfComments",
+            "comments list string: " + snapshotStr,
+            global.defineManager.LOG_LEVEL_DEBUG)
+
+        responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
+    })
+}

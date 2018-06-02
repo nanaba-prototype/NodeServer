@@ -26,7 +26,7 @@ exports.HTTP_UNAUTHORIZED = 401
 exports.MESSAGE_FAILED = "fail"
 exports.MESSAGE_SUCCESS = "ok"
 
-exports.QUERY_RETURN_LIMIT = 10
+exports.QUERY_RETURN_LIMIT = 5
 
 exports.ROUTINE_RATING_MAX = 5
 
