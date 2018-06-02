@@ -13,7 +13,8 @@ CommentManager.prototype.AddNewComment = function(rid, commentMsg){
             "body": commentMsg
         },
         this.AddNewCommentSuccess,
-        this.AddNewCommentFail
+        this.AddNewCommentFail,
+        this.authManager.GetMyToken()
     )
 }
 
