@@ -133,3 +133,10 @@ function AddNewComment() {
     commentMsg = $("#addCommentText").val()
     commentManager.AddNewComment(targetRid, commentMsg)
 }
+
+function ShowMoreComments() {
+    targetRid = $("#rid").val()
+    testLabManager.SaveTempData(targetRid)
+    PrintLogMessage("RoutineDetailManager", "ShowMoreComments", "go to history page rid: " + targetRid)
+    testLabManager.LoadAnotherPage("comment-history.html", "Show comment history (Auth)")
+}
