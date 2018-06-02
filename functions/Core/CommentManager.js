@@ -52,6 +52,9 @@ exports.AddNewComment = function (admin, request, response, responseManager) {
     replyFor = bodyData["replyFor"]
 
     if(targetRid == null || commentBody == null) {
+        global.logManager.PrintLogMessage("CommentManager", "AddNewComment", "you must include rid and comment body data",
+            global.defineManager.LOG_LEVEL_WARN)
+
         responseManager.TemplateOfResponse(
             {"msg": global.defineManager.MESSAGE_FAILED},
             global.defineManager.HTTP_REQUEST_ERROR, response)
@@ -76,6 +79,9 @@ exports.AddNewComment = function (admin, request, response, responseManager) {
 
     path = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + "/commentUser/"
     admin.database().ref(path).push().set(cidData);
+
+    global.logManager.PrintLogMessage("CommentManager", "AddNewComment", "comment saved",
+        global.defineManager.LOG_LEVEL_INFO)
 
     responseManager.TemplateOfResponse(
         {"msg": global.defineManager.MESSAGE_SUCCESS},
