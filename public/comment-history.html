@@ -5,7 +5,7 @@
     </div>
 
     <div class="3u$ 6u$(small)">
-        <a class="button fit" onclick="">Search</a>
+        <a class="button fit" onclick="SearchTargetRoutineComment()">Search</a>
     </div>
 </div>
 <div class="table-wrapper">
@@ -17,10 +17,10 @@
         </tr>
         </thead>
         <tbody id="bodyOfTable">
-        <tr id="templateOfRoutineRow" hidden="hidden">
+        <tr id="templateOfCommentRow" hidden="hidden">
             <div class="row">
-                <td class="8u" id="routineInfo"></td>
-                <td class="4u"><a class="button fit" id="detailBtn" data-url="">Increase score</a></td>
+                <td class="8u" id="commentInfo"></td>
+                <td class="4u"><a class="button fit" id="scoreIncreaseBtn" data-url="">Increase score</a></td>
             </div>
         </tr>
         </tbody>
@@ -40,7 +40,10 @@
     </pre>
 </div>
 <script>
-    routineHistoryStack = []
+    commentHistoryStack = []
 </script>
 <script src="js/view/CommentHistoryManager.js"></script>
 <script src="js/core/CommentManager.js"></script>
+<script>
+    commentManager = new CommentManager(authManager)
+</script>

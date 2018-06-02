@@ -30,11 +30,21 @@ CommentManager.prototype.AddNewCommentFail = function (errorText, errorStatus) {
 
 CommentManager.prototype.SearchCommentList = function (rid) {
     PrintLogMessage("CommentManager", "SearchCommentList", "search comment list rid: " + rid, LOG_LEVEL_INFO)
+    this.dataTransferManager.GetRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "getListOfComments",
+        {
+            "rid": rid
+        },
+        this.SearchCommentListSuccess,
+        this.SearchCommentListFail,
+        this.authManager.GetMyToken()
+    )
 }
 
 CommentManager.prototype.SearchCommentListSuccess = function (data) {
     PrintLogMessage("CommentManager", "SearchCommentList", "search comment successfully", LOG_LEVEL_INFO)
     SetServerRequestResult(JSON.stringify(data))
+    UpdateCommentList(data["data"])
 }
 
 CommentManager.prototype.SearchCommentListFail = function (errorText, errorStatus) {
