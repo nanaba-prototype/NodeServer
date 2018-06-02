@@ -44,5 +44,40 @@ exports.addComment = function (admin, response, responseManager, generateManager
 }
 
 exports.AddNewComment = function (admin, request, response, responseManager) {
+    bodyData = request.body
+    userRecordData = request.userRecordData
 
+    targetRid = bodyData["rid"]
+    commentBody = bodyData["body"]
+    replyFor = bodyData["replyFor"]
+
+    if(targetRid == null || commentBody == null) {
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    global.logManager.PrintLogMessage("CommentManager", "AddNewComment", "add comment to rid: " + targetRid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    date = global.dateTimeManager.GetCurrentDate()
+    dateStr = global.dateTimeManager.GetCurrentDateStr(date)
+    dateSec = global.dateTimeManager.GetCurrentDateSec(date)
+
+    cidData = {
+        "body": commentBody,
+        "date": dateStr,
+        "positive": 0,
+        "uid": userRecordData["uid"],
+        "replyFor": replyFor || null,
+        "commentator": userRecordData['displayName'],
+        "dateSec": dateSec
+    }
+
+    path = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + "/commentUser/"
+    admin.database().ref(path).push().set(cidData);
+
+    responseManager.TemplateOfResponse(
+        {"msg": global.defineManager.MESSAGE_SUCCESS},
+        global.defineManager.HTTP_SUCCESS, response)
 }

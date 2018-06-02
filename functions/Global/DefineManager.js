@@ -29,3 +29,5 @@ exports.MESSAGE_SUCCESS = "ok"
 exports.QUERY_RETURN_LIMIT = 10
 
 exports.ROUTINE_RATING_MAX = 5
+
+exports.DATABASE_ROUTINE_PATH = "/Routine"

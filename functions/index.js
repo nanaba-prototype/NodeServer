@@ -1,5 +1,6 @@
 global.defineManager = require('./Global/DefineManager');
 global.logManager = require('./Utils/LogManager');
+global.dateTimeManager = require('./Utils/DateTimeManager');
 
 //Firebase const value
 const functions = require('firebase-functions');
