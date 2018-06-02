@@ -37,7 +37,11 @@ function SearchTargetRoutineComment() {
 }
 
 function UpdateCommentList(commentListData) {
-
+    ResetCommentTable()
+    for(cid in commentListData) {
+        PrintLogMessage("CommentHistoryManager", "UpdateCommentList", "cid: " + cid, LOG_LEVEL_DEBUG)
+        PushCommentItem(JSON.stringify(commentListData[cid]))
+    }
 }
 
 $().ready(function () {
