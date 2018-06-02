@@ -6,6 +6,15 @@ function CommentManager() {
 
 CommentManager.prototype.AddNewComment = function(rid, commentMsg){
     PrintLogMessage("CommentManager", "AddNewComment", "upload new comment msg: " + commentMsg + " to: " + rid, LOG_LEVEL_DEBUG)
+    this.dataTransferManager.PostRequestWithCallbackFunc(
+        DOMAIN + SUB_DIRECTORY + "addNewComment",
+        {
+            "rid": rid,
+            "body": commentMsg
+        },
+        this.AddNewCommentSuccess,
+        this.AddNewCommentFail
+    )
 }
 
 CommentManager.prototype.AddNewCommentSuccess = function (data) {
