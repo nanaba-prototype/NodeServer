@@ -192,6 +192,11 @@ app.post('/increaseRoutineGood', function (request, response) {
     routineManager.IncreaseRoutineGood(admin, request, response, responseManager)
 })
 
+app.post('/addRoutineAsMyFavorite', function (request, response) {
+    global.logManager.PrintLogMessage("index", "addRoutineAsMyFavorite", "add routine as my favorite", global.defineManager.LOG_LEVEL_INFO)
+    routineManager.AddRoutineAsMyFavorite(admin, request, response, responseManager)
+})
+
 exports.app = functions.https.onRequest(app);
 //
 // exports.createRoutine = functions.https.onRequest(function (request, response) {

@@ -30,7 +30,11 @@ exports.QUERY_RETURN_LIMIT = 5
 
 exports.ROUTINE_RATING_MAX = 5
 
+exports.DATABASE_USERS_PATH = "/Users"
+exports.DATABASE_USERS_FAVORITE_ROUTINE_PATH = "/favoriteRoutine"
 exports.DATABASE_ROUTINE_PATH = "/Routine"
 exports.DATABASE_COMMENT_PATH = "/commentUser"
 exports.DATABASE_COMMENT_POSITIVE_PATH = "/positive"
 exports.DATABASE_ROUTINE_GOOD_PATH = "/good"
+exports.DATABASE_ROUTINE_FAVORITE_PATH = "/favorite"
+exports.DATABASE_ROUTINE_FAVORITE_USER_PATH = "/favoriteUser"

@@ -392,3 +392,66 @@ exports.IncreaseRoutineGood = function (admin, request, response, responseManage
         {"msg": global.defineManager.MESSAGE_SUCCESS},
         global.defineManager.HTTP_SUCCESS, response)
 }
+
+exports.AddRoutineAsMyFavorite = function (admin, request, response, responseManager) {
+    targetUserRecord = request.userRecordData
+    targetRid = request.body.rid
+
+    if(targetRid == null) {
+        global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+            "if you want add routine as your favorite, then you must give us rid", global.defineManager.LOG_LEVEL_WARN)
+
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    targetFavoritePath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + global.defineManager.DATABASE_ROUTINE_FAVORITE_PATH
+    targetFavoriteUserPath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + global.defineManager.DATABASE_ROUTINE_FAVORITE_USER_PATH
+    targetFavoriteMyHistoryPath = global.defineManager.DATABASE_USERS_PATH + "/" + targetUserRecord.uid + global.defineManager.DATABASE_USERS_FAVORITE_ROUTINE_PATH
+
+    global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+        "increase favorite path: " + targetFavoritePath,
+        global.defineManager.LOG_LEVEL_DEBUG)
+
+    favoriteRef = admin.database().ref(targetFavoritePath)
+    favoriteRef.transaction(function (favorite) {
+        global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+            "previous favorite: " + favorite,
+            global.defineManager.LOG_LEVEL_DEBUG)
+        return (favorite || 0) + 1
+    })
+
+    global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+        "increase favorite user path: " + targetFavoriteUserPath,
+        global.defineManager.LOG_LEVEL_DEBUG)
+
+    favoriteUserRef = admin.database().ref(targetFavoriteUserPath)
+    favoriteUserRef.transaction(function (favoriteUser) {
+        global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+            "previous favorite user: " + favoriteUser,
+            global.defineManager.LOG_LEVEL_DEBUG)
+        if(favoriteUser == null) {
+            favoriteUser = []
+        }
+        favoriteUser.push(targetUserRecord.uid)
+        return favoriteUser
+    })
+
+    favoriteMyHistoryRef = admin.database().ref(targetFavoriteMyHistoryPath)
+    favoriteMyHistoryRef.transaction(function (favoriteRoutine) {
+        global.logManager.PrintLogMessage("RoutineManager", "AddRoutineAsMyFavorite",
+            "previous favorite history: " + favoriteRoutine,
+            global.defineManager.LOG_LEVEL_DEBUG)
+
+        if(favoriteRoutine == null) {
+            favoriteRoutine = []
+        }
+        favoriteRoutine.push(targetRid)
+        return favoriteRoutine
+    })
+
+    responseManager.TemplateOfResponse(
+        {"msg": global.defineManager.MESSAGE_SUCCESS},
+        global.defineManager.HTTP_SUCCESS, response)
+}
