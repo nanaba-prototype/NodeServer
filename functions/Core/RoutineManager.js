@@ -406,6 +406,9 @@ exports.AddRoutineAsMyFavorite = function (admin, request, response, responseMan
             global.defineManager.HTTP_REQUEST_ERROR, response)
     }
 
+    date = new Date()
+    dateTimeSec = date.getTime() / 1000;
+
     targetFavoritePath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + global.defineManager.DATABASE_ROUTINE_FAVORITE_PATH
     targetFavoriteUserPath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + global.defineManager.DATABASE_ROUTINE_FAVORITE_USER_PATH
     targetFavoriteMyHistoryPath = global.defineManager.DATABASE_USERS_PATH + "/" + targetUserRecord.uid + global.defineManager.DATABASE_USERS_FAVORITE_ROUTINE_PATH
@@ -447,7 +450,11 @@ exports.AddRoutineAsMyFavorite = function (admin, request, response, responseMan
         if(favoriteRoutine == null) {
             favoriteRoutine = []
         }
-        favoriteRoutine.push(targetRid)
+        pushData = {
+            "rid": targetRid,
+            "uploadDateTimeSec": dateTimeSec
+        }
+        favoriteRoutine.push(pushData)
         return favoriteRoutine
     })
 
