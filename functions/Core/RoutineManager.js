@@ -358,3 +358,37 @@ exports.GetRoutineDetailInfo = function (admin, response, responseManager, reque
         responseManager.TemplateOfResponse(routineDetailData, global.defineManager.HTTP_SUCCESS, response)
     })
 }
+
+exports.IncreaseRoutineGood = function (admin, request, response, responseManager) {
+    targetRid = request.body.rid
+
+    if(targetRid == null) {
+        global.logManager.PrintLogMessage("RoutineManager", "IncreaseRoutineGood",
+            "if you want increase routine good, then you must give us rid", global.defineManager.LOG_LEVEL_WARN)
+
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    global.logManager.PrintLogMessage("RoutineManager", "IncreaseRoutineGood",
+        "increase routine good rid: " + targetRid,
+        global.defineManager.LOG_LEVEL_INFO)
+
+    targetRoutinePath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + global.defineManager.DATABASE_ROUTINE_GOOD_PATH
+    global.logManager.PrintLogMessage("RoutineManager", "IncreaseRoutineGood", "target routine path: " + targetRoutinePath,
+            global.defineManager.LOG_LEVEL_DEBUG)
+
+    routineGoodRef = admin.database().ref(targetRoutinePath)
+    routineGoodRef.transaction(function (good) {
+        global.logManager.PrintLogMessage("RoutineManager", "IncreaseRoutineGood",
+            "previous good: " + good, global.defineManager.LOG_LEVEL_DEBUG)
+
+        return (good || 0) + 1
+    })
+
+
+    responseManager.TemplateOfResponse(
+        {"msg": global.defineManager.MESSAGE_SUCCESS},
+        global.defineManager.HTTP_SUCCESS, response)
+}

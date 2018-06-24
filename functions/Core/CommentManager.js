@@ -126,7 +126,7 @@ exports.IncreaseCommentScore = function (admin, request, response, responseManag
 
     if(targetCid == null) {
         global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
-            "increase comment score rid: " + targetRid + "cid: " + targetCid, global.defineManager.LOG_LEVEL_DEBUG)
+            "if you want increase comment score, then you must give us cid, rid", global.defineManager.LOG_LEVEL_WARN)
 
         responseManager.TemplateOfResponse(
             {"msg": global.defineManager.MESSAGE_FAILED},
@@ -143,6 +143,7 @@ exports.IncreaseCommentScore = function (admin, request, response, responseManag
     commentRef.transaction(function (positive) {
         global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
             "previous comment score: " + positive, global.defineManager.LOG_LEVEL_DEBUG)
+
         return (positive || 0) + 1
     })
 

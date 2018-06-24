@@ -187,6 +187,11 @@ app.post('/increaseCommentScore', function (request, response) {
     commentManager.IncreaseCommentScore(admin, request, response, responseManager)
 })
 
+app.post('/increaseRoutineGood', function (request, response) {
+    global.logManager.PrintLogMessage("index", "increaseRoutineGood", "increase routine good", global.defineManager.LOG_LEVEL_INFO)
+    routineManager.IncreaseRoutineGood(admin, request, response, responseManager)
+})
+
 exports.app = functions.https.onRequest(app);
 //
 // exports.createRoutine = functions.https.onRequest(function (request, response) {
