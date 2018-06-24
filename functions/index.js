@@ -5,6 +5,7 @@ global.dateTimeManager = require('./Utils/DateTimeManager');
 //Firebase const value
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const storage = require('@google-cloud/storage')();
 
 //Custom const value
 const userManager = require('./Core/UserManager');
