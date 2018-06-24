@@ -182,6 +182,11 @@ app.get('/getListOfComments', function (request, response) {
     commentManager.GetListOfComments(admin, request, response, responseManager)
 })
 
+app.post('/increaseCommentScore', function (request, response) {
+    global.logManager.PrintLogMessage("index", "increaseCommentScore", "increase comment score", global.defineManager.LOG_LEVEL_INFO)
+    commentManager.IncreaseCommentScore(admin, request, response, responseManager)
+})
+
 exports.app = functions.https.onRequest(app);
 //
 // exports.createRoutine = functions.https.onRequest(function (request, response) {

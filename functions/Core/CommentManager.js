@@ -107,7 +107,8 @@ exports.GetListOfComments = function (admin, request, response, responseManager)
         "getting list of comments: " + targetRid,
         global.defineManager.LOG_LEVEL_INFO)
 
-    admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid + "/commentUser/").orderByChild("dateSec")
+    admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid
+        + global.defineManager.DATABASE_COMMENT_PATH + "/").orderByChild("dateSec")
         .limitToLast(showLimit).on("value", function (snapshot) {
         snapshotStr = JSON.stringify(snapshot)
         global.logManager.PrintLogMessage("CommentManager", "GetListOfComments",
@@ -116,4 +117,36 @@ exports.GetListOfComments = function (admin, request, response, responseManager)
 
         responseManager.TemplateOfResponse(snapshot, global.defineManager.HTTP_SUCCESS, response)
     })
+}
+
+exports.IncreaseCommentScore = function (admin, request, response, responseManager) {
+
+    targetCid = request.body.cid
+    targetRid = request.body.rid
+
+    if(targetCid == null) {
+        global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
+            "increase comment score rid: " + targetRid + "cid: " + targetCid, global.defineManager.LOG_LEVEL_DEBUG)
+
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    targetCommentPath = global.defineManager.DATABASE_ROUTINE_PATH
+        + global.defineManager.DATABASE_COMMENT_PATH + "/" + targetCid + global.defineManager.DATABASE_COMMENT_POSITIVE_PATH
+
+    global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
+        "target positive path: " + targetCommentPath, global.defineManager.LOG_LEVEL_DEBUG)
+
+    commentRef = admin.database().ref(targetCommentPath)
+    commentRef.transaction(function (positive) {
+        global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
+            "previous comment score: " + positive, global.defineManager.LOG_LEVEL_DEBUG)
+        return (positive || 0) + 1
+    })
+
+    responseManager.TemplateOfResponse(
+        {"msg": global.defineManager.MESSAGE_SUCCESS},
+        global.defineManager.HTTP_SUCCESS, response)
 }
