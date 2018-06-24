@@ -133,7 +133,7 @@ exports.IncreaseCommentScore = function (admin, request, response, responseManag
             global.defineManager.HTTP_REQUEST_ERROR, response)
     }
 
-    targetCommentPath = global.defineManager.DATABASE_ROUTINE_PATH
+    targetCommentPath = global.defineManager.DATABASE_ROUTINE_PATH + "/" + targetRid
         + global.defineManager.DATABASE_COMMENT_PATH + "/" + targetCid + global.defineManager.DATABASE_COMMENT_POSITIVE_PATH
 
     global.logManager.PrintLogMessage("CommentManager", "IncreaseCommentScore",
