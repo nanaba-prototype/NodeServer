@@ -30,6 +30,9 @@ const Multer = require('multer')
 const cors = require('cors')({origin: true});
 const app = express();
 const Busboy = require('busboy');
+const bucket = storage.bucket(
+    functions.config().backend.bucket
+);
 
 const uploadConfig = Multer({
     storage: Multer.memoryStorage(),
@@ -212,7 +215,7 @@ app.post('/addRoutineAsMyFavorite', function (request, response) {
 app.post('/uploadFile', uploadConfig.single('file'), function (request, response) {
     global.logManager.PrintLogMessage("index", "uploadFile", "file upload", global.defineManager.LOG_LEVEL_INFO)
     requestFile = request.file
-    fileManager.UploadFile(admin, storage, request, response, responseManager, requestFile)
+    fileManager.UploadFile(admin, bucket, request, response, responseManager, requestFile)
 })
 
 // app.post('/uploadFile', function (request, response) {

@@ -204,3 +204,4 @@ typings/
 # End of https://www.gitignore.io/api/node,intellij,intellij+iml,intellij+all
 functions/service-account.json
 /functions/service-account.json
+functions/.runtimeconfig.json
