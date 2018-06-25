@@ -96,3 +96,38 @@ exports.UploadFileToGoogleStorage = function (file, bucket) {
 
     return subPromise
 }
+
+exports.DownloadFile = function (admin, bucket, request, response, responseManager) {
+    targetFilePath = request.query.filePath
+    userRecordData = request.userRecordData
+    if(targetFilePath == null) {
+
+        global.logManager.PrintLogMessage("FileManager", "DownloadFile", "if you want to download file, then you must send target file path", global.defineManager.LOG_LEVEL_WARN)
+
+        responseManager.TemplateOfResponse(
+            {"msg": global.defineManager.MESSAGE_FAILED},
+            global.defineManager.HTTP_REQUEST_ERROR, response)
+    }
+
+    clientEmail = userRecordData["email"]
+    global.logManager.PrintLogMessage("FileManager", "DownloadFile", "download client email: " + clientEmail, global.defineManager.LOG_LEVEL_DEBUG)
+
+    targetFile = bucket.file(targetFilePath)
+    targetFileDownloadLink = targetFile.getSignedUrl({
+        action: 'read',
+        expires: '03-09-2491'
+    })
+        .then(function (signedDownloadUrl) {
+            global.logManager.PrintLogMessage("FileManager", "DownloadFile", "i found that file url: " + signedDownloadUrl, global.defineManager.LOG_LEVEL_DEBUG)
+            responseManager.TemplateOfResponse(
+                {"msg": global.defineManager.MESSAGE_SUCCESS, "url": signedDownloadUrl},
+                global.defineManager.HTTP_SUCCESS, response)
+        })
+        .catch(function (except) {
+            global.logManager.PrintLogMessage("FileManager", "DownloadFile", "there is something wrong: " + except, global.defineManager.LOG_LEVEL_ERROR)
+            responseManager.TemplateOfResponse(
+                {"msg": global.defineManager.MESSAGE_FAILED},
+                global.defineManager.HTTP_SERVER_ERROR, response)
+        })
+
+}

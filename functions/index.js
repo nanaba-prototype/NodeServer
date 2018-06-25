@@ -22,7 +22,9 @@ var serviceAccount = require("./service-account.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://nanaba-server.firebaseio.com/"
+    databaseURL: "https://nanaba-server.firebaseio.com/",
+    storageBucket: functions.config().backend.bucket,
+    projectId: functions.config().backend.project_id
 });
 
 const express = require('express');
@@ -30,9 +32,7 @@ const Multer = require('multer')
 const cors = require('cors')({origin: true});
 const app = express();
 const Busboy = require('busboy');
-const bucket = storage.bucket(
-    functions.config().backend.bucket
-);
+const bucket = admin.storage().bucket();
 
 const uploadConfig = Multer({
     storage: Multer.memoryStorage(),
@@ -222,6 +222,11 @@ app.post('/uploadFile', uploadConfig.single('file'), function (request, response
 //     global.logManager.PrintLogMessage("index", "uploadFile", "file upload", global.defineManager.LOG_LEVEL_INFO)
 //     fileManager.UploadFile2(admin, storage, request, response, responseManager, Busboy)
 // })
+
+app.get('/downloadFile', function (request, response) {
+    global.logManager.PrintLogMessage("index", "downloadFile", "file download", global.defineManager.LOG_LEVEL_INFO)
+    fileManager.DownloadFile(admin, bucket, request, response, responseManager)
+})
 
 exports.app = functions.https.onRequest(app);
 //
