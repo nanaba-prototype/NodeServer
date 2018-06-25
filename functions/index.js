@@ -16,6 +16,7 @@ const commentManager = require('./Core/CommentManager');
 const communityManager = require('./Core/CommunityManager');
 const favoriteManager = require('./Core/FavoriteManager');
 const productManager = require('./Core/ProductManager');
+const fileManager = require('./Core/FileManager');
 
 var serviceAccount = require("./service-account.json");
 
@@ -23,9 +24,19 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://nanaba-server.firebaseio.com/"
 });
+
 const express = require('express');
+const Multer = require('multer')
 const cors = require('cors')({origin: true});
 const app = express();
+const Busboy = require('busboy');
+
+const uploadConfig = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
+})
 
 const verifyAuthToken = function (request, response, next) {
     try {
@@ -197,6 +208,17 @@ app.post('/addRoutineAsMyFavorite', function (request, response) {
     global.logManager.PrintLogMessage("index", "addRoutineAsMyFavorite", "add routine as my favorite", global.defineManager.LOG_LEVEL_INFO)
     routineManager.AddRoutineAsMyFavorite(admin, request, response, responseManager)
 })
+
+app.post('/uploadFile', uploadConfig.single('file'), function (request, response) {
+    global.logManager.PrintLogMessage("index", "uploadFile", "file upload", global.defineManager.LOG_LEVEL_INFO)
+    requestFile = request.file
+    fileManager.UploadFile(admin, storage, request, response, responseManager, requestFile)
+})
+
+// app.post('/uploadFile', function (request, response) {
+//     global.logManager.PrintLogMessage("index", "uploadFile", "file upload", global.defineManager.LOG_LEVEL_INFO)
+//     fileManager.UploadFile2(admin, storage, request, response, responseManager, Busboy)
+// })
 
 exports.app = functions.https.onRequest(app);
 //
