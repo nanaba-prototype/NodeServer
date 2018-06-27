@@ -17,6 +17,7 @@ const communityManager = require('./Core/CommunityManager');
 const favoriteManager = require('./Core/FavoriteManager');
 const productManager = require('./Core/ProductManager');
 const fileManager = require('./Core/FileManager');
+const searchManager = require('./Core/SearchManager');
 
 var serviceAccount = require("./service-account.json");
 
@@ -226,6 +227,11 @@ app.post('/uploadFile', uploadConfig.single('file'), function (request, response
 app.get('/downloadFile', function (request, response) {
     global.logManager.PrintLogMessage("index", "downloadFile", "file download", global.defineManager.LOG_LEVEL_INFO)
     fileManager.DownloadFile(admin, bucket, request, response, responseManager)
+})
+
+app.post('/searchRoutine', function (request, response) {
+    global.logManager.PrintLogMessage("index", "searchRoutine", "search routines with options", global.defineManager.LOG_LEVEL_INFO)
+    searchManager.SearchRoutines(admin, request, response, responseManager)
 })
 
 exports.app = functions.https.onRequest(app);
