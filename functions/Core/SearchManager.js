@@ -3,7 +3,7 @@ exports.SearchRoutines = function (admin, request, response, responseManager) {
 
     databaseSearchQuery = request.body
     databaseQueryPath = global.defineManager.DATABASE_ROUTINE_PATH + "/"
-    searchQueryResult = {}
+    searchQueryResult = []
 
 
     global.logManager.PrintLogMessage("SearchManager", "SearchRoutines", "database search query ref: " + databaseQueryPath, global.defineManager.LOG_LEVEL_DEBUG);
@@ -53,9 +53,12 @@ exports.SearchRoutines = function (admin, request, response, responseManager) {
             //    time option is null
                 global.logManager.PrintLogMessage("SearchManager", "SearchRoutines", "time option is null", global.defineManager.LOG_LEVEL_WARN)
             }
-
-            searchQueryResult[indexOfRoutineKey] = indexOfRoutineData
+            tempResult = {}
+            tempResult[indexOfRoutineKey] = indexOfRoutineData
+            searchQueryResult.push(tempResult)
         }
+
+        searchQueryResult = searchQueryResult.slice(-global.defineManager.SEARCH_RETURN_LIMIT)
 
         responseManager.TemplateOfResponse(
             searchQueryResult,

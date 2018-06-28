@@ -30,6 +30,7 @@ exports.QUERY_RETURN_LIMIT = 5
 
 exports.ROUTINE_RATING_MAX = 5
 exports.SEARCH_LIMIT = 1000
+exports.SEARCH_RETURN_LIMIT = 30
 
 exports.DATABASE_USERS_PATH = "/Users"
 exports.DATABASE_USERS_FAVORITE_ROUTINE_PATH = "/favoriteRoutine"
