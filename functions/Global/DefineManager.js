@@ -29,12 +29,16 @@ exports.MESSAGE_SUCCESS = "ok"
 exports.QUERY_RETURN_LIMIT = 5
 
 exports.ROUTINE_RATING_MAX = 5
+exports.SEARCH_LIMIT = 1000
 
 exports.DATABASE_USERS_PATH = "/Users"
 exports.DATABASE_USERS_FAVORITE_ROUTINE_PATH = "/favoriteRoutine"
 exports.DATABASE_ROUTINE_PATH = "/Routine"
+exports.DATABASE_ROUTINE_UPLOAD_DATE_TIME_SEC = "/uploadDateTimeSec"
 exports.DATABASE_COMMENT_PATH = "/commentUser"
 exports.DATABASE_COMMENT_POSITIVE_PATH = "/positive"
 exports.DATABASE_ROUTINE_GOOD_PATH = "/good"
 exports.DATABASE_ROUTINE_FAVORITE_PATH = "/favorite"
 exports.DATABASE_ROUTINE_FAVORITE_USER_PATH = "/favoriteUser"
+
+exports.QUERY_ITEM_ROUTINE_UPLOAD_DATE_TIME_SEC = "uploadDateTimeSec"
