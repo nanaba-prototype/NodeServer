@@ -31,7 +31,11 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
         "uid": "",
         "uploadDate": "",
         "uploadDateTimeSec": 0,
-        "writer": ""
+        "writer": "",
+        "sex": "",
+        "skinConcern": [],
+        "skinType": [],
+        "birthYear": 0
     }
 
     routineDataTemplate["uid"] = uid
@@ -106,9 +110,24 @@ exports.AddRoutine = function (admin, response, responseManager, generateManager
             "save routine data uid: " + uid + " status: " + status.message,
             global.defineManager.LOG_LEVEL_INFO)
 
-        tempResponse = {'rid': rid}
-        responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+        admin.database().ref(global.defineManager.DATABASE_USERS_PATH + "/" + uid).once('value', function (userSnapshot) {
+            userSnapshot = JSON.parse(JSON.stringify(userSnapshot))
+            sex = userSnapshot["sex"]
+            skinConcern = userSnapshot["skinConcern"]
+            skinType = userSnapshot["skinType"]
+            birthYear = userSnapshot["birthYear"]
 
+            global.logManager.PrintLogMessage("RoutineManager", "AddRoutine", "attach routine search options", global.defineManager.LOG_LEVEL_INFO)
+            global.logManager.PrintLogMessage("RoutineManager", "AddRoutine", "sex: " + sex + " skinConcern: " + skinConcern + " skinType: " + skinType + " birthYear: " + birthYear, global.defineManager.LOG_LEVEL_DEBUG)
+
+            admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + rid + "/sex").set(sex)
+            admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + rid + "/skinConcern").set(skinConcern)
+            admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + rid + "/skinType").set(skinType)
+            admin.database().ref(global.defineManager.DATABASE_ROUTINE_PATH + "/" + rid + "/birthYear").set(Number(birthYear))
+
+            tempResponse = {'rid': rid}
+            responseManager.TemplateOfResponse(tempResponse, global.defineManager.HTTP_SUCCESS, response)
+        })
     })
 
 }
